@@ -89,6 +89,7 @@
 #include "YTree.h"
 #include "YWizard.h"
 #include "YTimezoneSelector.h"
+#include "YGraph.h"
 #include "YBusyIndicator.h"
 
 using std::string;
@@ -143,6 +144,11 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
      *				( if `opt( `notify ) is set for that SelectionBox ).
      *				Only widgets with this option set are affected.
      *
+     * @option	notifyContextMenu Make this widget to send an event when the context menu is requested
+     *				e.g. when the user clicks right mouse button
+     *				( if `opt( `notifyContextMenu ) is set for that SelectionBox ).
+     *				Only widgets with this option set are affected.
+     *
      * @option	disabled	Set this widget insensitive, i.e. disable any user interaction.
      *				The widget will show this state by being greyed out
      *				(depending on the specific UI).
@@ -190,6 +196,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 	{
 	    string sym = rawopt->value(o)->asSymbol()->symbol();
 	    if	    ( sym == YUIOpt_notify	) opt.notifyMode.setValue( true );
+	    else if ( sym == YUIOpt_notifyContextMenu) opt.notifyContextMenu.setValue( true );
 	    else if ( sym == YUIOpt_disabled	) opt.isDisabled.setValue( true );
 	    else if ( sym == YUIOpt_hstretch	) opt.isHStretchable.setValue( true );
 	    else if ( sym == YUIOpt_vstretch	) opt.isVStretchable.setValue( true );
@@ -312,6 +319,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUISpecialWidget_TimeField		)	w = parseTimeField		( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_Wizard		)	w = parseWizard			( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_TimezoneSelector	)	w = parseTimezoneSelector	( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_Graph		)	w = parseGraph			( p, opt, term, ol, n );
     else
     {
 	YUI_THROW( YUIException( string( "Unknown widget type " ) + s.c_str() ) );
@@ -343,6 +351,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 
 	if ( opt.isDisabled.value() 	)	w->setDisabled();
 	if ( opt.notifyMode.value() 	)	w->setNotify( true );
+	if ( opt.notifyContextMenu.value())	w->setNotifyContextMenu( true );
 	if ( opt.keyEvents.value()	)	w->setSendKeyEvents( true );
 	if ( opt.autoShortcut.value()	)	w->setAutoShortcut( true );
 	if ( opt.isHStretchable.value()	)	w->setStretchable( YD_HORIZ, true );
@@ -1419,7 +1428,7 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 	    if	    ( sym == YUIOpt_default    	)	isDefaultButton = true;
 	    else if ( sym == YUIOpt_okButton	)	role = YOKButton;
 	    else if ( sym == YUIOpt_cancelButton)	role = YCancelButton;
-	    else if ( sym == YUIOpt_cancelButton)	role = YApplyButton;
+	    else if ( sym == YUIOpt_applyButton)	role = YApplyButton;
 	    else if ( sym == YUIOpt_helpButton 	)	role = YHelpButton;
 	    else if ( sym == YUIOpt_customButton)	opt.customButton.setValue( true );
 	    else logUnknownOption( term, optList->value(o) );
@@ -3451,7 +3460,6 @@ YWidget *
 YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
                                         const YCPTerm & term, const YCPList & optList, int argnr )
 {
-
     if ( term->size() - argnr != 2
 	 || !term->value(argnr)->isString()
          || !term->value(argnr+1)->isMap() )
@@ -3471,6 +3479,43 @@ YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
 
     return selector;
 }
+
+
+/**
+ * @widgets	Graph
+ * @short	graph
+ * @class	YGraph
+ *
+ * @usage	if ( HasSpecialWidget( `Graph ) {...
+ * 		    `Graph( "graph.dot", "dot" )
+ *
+ * @description
+ * An graph
+ *
+ * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
+ * for availability with <tt>HasSpecialWidget(`Graph)</tt> before using it.
+ **/
+YWidget *
+YCPDialogParser::parseGraph( YWidget * parent, YWidgetOpt & opt,
+			     const YCPTerm & term, const YCPList & optList, int argnr )
+{
+    if ( term->size() - argnr != 2
+	 || !term->value(argnr)->isString()
+	 || !term->value(argnr+1)->isString() )
+    {
+	THROW_BAD_ARGS( term );
+    }
+
+    rejectAllOptions( term, optList );
+
+    string filename = term->value( argnr )->asString()->value();
+    string layoutAlgorithm = term->value( argnr+1 )->asString()->value();
+
+    YGraph * graph = YUI::optionalWidgetFactory()->createGraph( parent, filename, layoutAlgorithm );
+
+    return graph;
+}
+
 
 /**
  * @widget	BusyIndicator

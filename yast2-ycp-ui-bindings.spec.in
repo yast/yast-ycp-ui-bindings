@@ -2,6 +2,8 @@
 
 
 @HEADER@
+Group:	System/YaST
+License: GPL v2 or later
 
 
 BuildRequires:	gcc-c++
@@ -19,21 +21,23 @@ Conflicts:	yast2-core < 2.16.38
 # libycp includes crypto built-ins
 BuildRequires:  libxcrypt-devel
 
-Requires:	yast2-libyui	   >= 2.17.14
-BuildRequires:	yast2-libyui-devel >= 2.17.14
+Requires:	yast2-libyui	   >= 2.18.7
+BuildRequires:	yast2-libyui-devel >= 2.18.7
 
 # libyui ImplPtr
 BuildRequires:	boost-devel
 
 
-Summary:	-
+Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
 Provides:	@plugindir@/libpy2UI.so.2.0.0
 
 %description
--
+This package makes the generic YaST2 user interface engine available
+for YCP applications (YCP is the scripting language in which most YaST2
+modules are written).
 
 @HEADER-DEVEL@
-Summary:	-
+Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
 
 Requires:	glibc-devel
 Requires:	libstdc++-devel
@@ -44,8 +48,9 @@ Requires:	libxcrypt-devel
 Requires:	yast2-devtools
 
 %description devel
--
-
+This is the development package that makes the generic YaST2 user
+interface engine available for YCP applications (YCP is the scripting
+language in which most YaST2 modules are written).
 
 @PREP@
 
