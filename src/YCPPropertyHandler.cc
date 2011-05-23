@@ -1,3 +1,24 @@
+/**************************************************************************
+Copyright (C) 2000 - 2010 Novell, Inc.
+All Rights Reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+**************************************************************************/
+
+
 /*---------------------------------------------------------------------\
 |								       |
 |		       __   __	  ____ _____ ____		       |
@@ -117,6 +138,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     {
 	if ( trySetMultiSelectionBoxSelectedItems( widget, val ) )	return true;
 	if ( trySetTableSelectedItems( widget, val ) )			return true;
+	if ( trySetTreeSelectedItems( widget, val ) )			return true;
     }
 
     y2error( "Can't handle property %s::%s - not changing anything",
@@ -170,7 +192,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     else if ( propertyName == YUIProperty_CurrentItem )
     {
 	val = tryGetSelectionBoxValue	( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetTreeValue		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTreeCurrentItem	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetComboBoxValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetDumbTabValue	( widget );	if ( ! val.isNull() ) return val;
@@ -186,6 +208,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     {
 	val = tryGetMultiSelectionBoxSelectedItems( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableSelectedItems( widget );		if ( ! val.isNull() ) return val;
+	val = tryGetTreeSelectedItems( widget );		if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_OpenItems )
     {
@@ -663,6 +686,13 @@ YCPPropertyHandler::trySetTableSelectedItems( YWidget * widget, const YCPValue &
 
 
 bool
+YCPPropertyHandler::trySetTreeSelectedItems( YWidget * widget, const YCPValue & val )
+{
+    return trySetSelectionWidgetSelectedItems<YTree, YCPTreeItem>( widget, val );
+}
+
+
+bool
 YCPPropertyHandler::trySetMultiSelectionBoxCurrentItem( YWidget * widget, const YCPValue & val )
 {
     YMultiSelectionBox * multiSelBox = dynamic_cast<YMultiSelectionBox *> (widget);
@@ -982,6 +1012,13 @@ YCPPropertyHandler::tryGetTableSelectedItems( YWidget * widget )
     return tryGetSelectionWidgetSelectedItems<YTable, YCPTableItem>( widget );
 }
 
+YCPValue
+YCPPropertyHandler::tryGetTreeSelectedItems( YWidget * widget )
+{
+    return tryGetSelectionWidgetSelectedItems<YTree, YCPTreeItem>( widget );
+}
+
+
 
 YCPValue
 YCPPropertyHandler::tryGetMultiSelectionBoxCurrentItem( YWidget * widget )
@@ -1221,6 +1258,25 @@ YCPPropertyHandler::tryGetTableItems( YWidget * widget )
 
     return YCPTableItemWriter::itemList( table->itemsBegin(), table->itemsEnd() );
 }
+
+YCPValue
+YCPPropertyHandler::tryGetTreeCurrentItem( YWidget * widget )
+{
+    YTree * tree = dynamic_cast<YTree *> (widget);
+
+    if ( ! tree )
+        return YCPNull();
+
+    YItem * currentItem = tree->currentItem();
+    YCPTreeItem * item = dynamic_cast<YCPTreeItem *> (currentItem);
+
+    if ( item )
+        return item->id();
+
+    return YCPVoid();
+
+}
+
 
 
 YCPValue

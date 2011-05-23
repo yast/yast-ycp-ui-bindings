@@ -1,3 +1,23 @@
+/**************************************************************************
+Copyright (C) 2000 - 2010 Novell, Inc.
+All Rights Reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+**************************************************************************/
+
 /*---------------------------------------------------------------------\
 |								       |
 |		       __   __	  ____ _____ ____		       |
@@ -106,6 +126,7 @@ protected:
     static bool trySetRadioButtonGroupCurrentButton	( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxSelectedItems	( YWidget * widget, const YCPValue & val );
     static bool trySetTableSelectedItems		( YWidget * widget, const YCPValue & val );
+    static bool trySetTreeSelectedItems			( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxCurrentItem	( YWidget * widget, const YCPValue & val );
     static bool trySetMultiProgressMeterValues		( YWidget * widget, const YCPValue & val );
     static bool trySetBarGraphValues			( YWidget * widget, const YCPValue & val );
@@ -126,6 +147,7 @@ protected:
     static YCPValue tryGetRadioButtonGroupCurrentButton	( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxSelectedItems( YWidget * widget );
     static YCPValue tryGetTableSelectedItems		( YWidget * widget );
+    static YCPValue tryGetTreeSelectedItems		( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxCurrentItem	( YWidget * widget );
     static YCPValue tryGetTreeOpenItems			( YWidget * widget );
     static YCPValue tryGetTreeCurrentBranch		( YWidget * widget );
@@ -138,6 +160,8 @@ protected:
     static YCPValue tryGetSelectionWidgetItems		( YWidget * widget );
     static YCPValue tryGetBarGraphValues		( YWidget * widget );
     static YCPValue tryGetBarGraphLabels		( YWidget * widget );
+    static YCPValue tryGetTreeCurrentItem               ( YWidget * widget );
+
 
 
     /**

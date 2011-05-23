@@ -1,3 +1,24 @@
+/**************************************************************************
+Copyright (C) 2000 - 2010 Novell, Inc.
+All Rights Reserved.
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+**************************************************************************/
+
+
 /*---------------------------------------------------------------------\
 |								       |
 |		       __   __	  ____ _____ ____		       |
@@ -2118,6 +2139,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
  *		and opening subtrees. If the UI cannot handle this, all
  *		subtrees will always be open.
  *
+ * @option	multiSelection	user can select multiple items at once 
  * @option	immediate	make `notify trigger immediately when the selected item changes
  * @usage	`Tree( `id( `treeID ), "treeLabel", [ "top1", "top2", "top3" ] );
  * @examples	Tree1.ycp
@@ -2151,7 +2173,7 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
 {
     int numArgs = term->size() - argnr;
 
-    if ( numArgs < 1 || numArgs > 2
+    if ( numArgs < 1 || numArgs > 3
 	 || ! term->value( argnr )->isString()
 	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
@@ -2159,23 +2181,27 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
     }
 
     bool immediate  = false;
+    bool multiSelection = false;
+    bool recursiveSelection = false;
 
     for ( int o=0; o < optList->size(); o++ )
     {
-	if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_immediate )	immediate  = true;
+	if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_immediate )	          immediate  = true;
+        else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_multiSelection )     multiSelection = true;
+        else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_recursiveSelection ) recursiveSelection = true;
 	else logUnknownOption( term, optList->value(o) );
     }
 
     string label = term->value ( argnr )->asString()->value();
 
-    YTree * tree = YUI::widgetFactory()->createTree( parent, label );
+    YTree * tree = YUI::widgetFactory()->createTree( parent, label, multiSelection, recursiveSelection );
 
     if ( numArgs > 1 )
     {
 	YCPList itemList = term->value( argnr+1 )->asList();
 	tree->addItems( YCPTreeItemParser::parseTreeItemList( itemList ) );
 
-	if ( tree->hasItems() )
+	if ( tree->hasItems() && !multiSelection )
 	    tree->selectItem( tree->firstItem() );
     }
 

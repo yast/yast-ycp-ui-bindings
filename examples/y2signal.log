@@ -1,0 +1,166 @@
+=== 2011-02-09 15:59:40 +0100 ===
+YaST got signal 11 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox3.ycp:39
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7fbca0b8fd6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7fbca0b8ff77]
+/lib64/libc.so.6(+0x32a60)[0x7fbc9ec92a60]
+/usr/lib64/libstdc++.so.6(_ZNSsC1ERKSs+0x8)[0x7fbc9f4cf228]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN18YCPPropertyHandler21tryGetTreeCurrentItemEP7YWidget+0x108)[0x7fbc9cbfe298]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN18YCPPropertyHandler18getComplexPropertyEP7YWidgetRKSs+0x22f)[0x7fbc9cc06f4f]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN6YCP_UI11QueryWidgetERK8YCPValueS2_+0x92a)[0x7fbc9cbbefea]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN12YUINamespace11QueryWidgetERK7YCPTermRK9YCPSymbol+0x29)[0x7fbc9cba3229]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction16evaluateCall_intEv+0x3e2c)[0x7fbc9cba849c]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN16YCPBuiltinCaller4callEv+0x22)[0x7fbc9cbc2782]
+/usr/lib64/libyui.so.3(_ZN3YUI16uiThreadMainLoopEv+0x41)[0x7fbc9c912781]
+/usr/lib64/libyui.so.3(_Z15start_ui_threadPv+0xe)[0x7fbc9c9128de]
+/lib64/libpthread.so.0(+0x6a4f)[0x7fbc9fe90a4f]
+/lib64/libc.so.6(clone+0x6d)[0x7fbc9ed3082d]
+=== 2011-02-11 14:22:24 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7f9433691d6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7f9433691f77]
+/lib64/libc.so.6(+0x32a60)[0x7f9431794a60]
+/lib64/libpthread.so.0(read+0x2b)[0x7f943299a38b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7f942f41448a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7f942f6aea90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7f94339184af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7f943392c0b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f943393e2d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7f943392cca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f943393e2d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7f943390eb0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7f9433df68d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7f9433693d4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7f9431780b7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:51:09 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7fb1f7dd7d6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7fb1f7dd7f77]
+/lib64/libc.so.6(+0x32a60)[0x7fb1f5edaa60]
+/lib64/libpthread.so.0(read+0x2b)[0x7fb1f70e038b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7fb1f3b5a48a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7fb1f3df4a90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7fb1f805e4af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7fb1f80720b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fb1f80842d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7fb1f8072ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fb1f80842d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7fb1f8054b0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7fb1f853c8d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7fb1f7dd9d4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7fb1f5ec6b7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:51:47 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7fa4f2429d6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7fa4f2429f77]
+/lib64/libc.so.6(+0x32a60)[0x7fa4f052ca60]
+/lib64/libpthread.so.0(read+0x2b)[0x7fa4f173238b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7fa4ee1ac48a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7fa4ee446a90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7fa4f26b04af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7fa4f26c40b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fa4f26d62d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7fa4f26c4ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fa4f26d62d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7fa4f26a6b0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7fa4f2b8e8d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7fa4f242bd4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7fa4f0518b7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:52:07 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7fad7f2a9d6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7fad7f2a9f77]
+/lib64/libc.so.6(+0x32a60)[0x7fad7d3aca60]
+/lib64/libpthread.so.0(read+0x2b)[0x7fad7e5b238b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7fad7b02c48a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7fad7b2c6a90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7fad7f5304af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7fad7f5440b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fad7f5562d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7fad7f544ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fad7f5562d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7fad7f526b0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7fad7fa0e8d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7fad7f2abd4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7fad7d398b7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:52:35 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7f75d5aead6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7f75d5aeaf77]
+/lib64/libc.so.6(+0x32a60)[0x7f75d3beda60]
+/lib64/libpthread.so.0(read+0x2b)[0x7f75d4df338b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7f75d186d48a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7f75d1b07a90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7f75d5d714af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7f75d5d850b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f75d5d972d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7f75d5d85ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f75d5d972d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7f75d5d67b0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7f75d624f8d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7f75d5aecd4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7f75d3bd9b7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:53:40 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7fddb57acd6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7fddb57acf77]
+/lib64/libc.so.6(+0x32a60)[0x7fddb38afa60]
+/lib64/libpthread.so.0(read+0x2b)[0x7fddb4ab538b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7fddb152f48a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7fddb17c9a90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7fddb5a334af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7fddb5a470b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fddb5a592d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7fddb5a47ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7fddb5a592d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7fddb5a29b0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7fddb5f118d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7fddb57aed4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7fddb389bb7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
+=== 2011-02-11 14:54:06 +0100 ===
+YaST got signal 2 at YCP file /data/yast_trunk/ycp-ui-bindings/examples/Tree-Checkbox2.ycp:31
+Liberating suppressed debugging messages:
+End of suppressed debugging messages
+Backtrace: (use c++filt to demangle)
+/usr/lib64/liby2.so.2(_Z20signal_log_backtracev+0x1e)[0x7f3912f0ed6e]
+/usr/lib64/liby2.so.2(_Z14signal_handleri+0x157)[0x7f3912f0ef77]
+/lib64/libc.so.6(+0x32a60)[0x7f3911011a60]
+/lib64/libpthread.so.0(read+0x2b)[0x7f391221738b]
+/usr/lib64/libyui.so.3(_ZN3YUI15waitForUIThreadEv+0x2a)[0x7f390ec9148a]
+/usr/lib64/YaST2/plugin/libpy2UI.so.2(_ZN11YUIFunction12evaluateCallEv+0xc0)[0x7f390ef2ba90]
+/usr/lib64/libycp.so.3(_ZN10YEFunction8evaluateEb+0x2df)[0x7f39131954af]
+/usr/lib64/libycp.so.3(_ZN8YSAssign8evaluateEb+0x44)[0x7f39131a90b4]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f39131bb2d2]
+/usr/lib64/libycp.so.3(_ZN8YSRepeat8evaluateEb+0xc3)[0x7f39131a9ca3]
+/usr/lib64/libycp.so.3(_ZN6YBlock8evaluateEb+0x1d2)[0x7f39131bb2d2]
+/usr/lib64/libycp.so.3(_ZNK10YCPCodeRep8evaluateEb+0xfa)[0x7f391318bb0a]
+/usr/lib64/YaST2/plugin/libpy2wfm.so.2(_ZN14Y2WFMComponent12doActualWorkERK7YCPListP11Y2Component+0x5d3)[0x7f39136738d3]
+/usr/lib64/liby2.so.2(main+0x101d)[0x7f3912f10d4d]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x7f3910ffdb7d]
+/usr/lib/YaST2/bin/y2base[0x400679]
