@@ -178,16 +178,22 @@ YUIComponent::createUI()
     }
     catch ( YUIPluginPipeException & ex )
     {
-	y2error( "Can NOT setup UI-plugin properly. There was an error" );
-	y2error( "when finishing plugin-initilazation by invoking" );
-	y2error( "YUI::topmostConstructorHasFinished()." );
-	y2error( "A YUIPluginPipeException was thrown from there and" );
-	y2error( "got rethrown from YUILoader::loadUI. Message is:" );
-	y2error( ex.asString() );
-	y2error( "Will call `exit( 2 );` now. <THIS IS EVIL !!!>" );
+	std::string pipe_err;
+
+	pipe_err = "Can NOT setup UI-plugin properly. There was an error\n";
+	pipe_err.append( "when finishing plugin-initialization by invoking\n" );
+	pipe_err.append( "YUI::topmostConstructorHasFinished().\n\n" );
+	pipe_err.append( "A YUIPluginPipeException() was thrown from there and\n" );
+	pipe_err.append( "got rethrown from YUILoader::loadUI(). Message is:\n\n" );
+	pipe_err.append( ex.asString() + "\n\n" );
+	pipe_err.append( "Will call `exit( 2 );` now. <THIS IS EVIL !!!>" );
+
+	y2error( pipe_err );
+
 	/* THIS IS EVIL !!!
 	   Taken from YUI::topmostConstructorHasFinished()
 	   https://github.com/libyui/libyui/blob/master/src/YUI.cc#L182 */
+
 	exit( 2 );
     }
     catch ( YUICantLoadAnyUIException & ex )
