@@ -180,7 +180,9 @@ YUIComponent::createUI()
     {
 	y2error( "Can NOT setup UI-plugin properly. There was an error" );
 	y2error( "when finishing plugin-initilazation by invoking" );
-	y2error( "YUI::topmostConstructorHasFinished():" );
+	y2error( "YUI::topmostConstructorHasFinished()." );
+	y2error( "A YUIPluginPipeException was thrown from there and" );
+	y2error( "got rethrown from YUILoader::loadUI. Message is:" );
 	y2error( ex.asString() );
 	y2error( "Will call `exit( 2 );` now. <THIS IS EVIL !!!>" );
 	/* THIS IS EVIL !!!
