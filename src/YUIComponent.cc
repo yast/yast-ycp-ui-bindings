@@ -176,10 +176,22 @@ YUIComponent::createUI()
 	YMacro::setRecorder( new YCPMacroRecorder() );
 	YMacro::setPlayer  ( new YCPMacroPlayer()   );
     }
+    catch ( YUIPluginPipeException & ex )
+    {
+	y2error( "Can NOT setup UI-plugin properly. There was an error" );
+	y2error( "when finishing plugin-initilazation by invoking" );
+	y2error( "YUI::topmostConstructorHasFinished():" );
+	y2error( ex.asString() );
+	y2error( "Will call `exit( 2 );` now. <THIS IS EVIL !!!>" );
+	/* THIS IS EVIL !!!
+	   Taken from YUI::topmostConstructorHasFinished()
+	   https://github.com/libyui/libyui/blob/master/src/YUI.cc#L182 */
+	exit( 2 );
+    }
     catch ( YUICantLoadAnyUIException & ex )
     {
 	// Special case: Dummy UI (needed in test cases)
-	
+
 	YUI_CAUGHT( ex );
     }
 }
