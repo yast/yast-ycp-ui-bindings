@@ -176,10 +176,32 @@ YUIComponent::createUI()
 	YMacro::setRecorder( new YCPMacroRecorder() );
 	YMacro::setPlayer  ( new YCPMacroPlayer()   );
     }
+    catch ( YUIPluginPipeException & ex )
+    {
+	std::string pipe_err = "";
+
+	YUI_CAUGHT( ex );
+
+	pipe_err.append( "Can NOT setup UI-plugin properly. There was an error\n");
+	pipe_err.append( "when finishing plugin-initialization by invoking\n" );
+	pipe_err.append( "YUI::topmostConstructorHasFinished().\n\n" );
+	pipe_err.append( "A YUIPluginPipeException() was thrown from there and\n" );
+	pipe_err.append( "got rethrown from YUILoader::loadUI(). Message is:\n\n" );
+	pipe_err.append( ex.asString() + "\n\n" );
+	pipe_err.append( "Will call `exit( 2 );` now. <THIS IS EVIL !!!>" );
+
+	y2error( pipe_err );
+
+	/* THIS IS EVIL !!!
+	   Taken from YUI::topmostConstructorHasFinished()
+	   https://github.com/libyui/libyui/blob/master/src/YUI.cc#L182 */
+
+	exit( 2 );
+    }
     catch ( YUICantLoadAnyUIException & ex )
     {
 	// Special case: Dummy UI (needed in test cases)
-	
+
 	YUI_CAUGHT( ex );
     }
 }

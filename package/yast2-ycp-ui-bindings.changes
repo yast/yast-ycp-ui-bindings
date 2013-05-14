@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon May 13 15:10:00 CEST 2013 - bjoern.esser@gmail.com
+
+- catching YUIPlugingPipeException() thrown from libyui
+  and give verbose y2error and call exit( 2 )
+- 2.21.8
+
+-------------------------------------------------------------------
 Tue Apr 30 10:41:15 CEST 2013 - tgoettlicher@suse.de
 
 - Adapted setting prog dir in libyui
