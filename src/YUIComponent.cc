@@ -180,6 +180,8 @@ YUIComponent::createUI()
     {
 	std::string pipe_err;
 
+	YUI_CAUGHT( ex );
+
 	pipe_err = "Can NOT setup UI-plugin properly. There was an error\n";
 	pipe_err.append( "when finishing plugin-initialization by invoking\n" );
 	pipe_err.append( "YUI::topmostConstructorHasFinished().\n\n" );
