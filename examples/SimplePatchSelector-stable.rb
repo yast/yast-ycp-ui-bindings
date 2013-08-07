@@ -6,7 +6,6 @@ module Yast
     def main
       Yast.import "UI"
       Yast.import "Pkg"
-      textdomain "bogus"
 
       # Initialize RPM DB as pkg src
       Pkg.TargetInit(

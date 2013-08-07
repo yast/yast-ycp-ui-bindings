@@ -6,7 +6,6 @@ module Yast
     def main
       Yast.import "UI"
       Yast.import "Pkg"
-      textdomain "bogus"
 
       # Pkg::SourceCreate( "http://dist.suse.de/install/SLP/SUSE-10.1-Beta3/i386/CD1/", "" );
       Pkg.SourceCreate("file:/srv/sles-10-i386/CD1/", "")
