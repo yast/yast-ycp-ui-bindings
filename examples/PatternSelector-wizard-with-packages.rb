@@ -6,7 +6,6 @@ module Yast
     def main
       Yast.import "UI"
       Yast.import "Pkg"
-      textdomain "bogus"
 
       # Pkg::SourceCreate( "http://dist.suse.de/install/SLP/SUSE-10.1-Beta3/i386/CD1/", "" );
       #    Pkg::SourceCreate( "file:/srv/sles-10-i386/CD1/", "" );
@@ -27,18 +26,11 @@ module Yast
       )
 
 
-      @help_text = _(
-        "<p>The available software for this system is shown by category in the left column.  To view a description for an item, select it in the list.</p>"
-      ) +
-        _(
-          "<p>Change the status of items by clicking on their status icon or right-click on any icon for a context menu. With the context menu you can also change the status of all items.</p>"
-        ) +
-        _(
-          "<p><b>Details</b> opens the detailed software package selection where you can view and select individual software packages.</p>"
-        ) +
-        _(
+      @help_text =
+          "<p>The available software for this system is shown by category in the left column.  To view a description for an item, select it in the list.</p>" +
+          "<p>Change the status of items by clicking on their status icon or right-click on any icon for a context menu. With the context menu you can also change the status of all items.</p>" +
+          "<p><b>Details</b> opens the detailed software package selection where you can view and select individual software packages.</p>" +
           "<p>The <b>disk usage</b> display in the lower right corner shows the remaining disk space after all requested changes will have been performed. Please notice that hard disk partitions that are full or nearly full can degrade system performance and in some cases even cause serious problems. The system needs some available disk space to run properly.</p>"
-        )
 
       UI.WizardCommand(
         term(
