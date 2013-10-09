@@ -50,7 +50,6 @@ BuildRequires:	libyui-devel >= 3.0.4
 BuildRequires:	boost-devel
 
 Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
-Provides:	%{yast_plugindir}/libpy2UI.so.2.0.0
 
 %description
 This package makes the generic YaST2 user interface engine available
