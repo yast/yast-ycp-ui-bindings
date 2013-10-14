@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Oct 14 14:47:09 UTC 2013 - jreidinger@suse.com
+
+- Fix query for special widget DateField and TimeField resulting
+  in bad widget in GUI (BNC#845623)
+- 3.0.1
+
+-------------------------------------------------------------------
 Wed Jul 31 08:45:48 UTC 2013 - yast-devel@opensuse.org
 
 - converted from YCP to Ruby by YCP Killer
