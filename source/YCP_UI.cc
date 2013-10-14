@@ -108,9 +108,7 @@ YCPValue YCP_UI::HasSpecialWidget( const YCPSymbol & widget )
     else if ( symbol == YUISpecialWidget_PartitionSplitter	)	hasWidget = fact->hasPartitionSplitter();
     else if ( symbol == YUISpecialWidget_SimplePatchSelector	)	hasWidget = fact->hasSimplePatchSelector();
     else if ( symbol == YUISpecialWidget_Wizard			)	hasWidget = fact->hasWizard();
-    else if ( symbol == YUISpecialWidget_Date			)	hasWidget = fact->hasDateField();
     else if ( symbol == YUISpecialWidget_DateField)	hasWidget = fact->hasDateField();
-    else if ( symbol == YUISpecialWidget_Time)	hasWidget = fact->hasTimeField();
     else if ( symbol == YUISpecialWidget_TimeField)	hasWidget = fact->hasTimeField();
     else if ( symbol == YUISpecialWidget_TimezoneSelector	)	hasWidget = fact->hasTimezoneSelector();
     else if ( symbol == YUISpecialWidget_Graph			)	hasWidget = fact->hasGraph();
