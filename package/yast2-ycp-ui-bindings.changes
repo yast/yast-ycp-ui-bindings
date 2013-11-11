@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Nov 11 12:49:15 UTC 2013 - jsrain@suse.cz
+
+- added handling of release notes button (fate#314695)
+
+-------------------------------------------------------------------
 Thu Sep 19 18:02:34 UTC 2013 - lslezak@suse.cz
 
 - do not use *.spec.in template, use *.spec file with RPM macros

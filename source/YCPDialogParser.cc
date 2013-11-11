@@ -1449,6 +1449,7 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 	    else if ( sym == YUIOpt_cancelButton)	role = YCancelButton;
 	    else if ( sym == YUIOpt_applyButton)	role = YApplyButton;
 	    else if ( sym == YUIOpt_helpButton 	)	role = YHelpButton;
+            else if ( sym == YUIOpt_relNotesButton )    role = YRelNotesButton;
 	    else if ( sym == YUIOpt_customButton)	opt.customButton.setValue( true );
 	    else logUnknownOption( term, optList->value(o) );
 	}
@@ -1465,6 +1466,13 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 
     if ( role == YHelpButton )
 	button->setHelpButton();
+
+    if ( role == YRelNotesButton )
+    {
+       yuiMilestone() << "Setting RN role" << std::endl;
+       button->setRelNotesButton();
+       yuiMilestone() << "RN role set" << std::endl;
+    }
 
     if ( isIconButton )
 	button->setIcon( iconName );
