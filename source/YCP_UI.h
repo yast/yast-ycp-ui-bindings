@@ -97,6 +97,8 @@ public:
     static YCPValue 	WizardCommand			( const YCPTerm & command );
     static YCPValue 	PollInput			();
     static YCPBoolean	TextMode			();
+    static YCPValue	SetReleaseNotes			( const YCPMap & relnotes );
+
 
     /**
      * Not really a UI built-in: This implements the WFM or SCR callback command.

@@ -313,6 +313,9 @@ public:
     /* TYPEINFO: boolean (term) */	
     YCPBoolean OpenContextMenu( const YCPTerm & term );
 
+    /* TYPEINFO: void (map<string,string>) */
+    YCPValue SetReleaseNotes( const YCPMap & relnotes );
+
 
     
     YCPValue

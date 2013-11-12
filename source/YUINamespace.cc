@@ -236,6 +236,15 @@ YUINamespace::OpenContextMenu( const YCPTerm & term )
 }
 
 
+YCPValue
+YUINamespace::SetReleaseNotes( const YCPMap & relnotes )
+{
+    if ( YUIComponent::ui() )
+	return YCP_UI::SetReleaseNotes( relnotes );
+    else
+	return YCPVoid();
+}
+
 
 YCPValue
 YUINamespace::ChangeWidget( const YCPTerm & widget_id, const YCPSymbol & property, const YCPValue & new_value )

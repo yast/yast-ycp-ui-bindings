@@ -1636,6 +1636,27 @@ YCPBoolean YCP_UI::OpenContextMenu ( const YCPTerm & term )
 }
  
 
+YCPValue YCP_UI::SetReleaseNotes( const YCPMap & relnotes )
+{
+    yuiMilestone() << "Setting release notes" << std::endl;
+
+    std::map<std::string,std::string> rn;
+
+    for ( YCPMap::const_iterator it = relnotes->begin(); it != relnotes->end(); ++it )
+    {
+        if ( it->first->isString() && it->second->isString() )
+        {
+	    rn[it->first->asString()->value()] = it->second->asString()->value();
+        }
+        else
+        {
+	    ycperror( "Invalid data in release notes map" );
+        }
+    }
+    YUI::application()->setReleaseNotes( rn );
+
+    return YCPVoid();
+}
 
 
 // EOF
