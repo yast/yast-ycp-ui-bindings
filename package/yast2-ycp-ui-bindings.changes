@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Dec  3 13:50:09 UTC 2013 - lslezak@suse.cz
+
+- added missing locale directory initialization, fixes missing
+  translations in Gtk package manager (bnc#801311)
+- 3.0.2
+
+-------------------------------------------------------------------
 Mon Oct 14 14:47:09 UTC 2013 - jreidinger@suse.com
 
 - Fix query for special widget DateField and TimeField resulting
