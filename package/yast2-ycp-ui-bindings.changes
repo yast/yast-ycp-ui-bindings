@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Dec  9 08:28:31 UTC 2013 - lslezak@suse.cz
+
+- added missing locale directory initialization, fixes missing
+  translations in Gtk package manager (bnc#801311)
+- 3.1.4
+
+-------------------------------------------------------------------
 Fri Dec  6 13:21:33 UTC 2013 - jsrain@suse.cz
 
 - added handling of release notes button (fate#314695)

@@ -165,13 +165,17 @@ YUIComponent::createUI()
 
     try
     {
+        // configure the directories _before_ loading the UI
+        // so the paths can be used in the initialization code
+        YSettings::setProgDir( YAST2DIR );
+        YSettings::setLocaleDir( LOCALEDIR );
+
 	if ( _requestedUIName.empty() )
 	    YUILoader::loadUI( _withThreads );
 	else
 	    YUILoader::loadPlugin( _requestedUIName, _withThreads );
 
 	_ui = YUI::ui();
-        YSettings::setProgDir( YAST2DIR );
     
 	YMacro::setRecorder( new YCPMacroRecorder() );
 	YMacro::setPlayer  ( new YCPMacroPlayer()   );
