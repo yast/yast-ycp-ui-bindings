@@ -43,7 +43,6 @@ Conflicts:	yast2-core < 2.16.38
 Conflicts:	yast2 < 2.23.0
 Conflicts:	yast2-libyui < 2.42.0
 
-Requires:	libyui6	   >= 3.0.11
 BuildRequires:	libyui-devel >= 3.0.11
 
 # libyui ImplPtr
