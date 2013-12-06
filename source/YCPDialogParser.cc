@@ -314,7 +314,6 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     // Special widgets - may or may not be supported by the specific UI.
     // The YCP application should ask for presence of such a widget with Has???Widget() prior to creating one.
 
-    else if ( s == YUISpecialWidget_Date		)	w = parseDateField		( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_DateField		)	w = parseDateField		( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_DummySpecialWidget	)	w = parseDummySpecialWidget	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_DownloadProgress	)	w = parseDownloadProgress	( p, opt, term, ol, n );
@@ -326,7 +325,6 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUISpecialWidget_PatternSelector	)	w = parsePatternSelector	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_SimplePatchSelector	)	w = parseSimplePatchSelector	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_Slider		)	w = parseSlider			( p, opt, term, ol, n );
-    else if ( s == YUISpecialWidget_Time		)	w = parseTimeField		( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_TimeField		)	w = parseTimeField		( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_Wizard		)	w = parseWizard			( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_TimezoneSelector	)	w = parseTimezoneSelector	( p, opt, term, ol, n );
