@@ -5,9 +5,7 @@ module Yast
     def main
       Yast.import "UI"
 
-
       @event_display = "<i>No event yet - click something (or wait for timeout)</i>"
-
 
       if !UI.HasSpecialWidget(:Slider)
         UI.OpenDialog(
@@ -20,10 +18,6 @@ module Yast
         UI.CloseDialog
         return
       end
-
-
-
-
 
       UI.OpenDialog(
         VBox(
@@ -38,9 +32,7 @@ module Yast
         )
       )
 
-      #
       # Event loop
-      #
 
       @event = {}
       begin
@@ -51,13 +43,6 @@ module Yast
 
         if @event != nil &&
             Ops.get_string(@event, "EventReason", "") == "ContextMenuActivated"
-          # UI::OpenContextMenu( `menu(
-          # 				    [	`item(`id(`folder), "&Folder"),
-          # 					`item(`id(`text),   "&Text File" ),
-          # 					`item(`id(`image),  "&Image"     )
-          # 				    ]));
-
-
           UI.OpenContextMenu(
             term(
               :menu,
@@ -74,9 +59,7 @@ module Yast
         end
       end until Ops.get(@event, "ID") == :close
 
-
       UI.CloseDialog
-
       nil
     end
 
