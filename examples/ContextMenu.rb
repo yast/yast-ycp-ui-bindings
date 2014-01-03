@@ -7,7 +7,7 @@ module Yast
 
       @event_display = "<i>No event yet - click something (or wait for timeout)</i>"
 
-      if !UI.HasSpecialWidget(:Slider)
+      if !UI.HasSpecialWidget(:ContextMenu)
         UI.OpenDialog(
           VBox(
             Label("ContextMenu not supported!"),
