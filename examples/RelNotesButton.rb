@@ -7,10 +7,10 @@ module Yast
       Yast.import "UI"
       
       rel_notes_file =  UI.TextMode ? "./RELEASE-NOTES.en.txt" : "./RELEASE-NOTES.en.rtf"       
-      rel_notes_text = Convert.to_string(SCR.Read(path(".target.string"), rel_notes_file))
+      rel_notes_text = SCR.Read(path(".target.string"), rel_notes_file)
       rel_notes = {"SLES12" => rel_notes_text, "Some-Add-On" => "some text" }
 
-      UI.SetReleaseNotes( rel_notes )
+      UI.SetReleaseNotes(rel_notes)
     
       UI.OpenDialog(
         VBox(
@@ -41,10 +41,10 @@ module Yast
           PushButton(Id(:ok), "&OK")
         )
       )
-      @id = nil
+
       begin
         @id = UI.UserInput
-      end until @id == :ok
+      end until @id == :ok || @id == :cancel
 
       UI.CloseDialog
 
