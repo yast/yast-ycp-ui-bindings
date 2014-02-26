@@ -1,0 +1,4739 @@
+Release Notes for SUSE Linux Enterprise Server 11 Service Pack 2
+
+Version 11.2.0.28 (2012-02-06)
+
+Abstract
+
+These release notes are generic for all products of our SUSE Linux
+Enterprise Server 11 product line. Some parts may not apply to a particular
+architecture or product. Where this is not obvious, the specific
+architectures or products are explicitly listed.
+
+Installation Quick Start and Deployment Guides can be found in the docu
+language directories on the media. Documentation (if installed) is
+available below the /usr/share/doc/ directory of an installed system.
+
+This SUSE product includes materials licensed to SUSE under the GNU General
+Public License (GPL). The GPL requires SUSE to provide the source code that
+corresponds to the GPL-licensed material. The source code is available for
+download at http://www.suse.com/download-linux/source-code.html. Also, for
+up to three years after distribution of the SUSE product, upon request,
+Novell will mail a copy of the source code. Requests should be sent by
+e-mail to mailto:sle_source_request@novell.com or as otherwise instructed
+at http://www.suse.com/download-linux/source-code.html. Novell may charge a
+reasonable fee to recover distribution costs.
+
+---------------------------------------------------------------------------
+
+1. SUSE Linux Enterprise Server
+2. Read Me First
+3. Support Statement for SUSE Linux Enterprise Server
+
+    3.1. General Support Statement
+
+        3.1.1. Tomcat6 and Related Packages
+        3.1.2. SELinux
+
+    3.2. Software Requiring Specific Contracts
+    3.3. Technology Previews
+
+        3.3.1. Limit the Linux Kernel's page cache
+
+4. Miscellaneous
+
+    4.1. Disable cpuplugd by default
+    4.2. Extend and improve zFCP trace utilities
+    4.3. IPv6 support for qetharp tool
+    4.4. Safely start getty through init
+
+5. Installation
+
+    5.1. Map network interface names to the names written on the chassis
+        (biosdevname)
+    5.2. Amazon EC2 Availability
+    5.3. Deployment
+    5.4. CJK Languages Support in Text-mode Installation
+    5.5. Booting from Harddisks larger than 2 TiB in Non-UEFI Mode
+    5.6. Installation Using Persistent Device Names
+    5.7. Using qla3xxx and qla4xxx Drivers at the Same Time
+    5.8. Using iSCSI Disks when Installing
+    5.9. Using EDD Information for Storage Device Identification
+    5.10. Automatic Installation with AutoYaST in an LPAR (System z)
+    5.11. Adding DASD or zFCP Disks During Installation (System z)
+    5.12. Network Installation via eHEA on POWER
+    5.13. For More Information
+
+6. Features and Versions
+
+    6.1. Linux Kernel and Toolchain
+
+        6.1.1. Transparent Huge Pages (THP) Support
+        6.1.2. CFS Bandwidth Control (aka CPU Hard Limits)
+
+    6.2. Server
+
+        6.2.1. Support for Tomcat Servlet Container
+        6.2.2. HPLIP Version Upgrade
+        6.2.3. Virtual Hosting: Supporting Multiple SSL Based Domains on
+            One IP Address through Server Name Indication (SNI)
+
+    6.3. Desktop
+    6.4. Security
+
+        6.4.1. Stricter SSL Certificate Checks for LDAP Clients
+        6.4.2. Managing Access Control Lists over NFSv4
+        6.4.3. Added System Security Services Daemon (sssd) for LDAP/
+            Kerberos Authentication
+        6.4.4. Activating DKIM Support
+        6.4.5. openSSH with Cryptographic Hardware Acceleration
+        6.4.6. PAM Configuration
+        6.4.7. SELinux Enablement
+        6.4.8. Enablement for TPM/Trusted Computing
+        6.4.9. Linux File System Capabilities
+
+    6.5. Network
+
+        6.5.1. YaST GUI tool available to configure FCoE capable network
+            interfaces
+        6.5.2. Map network interface names to the names written on the
+            chassis (biosdevname)
+
+    6.6. Resource Management
+
+        6.6.1. OS level virtualization: Linux Container (LXC)
+
+    6.7. Systems Management
+    6.8. Other
+
+        6.8.1. Enhanced yast to support SCSI tape devices
+
+    6.9. System z
+
+        6.9.1. Exploitation of new z196 / z114 processor instructions
+        6.9.2. FICON IPL and device discovery hardening
+        6.9.3. Userspace handle to wait for cio pending work
+        6.9.4. Hardware
+        6.9.5. Virtualization
+        6.9.6. Storage
+        6.9.7. Network
+        6.9.8. Security
+        6.9.9. RAS
+        6.9.10. Web 2.0 Open Source Stack in SUSE Linux Enterprise Software
+            Development Kit
+        6.9.11. Functionality implemented in SUSE Linux Enterprise Server
+            11 (and SUSE Linux Enterprise Server 10 Service Pack 2.)
+
+7. Driver Updates
+
+    7.1. Network Drivers
+
+        7.1.1. ixgbe Driver Update to version 3.3.8
+        7.1.2. Added the ixgbevf Driver, Version 2.0.0
+        7.1.3. igb Driver Update to version 3.0.6
+        7.1.4. igbvf Driver Update to Version 1.0.8
+        7.1.5. e1000e Driver Update to version 1.3.16
+        7.1.6. IBM Power Chelsio T4 Adapter cxgb4i Driver
+        7.1.7. Brocade 10G PCIe Ethernet Adapters (bna)
+
+    7.2. Storage Drivers
+
+        7.2.1. Support for Intel RSTe3.0 (Intel Rapid Storage Technology)
+        7.2.2. Support for Intel SAS Controller Unit (SCU) driver "isci"
+        7.2.3. Major advances in supporting iSCSI and FCoE
+        7.2.4. Open-iSCSI supported added to the QLogic iSCSI qla4xxx
+            driver
+        7.2.5. Broadcom FCoE and iSCSI Enhanced Support for SLE11SP2
+        7.2.6. Brocade FC/FCOE Adapters (bfa) Update Notes
+
+    7.3. Other Drivers
+
+        7.3.1. Support for Universal Serial Bus Version 3.0 (USB 3.0)
+        7.3.2. Support Intel? HD Graphics 2000/3000 used in 2nd Generation
+            Intel? Core? i7/i5/i3 processor family
+
+8. Other Updates
+
+    8.1. Upgrade to gawk 3.1.8
+    8.2. Update gdb to Version 7.3
+
+9. Software Development Kit
+
+    9.1. PowerPC64 GCC Large TOC Support
+
+10. Update-Related Notes
+
+    10.1. General Notes
+
+        10.1.1. Automated Upgrade Using AutoYaST
+        10.1.2. Online Migration from SP1 to SP2 via "YaST waggon"
+        10.1.3. Online Migration with Debuginfo Packages Not Supported
+        10.1.4. Migrating to SLE 11 SP2
+        10.1.5. Migration from SUSE Linux Enterprise Server 10 SP4 via
+            Bootable Media
+        10.1.6. Upgrading from SLES 10 SPx
+        10.1.7. Upgrading to SLES 11 SP2 with Root File System on iSCSI
+        10.1.8. Kernel Split in Different Packages
+        10.1.9. Tickless Idle
+        10.1.10. Development Packages
+        10.1.11. Displaying Manual Pages with the Same Name
+        10.1.12. YaST LDAP Server No Longer Uses /etc/openldap/slapd.conf
+        10.1.13. AppArmor
+        10.1.14. Updating with Alternative Boot Loader (Non-Linux) or
+            Multiple Boot Loader Programs
+        10.1.15. Upgrading MySQL to SUSE Linux Enterprise Server 11
+        10.1.16. Fine-Tuning Firewall Settings
+        10.1.17. Upgrading from SUSE Linux Enterprise Server 10 SP4 with
+            the Xen Hypervisor May Have Incorrect Network Configuration
+        10.1.18. LILO Configuration Via YaST or AutoYaST
+
+    10.2. Update from SUSE Linux Enterprise Server 11
+
+        10.2.1. Changed Routing Behavior
+        10.2.2. Kernel Devel Packages
+
+    10.3. Update from SUSE Linux Enterprise Server 11 SP 1
+
+        10.3.1. Update from SUSE Linux Enterprise Server 11 SP 1
+
+11. Deprecated Functionality
+
+    11.1. Remove Support for Multi-Volume Tape Dumps
+    11.2. Moving Novfs Kernel Module
+    11.3. Support for portmap will end with SUSE Linux Enterprise 11 SP3
+    11.4. Replacing xpdf-tools
+    11.5. L3 Support for Openswan Is Scheduled to Expire
+    11.6. Support for IBM Java 1.4.2 Ending 2013
+    11.7. Intel Active Management (IAMT)
+    11.8. PHP 5.2 Is Deprecated
+    11.9. Read-only Support for the ext4 File System for Migration Purposes
+
+12. Infrastructure, Package and Architecture Specific Information
+
+    12.1. Systems Management
+
+        12.1.1. xrdp
+        12.1.2. YaST AppArmor Configuration Module
+        12.1.3. Modified Operation against Novell Customer Center
+        12.1.4. Operation against Subscription Management Tool
+        12.1.5. Minimal Pattern
+        12.1.6. SPident
+
+    12.2. Performance Related Information
+
+        12.2.1. AES-NI Instruction Set Extension Support in OpenSSL
+        12.2.2. Linux Completely Fair Scheduler Affects Java Performance
+        12.2.3. Tuning Performance of Simple Database Engines
+
+    12.3. Storage
+
+        12.3.1. Host Protected Area
+        12.3.2. Allow Settable permission/ownership on mp devices from
+            multipath.conf
+        12.3.3. Multipathing - SCSI Hardware Handler
+        12.3.4. Multipathing: Failed Paths Do Not Return after a Path
+            Failure.
+        12.3.5. Local Mounts of iSCSI Shares
+
+    12.4. Hyper-V
+
+        12.4.1. Change of Kernel Device Names in Hyper-V Guests
+        12.4.2. Using the "Virtual Machine Snapshot" Feature
+
+    12.5. Architecture Independent Information
+
+        12.5.1. Changes in Packaging and Delivery
+        12.5.2. Security
+        12.5.3. Networking
+        12.5.4. Cross Architecture Information
+
+    12.6. AMD64/Intel64 64-Bit (x86_64) and Intel/AMD 32-Bit (x86) Specific
+        Information
+
+        12.6.1. Support of new Intel processors
+        12.6.2. Generic support for the PCI Express Gen3
+        12.6.3. Support for new Intel? Platforms
+        12.6.4. Support for Intel? Trusted Execution Technology (TXT)
+        12.6.5. System and Vendor Specific Information
+        12.6.6. Virtualization
+        12.6.7. RAS
+
+    12.7. Intel Itanium (ia64) Specific Information
+    12.8. POWER (ppc64) Specific Information
+
+        12.8.1. Suspend and Resume Support
+        12.8.2. Capture Oops and Panic Reports to NVRAM
+        12.8.3. Page Hinting for Active Memory Deduplication
+        12.8.4. IBM Power Virtual Fibre Channel Driver Update
+        12.8.5. ITrace Package Removed
+        12.8.6. IBM Power Virtual Ethernet Driver Update
+        12.8.7. IBM Power Shared Storage Pools
+
+    12.9. System z (s390x) Specific Information
+
+        12.9.1. Libdfp updated to version 1.0.7
+        12.9.2. Suspend to Disk for System z
+        12.9.3. Hardware
+        12.9.4. Virtualization
+        12.9.5. Storage
+        12.9.6. Network
+        12.9.7. Security
+        12.9.8. RAS
+        12.9.9. Performance
+        12.9.10. Miscellaneous
+
+13. Resolved Issues
+14. Technical Information
+
+    14.1. Kernel Limits
+
+        14.1.1. Howto Run Applications that Do Not Recognize Linux Kernel
+            3.0 as Valid and Require Kernel 2.6 Instead
+
+    14.2. KVM Limits
+    14.3. Xen Limits
+    14.4. File Systems
+
+        14.4.1. Support for the btrfs File System
+
+    14.5. Kernel Modules
+    14.6. IPv6 Implementation and Compliance
+    14.7. Other Technical Information
+
+        14.7.1. Storing Log Files on the tmpfs File System Is Unsupported
+        14.7.2. libica 2.0.2 is available in SLES 11 SP2 for s390x
+            customers
+        14.7.3. Yast support for layer 2 devices
+        14.7.4. Changes to Network Setup
+        14.7.5. Memory cgroups
+        14.7.6. MCELog
+        14.7.7. Locale Settings in ~/.i18n
+        14.7.8. Configuration of kdump
+        14.7.9. Configuring Authentication for kdump through YaST with ssh/
+            scp as Target
+        14.7.10. JPackage Standard for Java Packages
+        14.7.11. Pulseaudio
+        14.7.12. Stopping Cron Status Messages
+
+15. Documentation and Other Information
+
+    15.1. AutoYaST Documentation
+
+16. Legal Notices
+
+Chapter 1. SUSE Linux Enterprise Server
+
+SUSE Linux Enterprise Server is a highly reliable, scalable, and secure
+server operating system, built to power mission-critical workloads in both
+physical and virtual environments. It is an affordable, interoperable, and
+manageable open source foundation. With it, enterprises can
+cost-effectively deliver core business services, enable secure networks,
+and simplify the management of their heterogeneous IT infrastructure,
+maximizing efficiency and value.
+
+The only enterprise Linux recommended by Microsoft and SAP, SUSE Linux
+Enterprise Server is optimized to deliver high-performance mission-critical
+services, as well as edge of network, and web infrastructure workloads.
+
+Designed for interoperability, SUSE Linux Enterprise Server lives in
+classical Unix as well as Windows environments, supports open standard CIM
+interfaces for systems management, and has been certified for IPv6
+compatibility,
+
+This modular, general purpose operating system runs on five processor
+architectures and is available with optional extensions that provide
+advanced capabilities fortasks such as real time computing and high
+availability clustering.
+
+SUSE Linux Enterprise Server is optimized to run as a high performance
+guest on leading hypervisors and supports an unlimited number of virtual
+machines per physical system with a single subscription, making it the
+perfect guest operating system for virtual computing.
+
+SUSE Linux Enterprise Server is backed by award-winning support from SUSE,
+an established technology leader with a proven history of delivering
+enterprise-quality support services.
+
+With the release of SUSE Linux Enterprise Server 11 Service Pack 2 the
+former SUSE Linux Enterprise Server 11 Service Pack 1 enters the 6 months
+migration window, during which time SUSE will continue to provide security
+updates and full support to maintain its customers' operations safe. At the
+end of the six-month parallel support period, on 2012-08-31, support for
+SUSE Linux Enterprise Server 11 Service Pack 1 will be discontinued. Long
+Term Service Pack Support (LTSS) for SUSE Linux Enterprise Server 11
+Service Pack 1 is available as a separate option.
+
+Chapter 2. Read Me First
+
+Users upgrading from a previous SUSE Linux Enterprise Server release are
+recommended to take a look at the following topics:
+
+  * Chapter 3, Support Statement for SUSE Linux Enterprise Server
+
+  * Chapter 10, Update-Related Notes
+
+  * Chapter 14, Technical Information
+
+These Release Notes are identical across all architectures, and the most
+recent version is always available online at http://www.suse.com/
+releasenotes/.
+
+Chapter 3. Support Statement for SUSE Linux Enterprise Server
+
+To receive support, customers need an appropriate subscription with SUSE;
+for more information, see http://www.suse.com/products/server/
+services-and-support/.
+
+3.1. General Support Statement
+
+The following definitions apply:
+
+  * L1: Installation and problem determination, which means technical
+    support designed to provide compatibility information, installation
+    configuration assistance, usage support, on-going maintenance and basic
+    troubleshooting. Level 1 Support is not intended to correct product
+    defect errors.
+
+  * L2: Reproduction and isolation of problem, which means technical
+    support designed to duplicate customer problems, isolate problem area
+    and potential issues, and provide resolution for problems not resolved
+    by Level 1 Support.
+
+  * L3: Code debugging and problem resolution, which means technical
+    support designed to resolve complex problems by engaging engineering in
+    patch provision, and resolution of product defects which have been
+    identified by Level 2 Support.
+
+For contracted customers and partners, SUSE Linux Enterprise Server 11 will
+be delivered with L3 support for all packages, except the following:
+
+  * technology previews;
+
+  * sounds, graphics, fonts and artwork;
+
+  * packages, which require an additional customer contract;
+
+  * packages on the Software Development Kit (SDK).
+
+SUSE will only support the usage of original (e.g., unchanged or
+un-recompiled) packages.
+
+3.1.1. Tomcat6 and Related Packages
+
+Tomcat6 and related packages are fully supported on the Intel/AMD x86
+(32bit), AMD64/Intel64, IBM POWER, and IBM System z architectures.
+
+3.1.2. SELinux
+
+The SELinux subsystem is supported. Arbitrary SELinux policies running on
+SLES are not supported, though. Customers and Partners who have an interest
+in using SELinux in their solutions, are encouraged to contact SUSE to
+evaluate the level of support that is needed, and how support and services
+for the specific SELinux policies will be granted.
+
+3.2. Software Requiring Specific Contracts
+
+The following packages require additional support contracts to be obtained
+by the customer in order to receive full support:
+
+  * BEA Java (Itanium only)
+
+  * MySQL Database
+
+  * PostgreSQL Database
+
+  * WebSphere CE Application Server
+
+3.3. Technology Previews
+
+Technology previews are packages, stacks, or features delivered by SUSE.
+These features are not supported. They may be functionally incomplete,
+unstable or in other ways not suitable for production use. They are mainly
+included for customer convenience and give customers a chance to test new
+technologies within an enterprise environment.
+
+Whether a technical preview will be moved to a fully supported package
+later, depends on customer and market feedback. A technical preview does
+not automatically result in support at a later point in time. Technical
+previews could be dropped at any time and SUSE is not committed to provide
+a technical preview later in the product cycle.
+
+Please, give your SUSE representative feedback, including your experience
+and use case. Alternatively, use the Novell Requirements Portal at http://
+www.novell.com/rms.
+
+  * Hot-Add Memory
+
+    Hot-add memory is currently only supported on the following hardware:
+
+      o IBM eServer xSeries x260, single node x460, x3800, x3850, single
+        node x3950,
+
+      o certified systems based on recent Intel Xeon Architecture,
+
+      o certified systems based on recent Intel IPF Architecture,
+
+      o all IBM servers and blades with POWER5, POWER6, or POWER7
+        processors and recent firmware.
+
+    If your specific machine is not listed, please call SUSE support to
+    confirm whether or not your machine has been successfully tested. Also,
+    regularly check our maintenance update information, which will
+    explicitly mention the general availability of this feature.
+
+    Restriction on using IBM eHCA InfiniBand adapters in conjunction with
+    hot-add memory on IBM System p:
+
+    The current eHCA Device Driver will prevent dynamic memory operations
+    on a partition as long as the driver is loaded. If the driver is
+    unloaded prior to the operation and then loaded again afterwards,
+    adapter initialization may fail. A Partition Shutdown / Activate
+    sequence on the HMC may be needed to recover from this situation.
+
+  * Internet Storage Naming Service (iSNS)
+
+    The Internet Storage Naming Service (iSNS) package is by design
+    suitable for secure internal networks only. SUSE will continue to work
+    with the community on improving security.
+
+  * Read-Only Root File System
+
+    It is possible to run SUSE Linux Enterprise Server 11 on a shared
+    read-only root file system. A read-only root setup consists of the
+    read-only root file system, a scratch and a state file system. The /etc
+    /rwtab file defines which files and directories on the read-only root
+    file system are replaced by which files on the state and scratch file
+    systems for each system instance.
+
+    The readonlyroot kernel command line option enables read-only root
+    mode; the state= and scratch= kernel command line options determine the
+    devices on which the state and scratch file systems are located.
+
+    In order to set up a system with a read-only root file system, set up a
+    scratch file system, set up a file system to use for storing persistent
+    per-instance state, adjust /etc/rwtab as needed, add the appropriate
+    kernel command line options to your boot loader configuration, replace
+    /etc/mtab with a symlink to /proc/mounts as described below, and (re)
+    boot the system.
+
+    To replace /etc/mtab with the appropriate symlinks, call:
+
+    ln -sf /proc/mounts /etc/mtab
+
+    See the rwtab(5) manual page for further details and http://
+    www.redbooks.ibm.com/abstracts/redp4322.html for limitations on System
+    z.
+
+3.3.1. Limit the Linux Kernel's page cache
+
+The Linux Kernel swaps out rarely accessed memory pages in order to use
+freed memory pages as cache to speed up file-system operations, for
+instance during backup operations.
+
+Some Enterprise applications, such as SAP solutions, use large amounts of
+memory for accelerated access to business data. Parts of this memory are
+very seldom accessed. When a user request then needs to access paged out
+memory, the response time is poor - being even worse, when a SAP solution
+running on Java incurs a Java garbage collection. The system starts heavy
+page-in (disc I/O) activity and incurs poor response time for an extended
+period of time.
+
+The pagecache_limit feature is a technology preview in SUSE Linux
+Enterprise Server 11 SP1 and SP2, and only supported for SUSE Linux
+Enterprise Server for SAP Applications 11 SP1 and later.
+
+For SUSE Linux Enterprise Server 12 we expect an upstream solution based on
+Control Groups.
+
+Chapter 4. Miscellaneous
+
+4.1. Disable cpuplugd by default
+
+cpuplugd is supposed to optimize the processor utilization if the workload
+does not need the full capacity. The latest Linux scheduler is optimized to
+achieve the same result without the cost intensive operation of CPU plug
+and unplug. If the use case is not fully exploited, it is advisable to
+disable the cpuplugd by default.
+
+4.2. Extend and improve zFCP trace utilities
+
+I/O statistics gathering are essential tools for performance analysis and
+problem determination. Various parts of the infrastructure have been
+improved to allow better serviceability by introducing enhanced trace
+support for FCP.
+
+4.3. IPv6 support for qetharp tool
+
+This feature adds IPv6 support to the qetharp tool for inspection and
+modification of the ARP cache of OSA cards or HiperSockets (real and
+virtual) operated in layer 3 mode.
+
+4.4. Safely start getty through init
+
+This feature integrates a new tool 'ttyrun', which safely starts getty
+programs and prevents re-spawns through the init program if a terminal is
+not available. This is very useful when integrated in inittab. Depending on
+your setup, Linux on System z might or might not provide a particular
+terminal or console.
+
+Chapter 5. Installation
+
+5.1. Map network interface names to the names written on the chassis
+(biosdevname)
+
+This feature addresses the issue of eth0 does not map to em1 as labeled on
+server chassis when a server has multiple network adapters.
+
+This issue is solved for Dell hardware, which has the corresponding BIOS
+support, by renaming onboard network interfaces to em[1234], which maps to
+Embedded NIC[1234] as labeled on server chassis. (em stands for
+ethernet-on-motherboard.)
+
+The renaming will be done by using the biosdevname utility.
+
+biosdevname is automatically installed and used if YaST2 detects hardware
+suitable to be used with biosdevname. biosdevname can be disabled during
+installation by using "biosdevname=0" on the kernel commandline. The usage
+of biosdevname can be enforced on every hardware with "biosdevname=1". If
+the BIOS has no support, no network interface names are renamed.
+
+5.2. Amazon EC2 Availability
+
+SUSE Linux Enterprise Server 11 SP2 is available immediately for use on
+Amazon Web Services EC2. For more information about Amazon EC2 Running SUSE
+Linux Enterprise Server, please visit http://aws.amazon.com/suse
+
+5.3. Deployment
+
+SUSE Linux Enterprise Server can be deployed in three ways:
+
+  * Physical Machine,
+
+  * Virtual Host,
+
+  * Virtual Machine in paravirtualized environments.
+
+5.4. CJK Languages Support in Text-mode Installation
+
+CJK (Chinese, Japanese, and Korean) languages do not work properly during
+text-mode installation if the framebuffer is not used (Text Mode selected
+in boot loader).
+
+There are three alternatives to resolve this issue:
+
+ 1. Use English or some other non-CJK language for installation then switch
+    to the CJK language later on a running system using
+    YaST+System+Language.
+
+ 2. Use your CJK language during installation, but do not choose Text Mode
+    in the boot loader using F3 Video Mode. Select one of the other VGA
+    modes instead. Select the CJK language of your choice using F2
+    Language, add textmode=1 to the boot loader command-line and start the
+    installation.
+
+ 3. Use graphical installation (or install remotely via SSH or VNC).
+
+5.5. Booting from Harddisks larger than 2 TiB in Non-UEFI Mode
+
+Booting from harddisks larger than 2 TiB in non-UEFI mode (but with GPT
+partition table) fails.
+
+To successfully use harddisks larger than 2 TiB in non-UEFI mode, but with
+GPT partition table (i.e., grub bootloader), consider one of the following
+options:
+
+  * Use a 4k sector harddisk in 4k mode (in this case, the 2 TiB limit will
+    become a 16 TiB limit).
+
+  * Use a separate /boot partition. This partition must be one of the first
+    3 partitions and end below the 2 TiB limit.
+
+  * Switch from legacy mode to UEFI mode, if this is an option for you.
+
+5.6. Installation Using Persistent Device Names
+
+The installer uses persistent device names by default. If you plan to add
+storage devices to your system after the installation, we strongly
+recommend you use persistent device names for all storage devices.
+
+To switch to persistent device names on a system that has already been
+installed, start the YaST2 partitioner. For each partition, select Edit and
+go to the Fstab Options dialog. Any mount option except Device name
+provides you persistent device names. In addition, rerun the Boot Loader
+module in YaST and select Propose New Config to switch the boot loader to
+using the persistent device name, or manually adjust all boot loader
+sections. Then select Finish to write the new proposed configuration to
+disk. Alternatively, edit /boot/grub/menu.lst and /boot/grub/device.map
+according to your needs.
+
+This needs to be done before adding new storage devices.
+
+For further information, see the ?Storage Administration Guide? about
+"Device Name Persistence".
+
+5.7. Using qla3xxx and qla4xxx Drivers at the Same Time
+
+QLogic iSCSI Expansion Card for IBM BladeCenter provides both Ethernet and
+iSCSI functions. Some parts on the card are shared by both functions. The
+current qla3xxx (Ethernet) and qla4xxx (iSCSI) drivers support Ethernet and
+iSCSI function individually. They do not support using both functions at
+the same time. Simultaneous use of both Ethernet and iSCSI functions may
+cause the device to hang with possible data loss and file system
+corruptions on iSCSI devices or network disruptions on Ethernet.
+
+Boot the installation with brokenmodules=qla3xxx or brokenmodules=qla4xxx
+to prevent one of the drivers from loading.
+
+5.8. Using iSCSI Disks when Installing
+
+To use iSCSI disks during installation, add the following parameter to the
+boot option line: withiscsi=1.
+
+During installation, an additional screen provides the option to attach
+iSCSI disks to the system and use them in the installation process.
+
+Booting from an iSCSI server on i386, x86_64 and ppc64 is supported if
+iSCSI-enabled firmware is used.
+
+5.9. Using EDD Information for Storage Device Identification
+
+EDD information (in /sys/firmware/edd/<device>) is used by default to
+identify your storage devices.
+
+EDD Requirements:
+
+  * BIOS provides full EDD information (found in /sys/firmware/edd/
+    <device>)
+
+  * Disks are signed with a unique MBR signature (found in /sys/firmware/
+    edd/<device>/mbr_signature).
+
+Add edd=off to the kernel parameters to disable EDD.
+
+5.10. Automatic Installation with AutoYaST in an LPAR (System z)
+
+For automatic installation with AutoYaST in an LPAR, the parmfile used for
+such an installation must have blank characters at the beginning and at the
+end of each line (the first line does not need to start with a blank). The
+number of characters in one line should not exceed 80.
+
+5.11. Adding DASD or zFCP Disks During Installation (System z)
+
+Adding of DASD or zFCP disks is not only possible during the installation
+workflow, but also when the installation proposal is shown. To add disks at
+this stage, please click on the Expert tab and scroll down. There the DASD
+and/or zFCP entry is shown. These added disks are not displayed in the
+partitioner automatically. To make the disks visible in the partitioner,
+you have to click on Expert and select reread partition table. This may
+reset any previously entered information.
+
+5.12. Network Installation via eHEA on POWER
+
+If you want to carry out a network installation via the IBM eHEA Ethernet
+Adapter on POWER systems, no huge (16GB) pages may be assigned to the
+partition during installation.
+
+5.13. For More Information
+
+For more information, see Chapter 12, Infrastructure, Package and
+Architecture Specific Information.
+
+Chapter 6. Features and Versions
+
+6.1. Linux Kernel and Toolchain
+
+  * GCC 4.3.4
+
+  * glibc 2.11.1
+
+  * Linux kernel 3.0.10
+
+  * perl 5.10
+
+  * php 5.2.6
+
+  * python 2.6.0
+
+  * ruby 1.8.7
+
+6.1.1. Transparent Huge Pages (THP) Support
+
+On systems with large memory, frequent access to the Translation Lookaside
+Buffer (TLB) may slow down the system significantly.
+
+Transparent huge pages thus are of most use on systems with very large
+(128GB or more) memory, and help to drive performance. In SUSE Linux
+Enterprise, THP is enabled by default where it is expected to give a
+performance boost to a large number of workloads.
+
+There are cases where THP may regress performance, particularly when under
+memory pressure due to pages being reclaimed in an effort to promote to
+huge pages. It is also possible that performance will suffer on CPUs with a
+limited number of huge page TLB entries for workloads that sparsely
+reference large amounts of memory. If necessary, THP can be disabled via
+the sysfs file "/sys/kernel/mm/transparent_hugepage/enabled", which accepts
+one of the values "always", "madvise", or "never".
+
+To disable THP via sysfs and confirm it is disabled, do the following as
+root:
+
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+cat /sys/kernel/mm/transparent_hugepage/enabled
+always madvise [never]
+
+6.1.2. CFS Bandwidth Control (aka CPU Hard Limits)
+
+  * Limiting the maximum CPU usage of a group or VM and ensuring that user
+    is not provided more CPU resource than what he has paid for.
+
+  * Providing consistent and repeatable VM performance in a Cloud
+    environment.
+
+CFS bandwidth control can be used to set a hard limit on the CPU usage of a
+group or VM. With this it becomes possible to limit a group's or VM's
+maximum CPU usage to say 0.5CPU or 2CPUs. The bandwidth is specified as
+quota/period where a group will not be allowed to consume more than 'quota'
+milliseconds worth of CPU time in every 'period' interval. If a group or
+VM's CPU usage exceeds the limit, it will be throttled until the time its
+quota gets refreshed.
+
+6.2. Server
+
+Note: in the following text version numbers do not necessarily give the
+final patch- and security-status of an application, as SUSE may have added
+additional patches to the specific version of an application.
+
+6.2.1. Support for Tomcat Servlet Container
+
+In SUSE Linux Enterprise 11 Service Pack 1 and earlier releases, the Tomcat
+servlet container has been provided as part of the Software Development
+Kit. We learned that our customers demand full runtime support for this
+infrastructure.
+
+Starting with SUSE Linux Enterprise Server 11 Service Pack2, Tomcat6 and
+related packages are part of the Server product. Based on customer and
+partner feedback we fully support this on the architectures Intel/AMD x86
+(32bit), AMD64/Intel64, IBM POWER, IBM System z.
+
+The following packages are affected: tomcat6, tomcat6-servlet-2_5-api,
+tomcat6-webapps, tomcat6-docs-webapp, tomcat6-admin-webapps, tomcat6-lib,
+tomcat6-jsp-2_1-api, libtcnative-1-0, apache2-mod_jk,
+jakarta-taglibs-standard, jakarta-commons-collections,
+jakarta-commons-dbcp, jakarta-commons-pool, jakarta-commons-httpclient3,
+jakarta-commons-beanutils, jakarta-commons-codec,
+jakarta-commons-collections, jakarta-commons-collections-tomcat5,
+jakarta-commons-daemon, jakarta-commons-dbcp-tomcat5,
+jakarta-commons-digester, jakarta-commons-discovery, jakarta-commons-el,
+jakarta-commons-fileupload, jakarta-commons-io, jakarta-commons-lang,
+jakarta-commons-launcher, jakarta-commons-logging, jakarta-commons-modeler,
+jakarta-commons-pool-tomcat5, jakarta-commons-validator, tomcat6-javadoc,
+jakarta-taglibs-standard-javadoc, jakarta-commons-*-javadoc,
+tomcat_apparmor, ant, ant-junit, ant-trax, and mx4j.
+
+6.2.2. HPLIP Version Upgrade
+
+With the changes in the printer market that have happened since SUSE Linux
+Enterprise 11 SP1 was released, it is highly probable that parts of HPLIP
+are outdated.
+
+The version upgrade to HPLIP version 3.11.5 keeps SUSE Linux Enterprise 11
+SP2 up-to-date regarding to HP printer and all-in-one devices.
+
+6.2.3. Virtual Hosting: Supporting Multiple SSL Based Domains on One IP
+Address through Server Name Indication (SNI)
+
+Having multiple domains residing in virtual hosts, only the first domain
+can be served for secure Web browsing. Other domains are prevented from
+using secure communications. Many servers in virtual hosting environments
+circumvent this by using a wrong certificate, which causes the browser to
+warn the user.
+
+An extension to TLS called Server Name Indication (SNI) addresses this
+issue by sending the name of the virtual domain as part of the TLS
+negotiation.This enables the server to "switch" to the correct virtual
+domain early and present the browser with the certificate containing the
+correct CN. Apache version 2.2.12 has server support for SNI extension.
+
+6.3. Desktop
+
+  * GNOME 2.28
+
+    GNOME was updated and uses PulseAudio for sound.
+
+  * KDE 4.3.5
+
+    KDE was updated.
+
+  * X.org 7.4
+
+6.4. Security
+
+6.4.1. Stricter SSL Certificate Checks for LDAP Clients
+
+With SP2 LDAP clients default to a stricter default setting for certificate
+verification. For that to work correctly, the CA certificate used to sign
+the LDAP server's certificate needs to be available on the client's file
+system. The YaST LDAP client module was enhanced to provide a way to
+download the CA certificate from a URL or to configure a file or directory
+from which the LDAP client should load the CA certificate.
+
+When updating from an SP1 system, this settings is not enabled
+automatically. To enable it, start the YaST LDAP client configuration
+wizard and configure a valid CA certificate to verify your LDAP server's
+certificate. Then make sure that /etc/openldap/ldap.conf either contains no
+TLS_REQCERT setting or set it to "demand" or "hard".
+
+For details, see the ldap.conf(5) man page.
+
+6.4.2. Managing Access Control Lists over NFSv4
+
+There is no single standard for Access Control Lists (ACL) in Linux and
+Unix beyond the simple user/group/others-rwx flags. One option for finer
+control are so-called "Draft Posix ACLs", which were never formally
+standardized by Posix. Another is the NFSv4 ACLs, which were designed to be
+part of the NFSv4 network file system with the goal of making something
+that provided reasonable compatibility between Posix systems (like Linux)
+and WIN32 systems (like Microsoft Windows).
+
+It turned out that NFSv4 ACLs are not sufficient to correctly implement
+Draft Posix ACLs. Thus no attempt has been made to map ACL accesses on an
+NFSv4 client (using e.g. setfacl ).
+
+Therefore, when using NFSv4, Draft Posix ACLs cannot be used even in
+emulation. NFSv4 ACLs need to be used directly; i.e., while setfacl can
+work on NFSv3, it cannot work on NFSv4.
+
+To allow NFSv4 ACLs to be used on an NFSv4 file system we provide the
+"nfs4-acl-tools" package, which contains:
+
+  * nfs4_getfacl
+
+  * nfs4_setfacl
+
+  * nfs4_editfacl
+
+These operate in a generally similar way to getfacl and setfacl for
+examining and modifying NFSv4 ACLs.
+
+Note: This can only be effective if the file system on the NFS server
+provides full support for NFSv4 ACLs. Any limitation imposed by the server
+will affect programs running on the client in that some particular
+combinations of Access Control Entries (ACEs) may not be possible.
+
+A future release of Linux may support "richacls", which are designed to
+provide access to NFSv4 ACLs in a way that is more integrated with other
+file sytems. If and when these become available, we will need to transition
+from using nfs4-acl-tools towards support tools coming with "richacls".
+
+6.4.3. Added System Security Services Daemon (sssd) for LDAP/Kerberos
+Authentication
+
+The System Security Services Daemon (sssd) was added to SLE 11 SP2 to
+provide an alternative method to retrieve user and group information from
+LDAP directories and to perform authentication through LDAP or Kerberos. It
+is provided as an alternative to the nss_ldap and pam_ldap (or pam_krb5)
+Modules. Compared to those modules sssd offers some advantages:
+
+  * due to it's daemon based architecture possible symbol conflicts between
+    different implementations of LDAP client libraries can be avoided
+
+  * offline authentication is supported (disabled by default)
+
+  * builtin support for Kerberos Authentication (no separate PAM module
+    needed)
+
+With SLE 11 SP2 the YaST2 ldap-client module can be used to setup sssd for
+LDAP (and/or Kerberos) Authentication. The YaST to ldap-client module can
+also be used to switch from a nss_ldap/pam_ldap based setup to sssd and
+back.
+
+Some additional notes:
+
+  * sssd requires a Transport Layer Encryption to be in place when using
+    LDAP based authentication (e.g., LDAPS or StartTLS),
+
+  * sssd does currently only support the passwd, shadow and group NSS
+    databases
+
+6.4.4. Activating DKIM Support
+
+After a new installation of SLES-11-SP2 this new feature is enabled when
+the mail system was configured with using amavis.
+
+Updating from SLES-11-SP1 this feature must be enabled by editing /etc/mail
+/spamassassin/v312.pre . The comment sign # must be removed from the last
+line:
+
+before:
+
+#loadplugin Mail::SpamAssassin::Plugin::DKIM
+
+after:
+
+loadplugin Mail::SpamAssassin::Plugin::DKIM
+
+6.4.5. openSSH with Cryptographic Hardware Acceleration
+
+openSSH now makes use of cryptographic hardware acceleration. As a result,
+the transfer of large quantities of data through a ssh connection is
+considerably faster. As an additional benefit, the CPU of the system with
+cryptographic hardware will see a significant reduction in load.
+
+6.4.6. PAM Configuration
+
+The common PAM configuration files (/etc/pam.d/common-*) are now created
+and managed with pam-config.
+
+6.4.7. SELinux Enablement
+
+In addition to AppArmor, SELinux capabilities have been added to SUSE Linux
+Enterprise Server. While these capabilities are not enabled by default,
+customers can run SELinux with SUSE Linux Enterprise Server if they choose
+to.
+
+What does SELinux enablement mean?
+
+  * The kernel ships with SELinux support.
+
+  * We will apply SELinux patches to all ?common? userland packages.
+
+  * The libraries required for SELinux (libselinux, libsepol, libsemanage,
+    etc.) have been added to openSUSE and SUSE Linux Enterprise.
+
+  * Quality Assurance is performed with SELinux disabled?to make sure that
+    SELinux patches do not break the default delivery and the majority of
+    packages.
+
+  * The SELinux specific tools are shipped as part of the default
+    distribution delivery.
+
+  * Arbitrary SELinux policies running on SLES are not supported, though,
+    and we will not be shipping any SELinux policies in the distribution.
+    Reference and minimal policies may be available from the repositories
+    at some future point.
+
+  * Customers and Partners who have an interest in using SELinux in their
+    solutions, are encouraged to contact SUSE to evaluate the level of
+    support that is needed, and how support and services for the specific
+    SELinux policies will be granted.
+
+By enabling SELinux in our codebase, we add community code to offer
+customers the option to use SELinux without replacing significant parts of
+the distribution.
+
+6.4.8. Enablement for TPM/Trusted Computing
+
+SUSE Linux Enterprise Server 11 comes with support for Trusted Computing
+technology. To enable your system's TPM chip, make sure that the "security
+chip" option in your BIOS is selected. TPM support is entirely passive,
+meaning that measurements are being performed, but no action is taken based
+on any TPM-related activity. TPM chips manufactured by Infineon, NSC and
+Atmel are supported, in addition to the virtual TPM device for Xen.
+
+The corresponding kernel drivers are not loaded automatically. To do so,
+enter:
+
+find /lib/modules -type f -name "tpm*.ko"
+
+and load the kernel modules for your system manually or via
+MODULES_LOADED_ON_BOOT in /etc/sysconfig/kernel.
+
+If your TPM chip with taken ownership is configured in Linux and available
+for use, you may read PCRs from /sys/devices/*/*/pcrs.
+
+The tpm-tools package contains utilities to administer your TPM chip, and
+the trousers package provides tcsd?the daemon that allows userland programs
+to communicate with the TPM driver in the Linux kernel. tcsd can be enabled
+as a service for the runlevels of your choice.
+
+To implement a trusted ("measured") boot path, use the package trustedgrub
+instead of the grub package as your bootloader. The trustedgrub bootloader
+does not display any graphical representation of a boot menu for
+informational reasons.
+
+6.4.9. Linux File System Capabilities
+
+Our kernel is compiled with support for Linux File System Capabilities.
+This is disabled by default. The feature can be enabled by adding file_caps
+=1 as kernel boot option.
+
+6.5. Network
+
+IPv6 Improvements
+
+    SUSE Linux Enterprise Server has successfully completed the USGv6 test
+    program designated by NIST that provides a proof of compliance to IPv6
+    specifications outlined in current industry standards for common
+    network products.
+
+    Being IPv6 Consortium Member and Contributor Novell/SUSE have worked
+    successfully with University of New Hampshire InterOperability
+    Laboratory (UNH-IOL) to verify compliance to IPv6 specifications. The
+    UNH-IOL offers ISO/IEC 17025 accredited testing designed specifically
+    for the USGv6 test program. The devices that have successfully
+    completed the USGv6 testing at the UNH-IOL by March 2012 are SUSE Linux
+    Enterprise Server 11 SP1. Testing for subsequent releases of SUSE Linux
+    Enterprise Server is in progress, and current and future results will
+    be listed at http://www.iol.unh.edu/services/testing/ipv6/
+    usgv6tested.php?company=105&type=#eqplist.
+
+    SUSE Linux Enterprise Server can be installed in an IPv6 environment
+    and run IPv6 applications. When installing via network, do not forget
+    to boot with "ipv6=1" (accept v4 and v6) or "ipv6only=1" (only v6) on
+    the kernel command line. For more information, see the Deployment Guide
+    and also Section 14.6, ?IPv6 Implementation and Compliance?.
+
+10G Networking Capabilities
+
+OFED 1.5
+
+traceroute 1.2
+
+    Support for traceroute over TCP.
+
+FCoE
+
+    FCoE is an implementation of the Fibre Channel over Ethernet working
+    draft. Fibre Channel over Ethernet is the encapsulation of Fibre
+    Channel frames in Ethernet packets. It allows users with a FCF (Fibre
+    Channel over Ethernet Forwarder) to access their existing Fibre Channel
+    storage using an Ethernet adapter. When leveraging DCB's PFC technology
+    to provide a loss-less environment, FCoE can run SAN and LAN traffic
+    over the same link.
+
+Data Center Bridging (DCB)
+
+    Data Center Bridging (DCB) is a collection of Ethernet enhancements
+    designed to allow network traffic with differing requirements (e.g.,
+    highly reliable, no drops vs. best effort vs. low latency) to operate
+    and coexist on Ethernet. Current DCB features are:
+
+      * Enhanced Transmission Selection (aka Priority Grouping) to provide
+        a framework for assigning bandwidth guarantees to traffic classes.
+
+      * Priority-based Flow Control (PFC) provides a flow control mechanism
+        which can work independently for each 802.1p priority.
+
+      * Congestion Notification provides a mechanism for end-to-end
+        congestion control for protocols, which do not have built-in
+        congestion management.
+
+6.5.1. YaST GUI tool available to configure FCoE capable network interfaces
+
+The YaST module "FCoE Client Configuration" is a tool to configure FCoE
+capable network interfaces. During the installation workflow the FCoE
+configuration can be started on 'Disk Activation' screen. The FCoE
+interface can be configured and the connected disk will be available for
+installation.
+
+The FCoE configuration should be automatically offered if the BIOS has
+activated FCoE. If not, add "withfcoe=1" to the kernel command line.
+
+6.5.2. Map network interface names to the names written on the chassis
+(biosdevname)
+
+This feature addresses the issue of eth0 does not map to em1 as labeled on
+server chassis when a server has multiple network adapters.
+
+This issue is solved for Dell hardware, which has the corresponding BIOS
+support, by renaming onboard network interfaces to em[1234], which maps to
+Embedded NIC[1234] as labeled on server chassis. (em stands for
+ethernet-on-motherboard.)
+
+The renaming will be done by using the biosdevname utility.
+
+biosdevname is automatically installed and used if YaST2 detects hardware
+suitable to be used with biosdevname. biosdevname can be disabled during
+installation by using "biosdevname=0" on the kernel commandline. The usage
+of biosdevname can be enforced on every hardware with "biosdevname=1". If
+the BIOS has no support, no network interface names are renamed.
+
+6.6. Resource Management
+
+6.6.1. OS level virtualization: Linux Container (LXC)
+
+SUSE Linux Enterprise Server 11 SP2 supports "system containers" with the
+LXC (LinuX Container) infrastructure to achieve soft partitioning of large
+physical systems. In this infrastructure, instances of SLES 11 SP2 run
+within a host instance of SLES 11 SP2. In other words: other than with a
+hypervisor, all instances share one Linux Kernel, every instance has its
+own "init" process though.
+
+While the host system has access to the guest instances and their
+filesystem, the guest instances do not see the host or the other guests
+other than via network or explicitly share storage (if configured). Thus,
+Linux Containers should not be used as the primary or only security measure
+around or inbetween highly secure environments.
+
+More information about LXC can be found in the SUSE Linux Enterprise 11
+documentation.
+
+6.7. Systems Management
+
+  * Improved Update Stack
+
+    SUSE Linux Enterprise Server 11 provides an improved update stack and
+    the new command line tool zypper to manage the repositories and install
+    or update packages.
+
+  * Enhanced YaST Partitioner
+
+  * Extended Built-in Management Infrastructure
+
+    SUSE Linux Enterprise Server provides CIM/WBEM enablement with the SFCB
+    CIMOM.
+
+    The following CIM providers are available:
+
+      o cmpi-pywbem-base
+
+      o cmpi-pywbem-power-management (DSP1027)
+
+      o cmpi-pywbem-software (DSP1023)
+
+      o libvirt-cim (DSP1041, DSP1043, DSP1045, DSP1057, DSP1059, DSP1076,
+        DSP1081)
+
+      o sblim-cmpi-base
+
+      o sblim-cmpi-dhcp
+
+      o sblim-cmpi-ethport_profile (DSP1014)
+
+      o sblim-cmpi-fsvol
+
+      o sblim-cmpi-network
+
+      o sblim-cmpi-nfsv3
+
+      o sblim-cmpi-nfsv4
+
+      o sblim-cmpi-sysfs
+
+      o sblim-gather-provider
+
+      o smis-providers
+
+      o sblim-cmpi-dns
+
+      o sblim-cmpi-samba
+
+      o sblim-cmpi-smbios
+
+  * Support for Web Services for Management (WS-Management)
+
+    The WS-Management protocol is supported via Openwsman, providing client
+    (package: openwsman-client) and server (package: openwsman-server)
+    implementations.
+
+    This allows for interoperable management with the Windows 'winrm'
+    stack.
+
+  * WebYaST ? Web-Based Remote Management
+
+    WebYaST is an easy to use, web-based administration tool targeted at
+    casual Linux administrators.
+
+    SUSE Linux Enterprise Server 11 SP2 adds WebYaST via an online software
+    repository. After successful registration you can install and start
+    WebYaST by following these steps:
+
+      o Enable online repositories:
+
+        zypper mr -e SLE11-WebYaST-SP2-Pool
+        zypper mr -e SLE11-WebYaST-SP2-Updates
+
+      o Install via pattern:
+
+        zypper in -t pattern WebYaST-UI WebYaST-Service
+
+      o Open firewall ports:
+
+        SuSEfirewall2 open EXT TCP 54984
+        SuSEfirewall2 restart
+
+      o Start services:
+
+        rccollectd start
+        rcyastws start
+        rcyastwc start
+
+    The last command will display the URL to connect to with a Web browser.
+
+6.8. Other
+
+EVMS2 Replaced with LVM2
+
+Default File System
+
+    With SUSE Linux Enterprise Server 11, the default file system in new
+    installations has been changed from ReiserFS to ext3. A public
+    statement can be found at http://www.suse.com/products/server/
+    technical-information/#FileSystem.
+
+UEFI Enablement on AMD64/Intel64
+
+Xen Boot Via Native-UEFI Not Supported
+
+SWAP over NFS
+
+Linux Foundation's Carrier Grade Linux (CGL)
+
+    SUSE supports the Linux Foundation's Carrier Grade Linux (CGL)
+    specification. SUSE Linux Enterprise 11 meets the latest CGL 4.0
+    standard, and is CGL registered. For more information, see http://
+    www.suse.com/products/server/cgl/.
+
+Hot-Add Memory and CPU with vSphere 4.1 or Newer
+
+    Hot-add memory and CPU is supported and tested for both 32-bit and
+    64-bit systems when running vSphere 4.1 or newer. For more information,
+    see the VMware Compatibility Guide at http://www.vmware.com/resources/
+    compatibility/detail.php?device_cat=software&device_id=11287~16&
+    release_id=24.
+
+6.8.1. Enhanced yast to support SCSI tape devices
+
+Support for SCSI tapes in yast for interactive handling. Udev rules are
+adjusted to make changes persistent in case of reboot.
+
+6.9. System z
+
+Additional information about the topics listed below, can be found at http:
+//www.ibm.com/developerworks/linux/linux390/documentation_novell_suse.html.
+
+6.9.1. Exploitation of new z196 / z114 processor instructions
+
+Performance improvement through exploitation of new System z196 processor
+instructions by binutils and alternate GCC on the SDK. This feature will be
+active when the GNU assembler is invoked with -march=z196.
+
+6.9.2. FICON IPL and device discovery hardening
+
+Improves the DASD error recovery procedures used in the early phases of IPL
+and DASD device initialization with additional error recovery procedures.
+
+6.9.3. Userspace handle to wait for cio pending work
+
+User space processes can delay I/O operations until all pending requests
+against the common I/O layer have been completed, eg. a user process wants
+to wait until a device is useable after a CP ATTACH command.
+
+6.9.4. Hardware
+
+  * System z optimizations for gcc
+
+  * Exploitation of z10 prefetching instructions
+
+  * 64-bit register support in 31-bit emulation
+
+  * zEnterprise z196/z114 exploitation in toolchain
+
+  * zEnterprise z196/z114 enhanced node affinity support
+
+  * zEnterprise z196/z114 optimized support with add-on gcc
+
+  * Performance indicator bytes
+
+  * Spinning mutex performance enhancement
+
+  * Get CPC name
+
+6.9.5. Virtualization
+
+  * cmsfs read and write support for kernel 2.6
+
+  * Deliver z/VM CP special messages to userspace using udev events
+    (uevents)
+
+  * Improve memory ballooning with cpuplugd
+
+  * snIPL support for z/VM 6
+
+6.9.6. Storage
+
+  * [FICON] DS8k support - Solid state device support
+
+  * [FICON] Dynamic PAV toleration
+
+  * [FICON] Multi-Track extensions for High Performance FICON
+
+  * Store I/O Operation Status and initiate logging (SIOSL)
+
+  * Automatic detection of read only DASDs
+
+  * Tunable default grace period for missing interrupts in DASD driver
+
+  * Access to raw ECKD data from Linux
+
+  * DASD Tools - implement new partition types
+
+6.9.7. Network
+
+  * Offload Outbound Checksumming to OSA within qeth driver
+
+  * Configuration tool for System z network devices
+
+  * OSX (OSM) chpids for hybrid data (management) network
+
+  * NAPI support for qeth and qdio
+
+  * Optimized Latency Mode (OLM) toleration
+
+  * IPv6 support for qetharp tool
+
+  * Support assisted VLAN null tagging support
+
+  * Optimal qeth default settings
+
+  * New communication infrastructure for HiperSockets
+
+6.9.8. Security
+
+  * zEnterprise z196/114: CP ACF exploitation ? in kernel crypto and libica
+
+  * zEnterprise z196/114: Support for 4096-bit RSA FastPath
+
+6.9.9. RAS
+
+  * [FICON] IPL & device discovery hardening
+
+  * cio: provide userspace handle to wait for pending work
+
+  * virtualtop for s390tools
+
+  * Valgrind - complete System z support
+
+  * Breaking-event-address for userspace programs
+
+  * reipl tool chreipl enhancements
+
+  * Calculate Boot Device Ramdisk Address in zipl
+
+  * Resume handling for re-ordered devices in cio layer
+
+  * CHPID reconfiguration handling
+
+  * Unit Check handling
+
+  * Automatic menu support in zipl
+
+  * [FICON] API & Tool to query DASD reservation status
+
+  * [FICON] Improve handling of stolen DASD reservation
+
+  * Removed support for multi-volume tape dumps
+
+  * Tool to safely start getty through init
+
+  * SCSI dump on remote container
+
+  * Handle channel path description changes in common I/O layer
+
+  * SCSI Dump Device Configuration via YaST
+
+  * Support blktrace in default kernel
+
+6.9.10. Web 2.0 Open Source Stack in SUSE Linux Enterprise Software
+Development Kit
+
+6.9.11. Functionality implemented in SUSE Linux Enterprise Server 11 (and
+SUSE Linux Enterprise Server 10 Service Pack 2.)
+
+  * AF_IUCV Support
+
+  * Provide Linux file system data into z/VM monitor stream
+
+  * Provide Linux process data into z/VM monitor stream
+
+  * System z support for processor degradation
+
+  * In-Kernel crypto exploitation of new CP Assist functions
+
+  * Linux CPU Node Affinity
+
+  * Support for OSA 2 Ports per CHPID
+
+  * cpuplugd to automatically adapt CPU and/or memory
+
+  * Dynamic CHPID reconfiguration via SCLP - tools
+
+  * skb scatter-gather support for large incoming messages - QETH
+    Exploitation
+
+  * Support for HiperSockets in Layer 2 mode (with IPv4 and IPv6)
+
+Chapter 7. Driver Updates
+
+7.1. Network Drivers
+
+  * Updated bnx driver to version 2.0.4
+
+  * Updated bnx2x driver to version 1.52.1-7
+
+  * Updated e100 driver to version 3.5.24-k2
+
+  * Updated tg3 driver to version 3.106
+
+  * Added bna driver for Brocade 10Gbit LAN card in version 2.1.2.1
+
+  * Updated bfa driver to version 2.1.2.1
+
+  * Updated qla3xxx driver to version 2.03.00-k5
+
+  * Updated sky2 driver to version 1.25
+
+7.1.1. ixgbe Driver Update to version 3.3.8
+
+This new ixgbe driver version adds support for the following devices:
+82599EB 10 Gigabit Network Connection 82599EB 10 Gigabit TN Network
+Connection X540-AT2 Ethernet Controller 10 Gigabit 82599 10 Gigabit Dual
+Port Backplane Connection with FCoE 82599 10 Gigabit Dual port Network
+Connection with FCoE 82599EB 10 Gigabit SFP+ Network Connection 82599 10
+Gigabit Dual Port Network Connection
+
+7.1.2. Added the ixgbevf Driver, Version 2.0.0
+
+This is a new virtual function driver added for SR-IOV support with the
+Intel ixgbe 10 Gigabit devices.
+
+7.1.3. igb Driver Update to version 3.0.6
+
+Added support for the following devices: 82580 Gigabit Network Connection
+82580 Gigabit Fiber Network Connection 82580 Gigabit Backplane Connection
+82580 Gigabit SFP Connection 82580 Gigabit Network Connection I350 Gigabit
+Network Connection I350 Gigabit Fiber Network Connection I350 Gigabit
+Backplane Connection I350 Gigabit Connection 82576 Gigabit Network
+Connection 82580 Gigabit Fiber Network Connection
+
+7.1.4. igbvf Driver Update to Version 1.0.8
+
+This Service Pack adds SR-IOV support for the Intel? I350 devices.
+
+7.1.5. e1000e Driver Update to version 1.3.16
+
+This new version of the e1000e driver adds support for the following
+devices: 82567LM Gigabit Network Connection 82574L Gigabit Network
+Connection 82567V-3 Gigabit Network Connection 82579LM Gigabit Network
+Connection 82579V Gigabit Network Connection 82583V Gigabit Network
+Connection 82567V-4 Gigabit Network Connection 82566DC-2 Gigabit Network
+Connection
+
+7.1.6. IBM Power Chelsio T4 Adapter cxgb4i Driver
+
+The Chelsio T4 adapter with the cxgb4, cxgb4i, and iw_cxgb4 drivers support
+10Ge NIC, iSCSI, and iWARP functions respectively. IBM Power systems
+support Enhanced Error Handling (EEH) and Hotplug removal. When hotplug
+operations are performed on a running adapter, a crash, hang or failure to
+remove the adapter may occur.
+
+A permanent solution in the device drivers is being investigated but may
+not be ready in time for GM. Until the maintenance driver is released, it
+is necessary to unload all of the cxgb4, cxgb4i, and iw_cxgb4 drivers prior
+to running any of the hotplug commands such as 'drmgr -r'.
+
+Once the drivers are unloaded, the adapter can be hotplug moved to another
+partition or removed from the system as necessary.
+
+7.1.7. Brocade 10G PCIe Ethernet Adapters (bna)
+
+The bna 3.0.2.2 driver supports all Brocade FC/FCOE adapters. Below is a
+list of adapter models with corresponding PCIIDs:
+
+PCIID                   Model
+
+1657:0014:1657:0014     1010 10Gbps single port CNA - LL
+1657:0014:1657:0014     1020 10Gbps dual port CNA - LL
+1657:0014:1657:0014     1007 10Gbps dual port CNA - LL
+1657:0014:1657:0014     1741 10Gbps dual port CNA - LL
+
+1657:0022:1657:0023     1860 10Gbps CNA - LL
+1657:0022:1657:0023     1860 10Gbps NIC - LL
+
+Firmware Download: The latest Firmware package for 3.0.2.2 bna driver can
+be found at: http://www.brocade.com/services-support/drivers-downloads/
+adapters/Linux.page and then click following respective util package link:
+Version Link v3.0.2.0 Linux Adapter Firmware package for RHEL 6.2, SLES
+11SP2
+
+Configuration and Management utility download: The latest driver
+configuration & management utility for 3.0.2.2 bna driver can be found at
+http://www.brocade.com/services-support/drivers-downloads/adapters/
+Linux.page and then click version v3.0.2.0, "Linux Adapter Util package for
+RHEL 6.2, SLES 11SP2".
+
+Documentation: The latest Administration's Guide, Installation and
+Reference Manual, Troubleshooting Guide, and Release Notes for the
+corresponding out-of-box driver can be found at http://www.brocade.com/
+services-support/drivers-downloads/adapters/Linux.page and use the
+following inbox and out-of-box driver version mapping to find the
+corresponding documentation:
+
+Inbox Version           Out-of-box Version
+
+v3.0.2.2                v3.0.0.0
+
+Support: For general product and support info, go to the Brocade website at
+http://www.brocade.com/services-support/index.page .
+
+7.2. Storage Drivers
+
+  * Updated qla2xxx to version 8.03.01.04.11.1-k8
+
+  * Updated qla4xxx to version v5.01.00.00.11.01-k13
+
+  * Updated megaraid_mbox driver to version 2.20.5.1
+
+  * Updated megaraid_sas to version 4.27
+
+  * Updated MPT Fusion to version 4.22.00.00
+
+  * Updated mpt2sas driver to version 04.100.01.02
+
+  * Updated lpfc driver to version 8.3.5.7
+
+  * Added bnx2i driver for Broadcom NetXtreme II in version 2.1.1
+
+  * Updated bfa driver to version 2.1.2.1
+
+  * The enic driver was updated to version 1.4.2 to support newer Cisco UCS
+    systems. This update also replaces LRO (Large Receive Offload) to GRO
+    (Generic Receive Offload).
+
+7.2.1. Support for Intel RSTe3.0 (Intel Rapid Storage Technology)
+
+Rapid Storage Technology enterprise 3.0 for the Linux allows users to
+install/boot to Intel BIOS initialized SW RAID. New features supported with
+this version includes Disk Coercion, Email Alerting, RAID5 Xor, Hot Spare
+Disk, Read Patrol, On Line Capacity Expansion, RAID Level Migrations, Check
+Pointing, smart alerting , Expanded Stripe Size, SAS & SATA drive roaming,
+and Auto Rebuild.
+
+This service pack includes the proper upstream md raid userspace (mdadm/
+mdmon) software raid utilities to ensure full feature functionality
+including install/boot support.
+
+7.2.2. Support for Intel SAS Controller Unit (SCU) driver "isci"
+
+The Intel 6 Series/C200 Series Chipset Platform Controller Hub (PCH) for
+mainstream Servers requires the isci driver for the Intel SAS Controller
+Unit (SCU).
+
+This service pack includes the official SCU "isci.c" driver to ensure full
+SCU support including install/boot support.
+
+7.2.3. Major advances in supporting iSCSI and FCoE
+
+Instructions to setup iSCSI initiator over DCB:
+
+The iSCSI initiator will automatically set packet priority based on the DCB
+iSCSI application priority in effect on the egress interface. The priority
+is set once at session establishment. If the DCB priority is to be changed,
+it will be necessary to reestablish the session to apply the changed
+priority.
+
+Because the priority is set based on the egress interface, the priority
+cannot be set until the egress interface is known. This means that by
+default, the initial TCP packets to establish the session will not have a
+priority set, but subsequent packets will. If a session is bound to an
+interface, then the priority associated with that interface will be used
+even for the initial packet exchange. If a routing change results in a
+different egress interface being used, the same priority will continue to
+be used unless or until the session is re-established.
+
+It is specifically recommended to bind to a VLAN interface. This allows the
+DCB-iSCSI priority to be communicated in the VLAN header. Without a VLAN
+header to convey the priority, the priority will only affect packet
+scheduling within the host. Commands such as the following demonstrate
+binding to a VLAN interface:
+
+iscsiadm -m iface -I iface3 --op=new
+iscsiadm -m iface -I iface3 --op=update -n iface.net_ifacename -v eth3.3260
+
+By binding to the interface, every packet will carry the correct priority.
+
+Make sure that the app tlv for iSCSI is enabled on the system and that the
+switchport is configured to use iscsi-default cee map AND lldp
+iscsi-priority-bits 0x10 is set:
+
+For example, to configure the switchport on Brocade:
+
+no cee
+cee iscsi-default
+lldp iscsi-priority-bits 0x10
+
+This sets iSCSI to use priority 4. Assuming that the host is willing (will
+accept DCB configuration from the switch), iSCSI should then operate at
+priority 4.
+
+The following will set the app tlv in CEE mode from the host:
+
+dcbtool sc ethX app:1 e:1 a:1 w:1 appcfg:10
+
+To enable app tlv in IEEE mode from the host:
+
+lldptool -T -i eth2 -V APP app=4,2,3260
+
+Note that the 3260 above is the well-known port number for iSCSI. The iSCSI
+app priority is always communicated using the well-known port number and
+will be used even if iSCSI has been configured to operate on a non-standard
+port. A non-standard port number is never used to determine the iSCSI
+initiator priority.
+
+There probably is a lot that could be said about DCB. It would probably
+simplify things to make some assumptions about how it will be used. For
+example, I expect that the DCB parameters will be nearly always managed
+from the switch, so perhaps the only real host configuration that should be
+needed is just turning on DCB. The rest of it probably just adds confusion.
+
+FCoE target setup:
+
+Refer this wiki http://www.open-fcoe.org/open-fcoe/wiki/
+tcm-fcoe-target-guide
+
+7.2.4. Open-iSCSI supported added to the QLogic iSCSI qla4xxx driver
+
+Open-iSCSI support is added to the QLogic iSCSI qla4xxx driver in SUSE
+Linux Enterprise Server 11 Service Pack 2. Using iscsiadm the features
+supported for qla4xxx are:
+
+  * Network configuration
+
+  * iSCSI Target management enabling Discovery, Login/Logout of iSCSI
+    targets
+
+For more details, see Open-iSCSI README at http://www.open-iscsi.org/docs/
+README .
+
+7.2.5. Broadcom FCoE and iSCSI Enhanced Support for SLE11SP2
+
+Using bnx2fc driver for installation:
+
+Broadcom's NetXtreme II 57712 device provides networking as well as storage
+functionality. Boot from SAN on this device is supported over FCoE network
+using bnx2fc driver. Add "withfcoe=1" to the boot option line. Since the
+DCBX protocol is offloaded and performed by the device firmware, 'dcb'
+feature should be turned off during installation when prompted.
+
+Note that FCoE boot from SAN on Broadcom 10G devices is only supported
+using the bnx2fc driver. Boot from SAN using the software fcoe driver is
+not supported.
+
+For detailed information, refer to "Broadcom NetXtreme II(tm) Network
+Adapter User Guide".
+
+Using iSCSI Disks When Installing:
+
+Note: The installer for SLES 11 SP2 now supports iscsi install using
+software iscsi method and native Broadcom offload method on Broadcom
+NetXtreme II devices.
+
+To use Broadcom offload iSCSI during install, the iSCSI option ROM on the
+Broadcom device must be set to HBA mode. Refer to "iSCSI Boot Broadcom
+NetXtreme II(tm) Network Adapter User Guide" for detailed information on
+iSCSI install/boot for Broadcom devices.
+
+To use software iSCSI install, disable HBA mode in the Broadcom iSCSI
+option ROM.
+
+Storage Drivers:
+
+  * Added bnx2i driver for Broadcom NetXtreme II in version 2.7.0.3
+
+  * Added new bnx2fc driver for Broadcom NetXtreme II 57712
+
+Bnx2fc is a FCoE offload driver, that uses open-fcoe's stack and fcoeutils.
+Note that SLES 11 SP2 only supports offload FCoE on NetXtreme II 57712.
+Refer to Documentation/scsi/bnx2fc.txt in linux kernel source for the
+driver usage information.
+
+7.2.6. Brocade FC/FCOE Adapters (bfa) Update Notes
+
+The bfa 3.0.2.2 driver supports all Brocade FC/FCOE adapters. Below is a
+list of adapter models with corresponding PCIIDs:
+
+PCIID                   Model
+
+1657:0013:1657:0014     425 4Gbps dual port FC HBA
+1657:0013:1657:0014     825 8Gbps PCIe dual port FC HBA
+1657:0013:103c:1742     HP 82B 8Gbps PCIedual port FC HBA
+1657:0013:103c:1744     HP 42B 4Gbps dual port FC HBA
+1657:0017:1657:0014     415 4Gbps single port FC HBA
+1657:0017:1657:0014     815 8Gbps single port FC HBA
+1657:0017:103c:1741     HP 41B 4Gbps single port FC HBA
+1657:0017:103c 1743     HP 81B 8Gbps single port FC HBA
+1657:0021:103c:1779     804 8Gbps FC HBA for HP Bladesystem c-class
+
+1657:0014:1657:0014     1010 10Gbps single port CNA - FCOE
+1657:0014:1657:0014     1020 10Gbps dual port CNA - FCOE
+1657:0014:1657:0014     1007 10Gbps dual port CNA - FCOE
+1657:0014:1657:0014     1741 10Gbps dual port CNA - FCOE
+
+1657:0022:1657:0024     1860 16Gbps FC HBA
+1657:0022:1657:0022     1860 10Gbps CNA - FCOE
+
+Firmware Download: The latest Firmware package for the 3.0.2.2 bfa driver
+can be found at http://www.brocade.com/services-support/drivers-downloads/
+adapters/Linux.page , then click version v3.0.2.0, "Linux Adapter Firmware
+package for RHEL 6.2, SLES 11SP2".
+
+Configuration and Management Utility Download: The latest driver
+configuration and management utility for 3.0.2.2 bfa driver can be found at
+http://www.brocade.com/services-support/drivers-downloads/adapters/
+Linux.page , then click version v3.0.2.0 "Linux Adapter Firmware package
+for RHEL 6.2, SLES 11SP2".
+
+Documentation: The latest Administration's Guide, Installation and
+Reference Manual, Troubleshooting Guide, and Release Notes for the
+corresponding out-of-box driver can be found at http://www.brocade.com/
+services-support/drivers-downloads/adapters/Linux.page and use the
+following inbox and out-of-box driver version mapping to find the
+corresponding documentation:
+
+Inbox Version           Out-of-box Version
+v3.0.2.2                v3.0.0.0
+
+Support: For general product and support info, go to the Brocade website at
+http://www.brocade.com/services-support/index.page .
+
+7.3. Other Drivers
+
+  * Updated CIFS to version 1.74
+
+  * Updated intel-i810 driver
+
+  * Added X11 driver for AMD Geode LX 2D (xorg-x11-driver-video-amd)
+
+  * Updated X11 driver for Radeon cards
+
+  * Updated XFS and DMAPI driver
+
+  * Updated Wacom driver to version 1.46
+
+7.3.1. Support for Universal Serial Bus Version 3.0 (USB 3.0)
+
+USB 3.0 is the third major revision of the USB standard, which brings
+faster data transfer and increases power savings. More and more USB 3.0
+consumer products are launched in market. Intel starts to support USB 3.0
+in the Intel? 7 Series/C216 Chipset Family.
+
+This SP introduces support for USB 3.0 by adding patches for xHCI
+(eXtensible Host Controller Interface), USB 3.0 hub support and USB 3.0
+support for Intel? 7 Series/C216 Chipset Family.
+
+7.3.2. Support Intel? HD Graphics 2000/3000 used in 2nd Generation Intel?
+Core? i7/i5/i3 processor family
+
+The processor graphics is provided in the 2nd Generation Intel? Core? i7/i5
+/i3 processor family.
+
+This service pack adds support for the processor graphics in the 2nd
+Generation Intel? Core? i7/i5/i3 processor family by updating the required
+kernel module, xserver, xf86-video-intel driver, Mesa and dri driver.
+
+Chapter 8. Other Updates
+
+  * Added support for installation from an NFSv4 server.
+
+  * Updated binutils to version 2.21.1
+
+  * Updated bluez to version 4.51
+
+  * Updated clamav to version 0.97.3
+
+  * Updated crash to version 5.1.9
+
+  * Updated dhcp to version 4.2.3.P2
+
+  * Updated gdb to version 7.3
+
+  * Updated hplip to version 3.11.10
+
+  * Updated ipsec-tools to version 0.7.3
+
+  * Updated IBM Java 1.4.2 (java-1_4_2-ibm) to SR13 FP11
+
+  * Updated IBM Java 1.6.0 (java-1_6_0-ibm) to SR9.3
+
+  * Updated libcgroup1 to version 0.37.1
+
+  * Updated libcmpiutil to version 0.5.6
+
+  * Updated libelf to version 0.8.12
+
+  * Updated QT4 (libqt4) to version 4.6.3
+
+  * Updated libvirt to version 0.9.6
+
+  * Updated libvirt-cim to version 0.5.12
+
+  * Updated mdadm to version 3.2.2
+
+  * Updated module-init-tools to version 3.11.1
+
+  * Updated MozillaFirefox to version 10
+
+  * Added mt_st version 0.9b
+
+  * Added netlabel version 0.19
+
+  * Updated numactl to version 2.0.7
+
+  * Updated openCryptoki to version 2.4
+
+  * Updated openldap2 to version 2.4.26
+
+  * Added openvas version 3.0
+
+  * Added perf: Performance Counters For Linux
+
+  * Added perl-WWW-Curl version 4.09
+
+  * Added rng-tools: Support daemon for hardware random device
+
+  * Updated sblim-cim-client2 to version 2.1.3
+
+  * Updated sblim-cmpi-base to version 1.6.1
+
+  * Updated sblim-cmpi-fsvol to version 1.5.0
+
+  * Updated sblim-cmpi-network to version 1.4.0
+
+  * Updated sblim-cmpi-nfsv3 to version 1.1.0
+
+  * Updated sblim-cmpi-nfsv4 to version 1.1.0
+
+  * Updated sblim-cmpi-params to version 1.3.0
+
+  * Updated sblim-cmpi-sysfs to version 1.2.0
+
+  * Updated sblim-gather to version 2.2.0
+
+  * Updated sblim-sfcb to version 1.3.11
+
+  * Updated sblim-sfcc to version 2.2.1
+
+  * Updated sblim-wbemcli to version 1.6.1
+
+  * Updated strongswan to version 4.4.0
+
+  * Added stunnel version 4.36
+
+  * Updated virt-viewer to version 0.4.1
+
+  * Updated virt-manager to version 0.9.0
+
+  * Updated kvm to version 0.15.1
+
+  * Updated Xen (xen) to version 4.1.2
+
+  * Updated dcbd to version 0.9.24
+
+  * Updated e2fsprogs to version 1.41.9
+
+  * Updated iprutils to version 2.3.7
+
+  * Updated iscsitarget to version 1.4.20
+
+  * Updated nfs-utils to version 1.2.3 for improved IPv6 support
+
+  * Added apport, a tool to collect data automatically from crashed
+    processes
+
+8.1. Upgrade to gawk 3.1.8
+
+gawk as delivered in SUSE Linux Enterprise 11 SP1, has a low performance
+with respect to multibyte string operations.
+
+Carefully considering the changes from 3.1.6 to 3.1.8 we decided that a
+version upgrade will significantly help in other areas as well. Find below
+the list of important changes:
+
+  * The zero flag no longer applies to %c and %s.
+
+  * Failure to open a socket is no longer a fatal error.
+
+  * The ' flag (%'d) is now just ignored on systems that cannot support it.
+
+  * Gawk now handles multibyte strings better in [s]printf with field
+    widths and such.
+
+  * A getline from a directory is no longer fatal; instead it returns -1.
+
+8.2. Update gdb to Version 7.3
+
+Several bugfixes for gdb version 7.1 accumulated, and upstream gdb gained
+better support for some languages (e.g. Fortran and C++). Backporting those
+changes to gdb 7.1 is not worthwhile.
+
+Update gdb to Version 7.3
+
+Chapter 9. Software Development Kit
+
+SUSE provides a Software Development Kit (SDK) for SUSE Linux Enterprise 11
+Service Pack 2. This SDK contains libraries, development-environments and
+tools along the following patterns:
+
+  * C/C++ Development
+
+  * Certification
+
+  * Documentation Tools
+
+  * GNOME Development
+
+  * Java Development
+
+  * KDE Development
+
+  * Linux Kernel Development
+
+  * Programming Libraries
+
+  * .NET Development
+
+  * Miscellaneous
+
+  * Perl Development
+
+  * Python Development
+
+  * Qt 4 Development
+
+  * Ruby on Rails Development
+
+  * Ruby Development
+
+  * Version Control Systems
+
+  * Web Development
+
+  * YaST Development
+
+9.1. PowerPC64 GCC Large TOC Support
+
+Previous versions of GCC limited the size of the TOC to 64kB. Options like
+-mminimal-toc and the linker automatic multiple TOC section support
+extended the effective size of the TOC, but some very large programs
+required source changes to break up large functions in order to compile and
+link.
+
+PowerPC64 GCC now supports -mcmodel=small, -mcmodel=medium and -mcmodel=
+large. The latter two generate code for a 2G TOC. -mcmodel=medium optimizes
+accesses to local data but limits the total size of all data sections to
+2G, in most cases giving a speed improvement over -mminimal-toc and may
+even give a speed improvement over the default -mcmodel=small. The linker
+supports mixing of object files compiled with any of these options.
+
+Chapter 10. Update-Related Notes
+
+This section includes update-related information for this release.
+
+10.1. General Notes
+
+10.1.1. Automated Upgrade Using AutoYaST
+
+For an automated upgrade from SLES 10 SP4 or SLES 11 SP1 using AutoYaST see
+the Deployment Guide, Part "Automated Installations". The Deployment Guide
+is part of the system documentation that comes with the product.
+
+10.1.2. Online Migration from SP1 to SP2 via "YaST waggon"
+
+The online migration from SP1 to SP2 is supported via the "YaST waggon"
+module.
+
+10.1.3. Online Migration with Debuginfo Packages Not Supported
+
+Online migration from SP1 to SP2 is not supported if debuginfo packages are
+installed.
+
+10.1.4. Migrating to SLE 11 SP2
+
+To migrate the system to the Service Pack 2 level with zypper, use the dup
+subcommand with the --from option and then finalize it with the patch
+subcommand as follows:
+
+zypper dup --from <new SP2 repos>
+zypper patch
+
+If you use zypper dup without the --from option, zypper will do a full
+update to the latest possible release on all channels, but not migrate to
+the Service Pack 2 level.
+
+For more information about migrating the system to SLE 11 SP2, see the
+Deployment Guide.
+
+10.1.5. Migration from SUSE Linux Enterprise Server 10 SP4 via Bootable
+Media
+
+Migration is supported from SUSE Linux Enterprise Server 10 SP4 via
+bootable media (incl. PXE boot).
+
+10.1.6. Upgrading from SLES 10 SPx
+
+There are supported ways to upgrade from SLES 10 SPx to SLES 11 SP2, which
+may require intermediate upgrade steps:
+
+  * SLES 10 SP4 -> SLES 11 SP2, or
+
+  * SLES 10 SP4 -> SLES 11 GA -> SLES 11 SP2, or
+
+  * SLES 10 SP2 -> SLES 10 SP3 -> SLES 10 SP4 -> SLES 11 SP1
+
+10.1.7. Upgrading to SLES 11 SP2 with Root File System on iSCSI
+
+The upgrade or the automated migration from SLES 10 to SLES 11 SP2 may fail
+if the root file system of the machine is located on iSCSI because of
+missing boot options.
+
+There are two approaches to solve it, if you are using AutoYaST (adjust IP
+addresses and hostnames according to your environment!):
+
+With Manual Intervention:
+
+    Use as boot options:
+
+    withiscsi=1 autoupgrade=1 autoyast=http://myserver/autoupgrade.xml
+
+    Then, in the dialog of the iSCSI initiator, configure the iSCSI device.
+
+    After successful configuration of the iSCSI device, YaST will find the
+    installed system for the upgrade.
+
+Fully Automated Upgrade:
+
+    Add or modify the <iscsi-client> section in your autoupgrade.xml as
+    follows:
+
+    <iscsi-client>
+      <initiatorname>iqn.2012-01.com.example:initiator-example</initiatorname>
+      <targets config:type="list">
+        <listentry>
+          <authmethod>None</authmethod>
+          <iface>default</iface>
+          <portal>10.10.42.84:3260</portal>
+          <startup>onboot</startup>
+          <target>iqn.2000-05.com.example:disk01-example</target>
+        </listentry>
+      </targets>
+      <version>1.0</version>
+    </iscsi-client>
+
+    Then, run the automated upgrade with these boot options:
+
+    autoupgrade=1 autoyast=http://myserver/autoupgrade.xml
+
+10.1.8.  Kernel Split in Different Packages
+
+With SUSE Linux Enterprise Server 11 the kernel RPMs are split in different
+parts:
+
+  * kernel-flavor-base
+
+    Very reduced hardware support, intended to be used in virtual machine
+    images.
+
+  * kernel-flavor
+
+    Extends the base package; contains all supported kernel modules.
+
+  * kernel-flavor-extra
+
+    All other kernel modules which may be useful but are not supported.
+    This package will not be installed by default.
+
+10.1.9.  Tickless Idle
+
+SUSE Linux Enterprise Server uses tickless timers. This can be disabled by
+adding nohz=off as a boot option.
+
+10.1.10.  Development Packages
+
+SUSE Linux Enterprise Server will no longer contain any development
+packages, with the exception of some core development packages necessary to
+compile kernel modules. Development packages are available in the SUSE
+Linux Enterprise Software Development Kit.
+
+10.1.11. Displaying Manual Pages with the Same Name
+
+The man command now asks which manual page the user wants to see if manual
+pages with the same name exist in different sections. The user is expected
+to type the section number to make this manual page visible.
+
+If you want to revert back to the previously used method, please set
+MAN_POSIXLY_CORRECT=1 in a shell initialization file such as ~/.bashrc.
+
+10.1.12.  YaST LDAP Server No Longer Uses /etc/openldap/slapd.conf
+
+The YaST LDAP Server module no longer stores the configuration of the LDAP
+Server in the file /etc/openldap/slapd.conf. It uses OpenLDAP's dynamic
+configuration backend, which stores the configuration in an LDAP database
+itself. That database consists of a set of .ldif files in the directory /
+etc/openldap/slapd.d. You should - usually - not need to access those files
+directly. To access the configuration you can either use the
+yast2-ldap-server module or any capable LDAP client (e.g., ldapmodify,
+ldapsearch, etc.). For details on the dynamic configuration of OpenLDAP,
+refer to the OpenLDAP Administration Guide.
+
+10.1.13.  AppArmor
+
+This release of SUSE Linux Enterprise Server ships with AppArmor. The
+AppArmor intrusion prevention framework builds a firewall around your
+applications by limiting the access to files, directories, and POSIX
+capabilities to the minimum required for normal operation. AppArmor
+protection can be enabled via the AppArmor control panel, located in YaST
+under Security and Users. For detailed information about using AppArmor,
+see the documentation in /usr/share/doc/packages/apparmor-docs.
+
+The AppArmor profiles included with SUSE Linux have been developed with our
+best efforts to reproduce how most users use their software. The profiles
+provided work unmodified for many users, but some users may find our
+profiles too restrictive for their environments.
+
+If you discover that some of your applications do not function as you
+expected, you may need to use the AppArmor Update Profile Wizard in YaST
+(or use the aa-logprof(8) command line utility) to update your AppArmor
+profiles. Place all your profiles into learning mode with the following:
+aa-complain /etc/apparmor.d/*
+
+When a program generates many complaints, the system's performance is
+degraded. To mitigate this, we recommend periodically running the Update
+Profile Wizard (or aa-logprof(8)) to update your profiles even if you
+choose to leave them in learning mode. This reduces the number of learning
+events logged to disk, which improves the performance of the system.
+
+10.1.14.  Updating with Alternative Boot Loader (Non-Linux) or Multiple
+Boot Loader Programs
+
+Note: Before updating, check the configuration of your boot loader to
+assure that it is not configured to modify any system areas (MBR, settings
+active partition or similar). This will reduce the amount of system areas
+that you need to restore after update.
+
+Updating a system where an alternative boot loader (not grub) or an
+additional boot loader is installed in the MBR (Master Boot Record) might
+override the MBR and place grub as the primary boot loader into the system.
+
+In this case, we recommend the following: First backup your data. Then
+either do a fresh installation and restore your data, or run the update
+nevertheless and restore the affected system areas (in particular, the
+MBR). It is always recommended to keep data separated from the system
+software. In other words, /home, /srv, and other volumes containing data
+should be on separate partitions, volume groups or logical volumes. The
+YaST partitioning module will propose doing this.
+
+Other update strategies (except booting the install media) are safe if the
+boot loader is configured properly. But the other strategies are not
+available, if you update from SUSE Linux Enterprise Server 10.
+
+10.1.15.  Upgrading MySQL to SUSE Linux Enterprise Server 11
+
+During the upgrade to SUSE Linux Enterprise Server 11 MySQL is also
+upgraded to the latest version. To complete this migration you may have to
+upgrade your data as described in the MySQL documentation.
+
+10.1.16.  Fine-Tuning Firewall Settings
+
+SuSEfirewall2 is enabled by default, which means you cannot log in from
+remote systems. This also interferes with network browsing and multicast
+applications, such as SLP and Samba ("Network Neighborhood"). You can
+fine-tune the firewall settings using YaST.
+
+10.1.17. Upgrading from SUSE Linux Enterprise Server 10 SP4 with the Xen
+Hypervisor May Have Incorrect Network Configuration
+
+We have improved the network configuration: If you install SUSE Linux
+Enterprise Server 11 SP2 and configure Xen, you get a bridged setup through
+YaST.
+
+However, if you upgrade from SUSE Linux Enterprise Server 10 SP4 to SUSE
+Linux Enterprise Server 11 SP2, the upgrade does not configure the bridged
+setup automatically.
+
+To start the bridge proposal for networking, start the "YaST Control
+Center", choose "Virtualization", then "Install Hypervisor and Tools".
+Alternatively, call yast2 xen on the commandline.
+
+10.1.18. LILO Configuration Via YaST or AutoYaST
+
+The configuration of the LILO boot loader on the x86 and x86_64
+architecture via YaST or AutoYaST is deprecated, and not supported anymore.
+For more information, see Novell TID 7003226 http://www.novell.com/support/
+documentLink.do?externalID=7003226.
+
+10.2. Update from SUSE Linux Enterprise Server 11
+
+10.2.1. Changed Routing Behavior
+
+SUSE Linux Enterprise Server 10 and SUSE Linux Enterprise Server 11 set
+net.ipv4.conf.all.rp_filter = 1 in /etc/sysctl.conf with the intention of
+enabling route path filtering. However, the kernel fails to enable routing
+path filtering, as intended, by default in these products.
+
+Since SLES 11 SP1, this bug is fixed and most simple single-homed unicast
+server setups will not notice a change. But it may cause issues for
+applications that relied on reverse path filtering being disabled (e.g.,
+multicast routing or multi-homed servers).
+
+For more details, see http://ifup.org/2011/02/03/
+reverse-path-filter-rp_filter-by-example/.
+
+10.2.2. Kernel Devel Packages
+
+Starting with SUSE Linux Enterprise Server 11 Service Pack 1 the
+configuration files for recompiling the kernel were moved into their own
+sub-package:
+
+kernel-flavor-devel
+
+    This package contains only the configuration for one kernel type
+    (?flavor?), such as default or desktop.
+
+10.3. Update from SUSE Linux Enterprise Server 11 SP 1
+
+10.3.1. Update from SUSE Linux Enterprise Server 11 SP 1
+
+Updating from SUSE Linux Enterprise Server 11 SP 1 with AutoYaST is
+supported.
+
+Chapter 11. Deprecated Functionality
+
+The following packages were removed with the release of SUSE Linux
+Enterprise Server 11 Service Pack 2:
+
+  * hyper-v-kmp
+
+    hyper-v-kmp has been removed.
+
+  * The 32-bit Xen hypervisor as a virtualization host is not supported
+    anymore. 32-bit virtual guests are not affected and fully supported
+    with the provided 64-bit hypervisor.
+
+The following packages were removed with the release of SUSE Linux
+Enterprise Server 11 Service Pack 1:
+
+  * brocade-bfa
+
+    The brocade-bfa kernel module is now part of the main kernel package.
+
+  * enic-kmp
+
+    The enic kernel module is now part of the main kernel package.
+
+  * fnic-kmp
+
+    The fnic kernel module is now part of the main kernel package.
+
+  * kvm-kmp
+
+    The KVM kernel modules are now part of the main kernel package.
+
+  * java-1_6_0-ibm-x86
+
+The following packages were removed with the major release of SUSE Linux
+Enterprise Server 11:
+
+  * dante
+
+  * JFS
+
+    The JFS file system is no longer supported and the utilities have been
+    removed from the distribution.
+
+  * EVMS
+
+    For the future strategy and development with respect to volume and
+    storage management on SUSE Linux Enterprise, refer to: http://
+    www.novell.com/linux/volumemanagement/strategy.html
+
+  * ippl
+
+  * powertweak
+
+  * SUN Java
+
+  * uw-imapd
+
+  * The mapped-base functionality, which is used by 32-bit applications
+    that need a larger dynamic data space (such as database management
+    systems), has been replaced with flexmap.
+
+  * zmd
+
+The following packages and features are deprecated and will be removed with
+the next Service Pack or major release of SUSE Linux Enterprise Server:
+
+  * The reiserfs file system is fully supported for the lifetime of SUSE
+    Linux Enterprise Server 11 specifically for migration purposes. We will
+    however remove support for creating new reiserfs file systems starting
+    with SUSE Linux Enterprise Server 12.
+
+  * The sendmail package is deprecated and might be discontinued with SUSE
+    Linux Enterprise Server 12.
+
+  * The lprng package is deprecated and will be discontinued with SUSE
+    Linux Enterprise Server 12.
+
+  * The dhcp-client package is deprecated and will be discontinued with
+    SUSE Linux Enterprise Server 12.
+
+  * The qt3 package is deprecated and will be discontinued with SUSE Linux
+    Enterprise Server 12.
+
+  * syslog-ng will be replaced with rsyslog.
+
+  * The smpppd package is deprecated and will be discontinued with one of
+    the next Service Packs or SUSE Linux Enterprise Server 12.
+
+  * The raw block devices (major 162) are deprecated and will be
+    discontinued with one of the next Service Packs or SUSE Linux
+    Enterprise Server 12.
+
+11.1. Remove Support for Multi-Volume Tape Dumps
+
+The multi-volume tape dump support will be removed from zipl and zgetdump.
+The reason for this decision is that current tape cartridges have hundreds
+of gigabyte capacity and therefore the multi-volume support is not needed
+any more.
+
+11.2. Moving Novfs Kernel Module
+
+Novfs and NCL are tightly coupled, the first is packaged on the SUSE Linux
+Enterprise Server media but the second is not.
+
+To prepare the move of novfs into an external repository together with NCL
+the novfs kernel module is dropped from the SLES media. Customers find the
+new novfs and NCL package at //URL//
+
+11.3. Support for portmap will end with SUSE Linux Enterprise 11 SP3
+
+In SUSE Linux Enterprise we provide "rpcbind" which for example provides
+full IPv6 support; it is compatible with portmap. Thus portmap is
+deprecated, and support for portmap will end end with SUSE Linux Enterprise
+11 SP3.
+
+11.4. Replacing xpdf-tools
+
+With SP2 we are switching from xpdf-tools to poppler-tools for PDF
+rendering. This is based on xpdf-tools, but more stable and better
+maintained and it is a seamless replacement.
+
+11.5. L3 Support for Openswan Is Scheduled to Expire
+
+L3 support for Openswan is scheduled to expire. This decision is driven by
+the fact that Openswan development stalled substantially and there are no
+tangible signs that this will change in the future.
+
+In contrast to this the strongSwan project is vivid and able to deliver a
+complete implementation of current standards. Compared to Openswan all
+relevant features are available by the package strongSwan plus strongSwan
+is the only complete Open Source implementation of the RFC 5996 IKEv2
+standard whereas Openswan only implements a small mandatory subset. For now
+and the expected future only strongSwan qualifies to be an enterprise-ready
+solution for encrypted TCP/IP connectivity.
+
+11.6. Support for IBM Java 1.4.2 Ending 2013
+
+IBM Java 1.4.2 is supported with SUSE Linux Enterprise Server 11
+specifically for migration purposes. We will however remove support for
+this specific Java version with SUSE Linux Enterprise Server 11 SP3 and
+SUSE Linux Enterprise Server 12. We recommend to upgrade your environments.
+
+11.7. Intel Active Management (IAMT)
+
+Intel Active Management (IAMT) drivers have been removed from SUSE Linux
+Enterprise due to incompatibilities and no longer being maintained. Refer
+to the Intel documentation on how to access newer versions of IAMT drivers
+for SUSE Linux Enterprise.
+
+11.8. PHP 5.2 Is Deprecated
+
+Based on significant customer demand, we ship PHP 5.3 parallel to PHP 5.2
+with SUSE Linux Enterprise 11 SP1 and SP2.
+
+PHP 5.2 is deprecated though, and will be removed with SLES 11 SP3.
+
+11.9. Read-only Support for the ext4 File System for Migration Purposes
+
+To facilitate the migration of an ext4 file system to another, supported
+file system, the SLE 11 SP2 kernel now contains a fully supported ext4 file
+system module, which provides solely read-only access to the file system.
+
+If read-write access to an ext4 file system is still required, you may
+install the ext4-writeable KMP (kernel module package). This package
+contains a kernel module that provides read-write access to an ext4 file
+system. Be aware, that this kernel module is unsupported.
+
+ext4 is not supported for the installation of the SUSE Linux Enterprise
+operating system files
+
+With SUSE Linux Enterprise 11 SP2 we support offline migration from ext4 to
+the supported btrfs filesystem.
+
+Chapter 12. Infrastructure, Package and Architecture Specific Information
+
+12.1. Systems Management
+
+12.1.1. xrdp
+
+Remote systems can now be served with xrdp. Windows clients are able to
+administer such servers.
+
+12.1.2. YaST AppArmor Configuration Module
+
+Find the AppArmor Configuration module now in the "Security and Users"
+section of the YaST Control Center.
+
+12.1.3. Modified Operation against Novell Customer Center
+
+Effective on 2009-01-13, provisional registrations have been disabled in
+the Novell Customer Center. Registering an instance of SUSE Linux
+Enterprise Server or Open Enterprise Server (OES) products now requires a
+valid, entitled activation code. Evaluation codes for reviews or proofs of
+concept can be obtained from the product pages and from the download pages
+on novell.com.
+
+If a device is registered without a code at setup time, a provisional code
+is assigned to it by Novell Customer Center (NCC), and it will be entered
+in your NCC list of devices. No update repositories are assigned to the
+device at this time.
+
+Once you are ready to assign a code to the device, start the YaST Novell
+Customer Center registration module and replace the un-entitled provisional
+code that NCC generated with the appropriate one to fully entitle the
+device and activate the related update repositories.
+
+12.1.4. Operation against Subscription Management Tool
+
+Operation under the Subscription Management Tool (SMT) package and
+registration proxy is not affected. Registration against SMT will assign
+codes automatically from your default pool in NCC until all entitlements
+have been assigned. Registering additional devices once the pool is
+depleted will result in the new device being assigned a provisional code
+(with local access to updates) The SMT server will notify the administrator
+that these new devices need to be entitled.
+
+12.1.5. Minimal Pattern
+
+The minimal pattern provided in YaST's Software Selection dialog targets
+experienced customers and should be used as a base for your own specific
+software selections.
+
+Do not expect a minimal pattern to provide a useful basis for your business
+needs without installing additional software.
+
+This pattern does not include any dump or logging tools. To fully support
+your configuration, Novell Technical Services (NTS) will request
+installation of all tools needed for further analysis in case of a support
+request.
+
+12.1.6. SPident
+
+SPident is a tool to identify the Service Pack level of the current
+installation. On SUSE Linux Enterprise Server 11 GA, this tool has been
+replaced by the new SAM tool (package "suse-sam").
+
+12.2. Performance Related Information
+
+12.2.1. AES-NI Instruction Set Extension Support in OpenSSL
+
+Intel's AES-NI is a new set of Single Instruction Multiple Data (SIMD)
+instructions that is introduced in Intel? processor since 2009. These
+instructions enable fast and secure data encryption and decryption, using
+the Advanced Encryption Standard (AES), defined by FIPS Publication number
+197.
+
+This service pack adds patches to OpenSSL to support Intel's AES-NI.
+
+12.2.2. Linux Completely Fair Scheduler Affects Java Performance
+
+Problem (Abstract)
+
+Java applications that use synchronization extensively might perform poorly
+on Linux systems that include the Completely Fair Scheduler. If you
+encounter this problem, there are two possible workarounds.
+
+Symptom
+
+You may observe extremely high CPU usage by your Java application and very
+slow progress through synchronized blocks. The application may appear to
+hang due to the slow progress.
+
+Cause
+
+The Completely Fair Scheduler (CFS) was adopted into the mainline Linux
+kernel as of release 2.6.23. The CFS algorithm is different from previous
+Linux releases. It might change the performance properties of some
+applications. In particular, CFS implements sched_yield() differently,
+making it more likely that a thread that yields will be given CPU time
+regardless. More information on CFS can be found here: "Multiprocessing
+with the Completely Fair Scheduler", http://www.ibm.com/developerworks/
+linux/library/l-cfs/?ca=dgrlnxw06CFC4Linux
+
+The new behavior of sched_yield() might adversely affect the performance of
+synchronization in the IBM JVM.
+
+Environment
+
+This problem may affect IBM JDK 5.0 and 6.0 (all versions) running on Linux
+kernels that include the Completely Fair Scheduler, including Linux kernel
+2.6.27 in SUSE Linux Enterprise Server 11.
+
+Resolving the Problem
+
+If you observe poor performance of your Java application, there are two
+possible workarounds:
+
+  * Either invoke the JVM with the additional argument
+    "-Xthr:minimizeUserCPU".
+
+  * Or configure the Linux kernel to use the more backward-compatible
+    heuristic for sched_yield() by setting the sched_compat_yield tunable
+    kernel property to 1. For example:
+
+    echo "1" > /proc/sys/kernel/sched_compat_yield
+
+You should not use these workarounds unless you are experiencing poor
+performance.
+
+12.2.3. Tuning Performance of Simple Database Engines
+
+Simple database engines like Berkeley DB use memory mappings (mmap(2)) to
+manipulate database files. When the mapped memory is modified, those
+changes need to be written back to disk. In SUSE Linux Enterprise 11, the
+kernel includes modified mapped memory in its calculations for deciding
+when to start background writeback and when to throttle processes which
+modify additional memory. (In previous versions, mapped dirty pages were
+not accounted for and the amount of modified memory could exceed the
+overall limit defined.) This can lead to a decrease in performance; the fix
+is to increase the overall limit.
+
+The maximum amount of dirty memory is 40% in SUSE Linux Enterprise 11 by
+default. This value is chosen for average workloads, so that enough memory
+remains available for other uses. The following settings may be relevant
+when tuning for database workloads:
+
+  * vm.dirty_ratio
+
+    Maximum percentage of dirty system memory (default 40).
+
+  * vm.dirty_background_ratio
+
+    Percentage of dirty system memory at which background writeback will
+    start (default 40).
+
+  * vm.dirty_expire_centisecs
+
+    Duration after which dirty system memory is considered old enough to be
+    eligible for background writeback (in centiseconds).
+
+These limits can be observed or modified with the sysctl utility (see
+sysctl(1) and sysctl.conf(5)).
+
+12.3. Storage
+
+12.3.1. Host Protected Area
+
+The host protected area (HPA), is an area of a hard drive that is not
+normally visible to an operating system and usually used by system vendors
+to store recovery data. The Linux kernel offers mechanisms to make the host
+protected area visible to the OS.
+
+SUSE Linux Enterprise defaults to the host protected area being visible.
+
+In rare cases this might be an unwanted setup (for example when using some
+RAID solutions etc.). In that case please use the option "Keep HPA" during
+installation or boot an already installed system using this kernel
+parameter:
+
+libata.ignore_hpa=0
+
+Note: Changing handling of host protected area for already installed
+systems may lead to data loss and should therefore be used with cautions.
+
+Future SUSE Linux Enterprise releases will change the default to honor the
+host protected area.
+
+12.3.2. Allow Settable permission/ownership on mp devices from
+multipath.conf
+
+Setting permissions/ownership on multipath devices is becoming a problem as
+raw devices are now deprecated in the Linux kernel and database systems
+such as Oracle. Setting permissions on raw devices is pretty
+straightforward as you can write udev rules for that. Doing the same for
+multipath devices is challenging since all you have at the udev level is
+dm-X as device name, but the associated WWID is not known.
+
+To set Permission/Ownership on Multipath Devices, please copy the file "/
+usr/share/doc/packages/device-mapper/12-dm-permissions.rules" to /etc/udev/
+rules.d and adopt it to your needs. This file has four parts for different
+device type: PLAIN DM, LVM, ENCRYPTED, MULTIPATH. Add the parameters
+suitable to your envinronment here. Changes to udev rules might only become
+active after a reboot of the system.
+
+12.3.3. Multipathing - SCSI Hardware Handler
+
+Some storage devices, e.g. IBM DS4K, require special handling for path
+failover and failback. In SUSE Linux Enterprise Server 10 SP2, dm layer
+served as hardware handler.
+
+One drawback of this implementation was that the underlying SCSI layer did
+not know about the existence of the hardware handler. Hence, during device
+probing, SCSI would send I/O on the passive path, which would fail after a
+timeout and also print extraneous error messages in the console.
+
+In SUSE Linux Enterprise Server 11, this problem is resolved by moving the
+hardware handler to the SCSI layer, hence the term SCSI Hardware Handler.
+These handlers are modules created under the SCSI directory in the Linux
+Kernel.
+
+In SUSE Linux Enterprise Server 11, there are four SCSI Hardware Handlers:
+scsi_dh_alua, scsi_dh_rdac, scsi_dh_hp_sw, scsi_dh_emc.
+
+These modules need to be included in the initrd image so that SCSI knows
+about the special handling during probe time itself.
+
+To do so, carry out the following steps:
+
+  * Add the device handler modules to the INITRD_MODULES variable in /etc/
+    sysconfig/kernel
+
+  * Create a new initrd with:
+
+    mkinitrd -k /boot/vmlinux-<flavour> \
+    -i /boot/initrd-<flavour>-scsi_dh \
+    -M /boot/System.map-<flavour>
+
+  * Update the grub.conf/lilo.conf/yaboot.conf file with the newly built
+    initrd.
+
+  * Reboot.
+
+12.3.4. Multipathing: Failed Paths Do Not Return after a Path Failure.
+
+To work in a fully certified environment with all storage backend systems,
+fully supported by SUSE and your storage vendor, install at least
+multipath-tools-0.4.8-40.2 or a later version. Appropriate packages are
+available as a maintenance update for SUSE Linux Enterprise 11.
+
+12.3.5. Local Mounts of iSCSI Shares
+
+An iSCSI shared device should never be mounted directly on the local
+machine. In an OCFS2 environment, doing so causes all hardware to hard
+hang.
+
+12.4. Hyper-V
+
+12.4.1. Change of Kernel Device Names in Hyper-V Guests
+
+SLES 11 SP2 has a newer block device driver, which presents all configured
+virtual disks as SCSI devices. Disks, which used to appear as /dev/hda in
+SLES 11 SP1 will from now on appear as /dev/sda.
+
+12.4.2. Using the "Virtual Machine Snapshot" Feature
+
+The Windows Server Manager GUI allows to take snapshots of a Hyper-V guest.
+After a snapshot is taken the guest will fail to reboot. By default, the
+guest's root file system is referenced by the serial number of the virtual
+disk. This serial number changes with each snapshot. Since the guest
+expects the initial serial number, booting will fail.
+
+The solution is to either delete all snapshots using the Windows GUI, or
+configure the guest to mount partitions by file system UUID. This change
+can be made with the YaST partitioner and boot loader configurator.
+
+12.5. Architecture Independent Information
+
+12.5.1. Changes in Packaging and Delivery
+
+12.5.1.1. Update Squid Web Proxy
+
+With global IPv4 addresses getting scarce, the switch to IPv6 is inevitable
+and needs compatible software. Squid2 does not support IPv6.
+
+Squid version 3.1 has been added, which provides native IPv6 support.
+
+The configuration file /etc/squid/squid.conf has changed in an incompatible
+manner, some options do not exist anymore, others are not backward
+compatible. For complete details on changes, refer to the Squid 3.1 release
+notes at http://www.squid-cache.org/Versions/v3/3.1/RELEASENOTES.html .
+
+With SUSE Linux Enterprise 11 SP3, Squid 2.7 packages will be deprecated
+and unsupported.
+
+12.5.1.2. Update coreutils to Version 8.5
+
+For some locales the date format has changed from ISO date (YYYY-MM-DD) to
+a locale date format. Most significantly, this applies for the American
+English locale ( LANG=en_US.UTF-8 ). This means SUSE Linux Enterprise 11
+SP2 will output the date as SUSE Linux Enterprise 10 did and thus ensure
+long-term backwards compatibility.
+
+To keep the ISO date, set the environment variable export TIME_STYLE=
+long-iso .
+
+12.5.1.3. SUSE Linux Enterprise High Availability Extension 11
+
+With the SUSE Linux Enterprise High Availability Extension 11, SUSE offers
+the most modern open source High Availability Stack for Mission Critical
+environments.
+
+12.5.1.4. Kernel Has Memory Cgroup Support Enabled By Default
+
+While this functionality is welcomed in most environments, it requires
+about 1% of memory. Memory allocation is done at boot time and is using 40
+Bytes per 4 KiB page which results in 1% of memory.
+
+In virtualized environments, specifically but not exclusively on s390x
+systems, this may lead to a higher basic memory consumption: e.g., a 20GiB
+host with 200 x 1GiB guests consumes 10% of the real memory.
+
+This memory is not swappable by Linux itself, but the guest cgroup memory
+is pageable by a z/VM host on an s390x system and might be swappable on
+other hypervisors as well.
+
+Cgroup memory support is activated by default but it can be deactivated by
+adding the Kernel Parameter cgroup_disable=memory
+
+A reboot is required to deactivate or activate this setting.
+
+12.5.1.5. Live Migration of KVM Guest with Device Hot-Plugging
+
+Hot-plugging a device (network, disk) works fine for a KVM guest on a SLES
+11 host since SP1. However, migrating the same guest with the hotplugged
+device (available on the destination host) fails.
+
+Since SLES 11 SP1, supports the hotplugging of the device to the KVM guest,
+but migrating the guest with the hot-plugged device is not supported and
+expected to fail.
+
+12.5.2. Security
+
+12.5.2.1. Removable Media
+
+To allow a specific user (?joe?) to mount removable media, run the
+following command as root:
+
+polkit-auth --user joe \
+--grant org.freedesktop.hal.storage.mount-removable
+
+
+To allow all locally logged in users on the active console to mount
+removable media, run the following commands as root:
+
+echo 'org.freedesktop.hal.storage.mount-removable no:no:yes' \
+  >> /etc/polkit-default-privs.local
+/sbin/set_polkit_default_privs
+
+12.5.2.2. Verbose Audit Records for System User Management Tools
+
+Install the package "pwdutils-plugin-audit". To enable this plugin, add
+"audit" to /etc/pwdutils/logging. See the ?Security Guide? for more
+information.
+
+12.5.3. Networking
+
+12.5.3.1. Loading the mlx4_en Adapter Driver with the Mellanox ConnectX2
+Ethernet Adapter
+
+There is a reported problem that the Mellanox ConnectX2 Ethernet adapter
+does not trigger the automatic load of the mlx4_en adapter driver. If you
+experience problems with the mlx4_en driver not automatically loading when
+a Mellanox ConnectX2 interface is available, create the file mlx4.conf in
+the directory /etc/modprobe.d with the following command:
+
+install mlx4_core /sbin/modprobe --ignore-install mlx4_core \
+  && /sbin/modprobe mlx4_en
+
+12.5.3.2. Using the System as a Router
+
+As long as the firewall is active, the option ip_forwarding will be reset
+by the firewall module. To activate the system as a router, the variable
+FW_ROUTE has to be set too. This can be done through yast2-firewall or
+manually.
+
+12.5.4. Cross Architecture Information
+
+12.5.4.1. Myricom 10-Gigabit Ethernet Driver and Firmware
+
+SUSE Linux Enterprise 11 (x86, x86_64 and IA64) is using the Myri10GE
+driver from mainline Linux kernel. The driver requires a firmware file to
+be present, which is not being delivered with SUSE Linux Enterprise 11.
+
+Download the required firmware at http://www.myricom.com.
+
+12.6. AMD64/Intel64 64-Bit (x86_64) and Intel/AMD 32-Bit (x86) Specific
+Information
+
+12.6.1. Support of new Intel processors
+
+This Service Pack will ensure support for the following new Intel
+processors: 1. The 2nd Generation Intel? Core? i7/i5/i3 processor family;
+2. The 3rd Generation Intel? Core? processor family; 3. Intel? Xeon?
+processor E3-1200 series; 4. Intel? Xeon? processors E5-4600/2600/2400/1600
+series;
+
+12.6.2. Generic support for the PCI Express Gen3
+
+Intel? Platforms based on Intel? Xeon? Processor E5-4600/2600/2400/1600 and
+Intel? C600 chipset product family will introduce PCI Express Gen3.
+
+This Service Pack adds support for PCI Express Gen3 (ID-based Ordering,
+Latency Tolerance Reporting, Optimized Buffer Flush/Fill (OBFF)).
+
+12.6.3. Support for new Intel? Platforms
+
+This Service Pack adds support for the following Intel? platforms:
+
+  * Intel? platforms based on Intel? Xeon? Processor E3-1200 and Intel?
+    C200 chipset product family.
+
+  * Intel? platforms based on Intel? Xeon? Processor E5-4600/2600/2400/1600
+    and Intel? C600 chipset product family.
+
+12.6.4. Support for Intel? Trusted Execution Technology (TXT)
+
+Intel? TXT provides the solution of protecting IT infrastructure against
+software-based attacks within a server or PC at startup.
+
+This Service Pack adds basic support for Intel? TXT by adding patches to
+the kernel and integrating tboot.
+
+12.6.5. System and Vendor Specific Information
+
+  * Boot Device Larger than 2 TiB
+
+    Due to limitations in the legacy x86/x86_64 BIOS implementations,
+    booting from devices larger than 2 TiB is technically not possible
+    using legacy partition tables (DOS MBR).
+
+    Since SUSE Linux Enterprise Server 11 Service Pack 1 we support
+    installation and boot using uEFI on the x86_64 architecture and
+    certified hardware.
+
+  * i586 and i686 Machine with More than 16 GB of Memory
+
+    Depending on the workload, i586 and i686 machines with 16GB-48GB of
+    memory can run into instabilities. Machines with more than 48GB of
+    memory are not supported at all. Lower the memory with the mem= kernel
+    boot option.
+
+    In such memory scenarios, we strongly recommend using a x86-64 system
+    with 64-bit SUSE Linux Enterprise Server, and run the (32-bit) x86
+    applications on it.
+
+  * Directly Addressable Memory on x86 Machines
+
+    When running SLES on an x86 machine, the kernel can only address 896MB
+    of memory directly. In some cases, the pressure on this memory zone
+    increases linearly according to hardware resources such as number of
+    CPUs, amount of physical memory, number of LUNs and disks, use of
+    multipath, etc.
+
+    To workaround this issue, we recommend running an x86_64 kernel on such
+    large server machines.
+
+  * NetXen 10G Ethernet Expansion Card on IBM BladeCenter HS12 System
+
+    When installing SUSE Linux Enterprise Server 11 on a HS12 system with a
+    "NetXen Incorporated BladeCenter-H 10 Gigabit Ethernet High Speed
+    Daughter Card", the boot parameter pcie_aspm=off should be added.
+
+  * NIC Enumeration
+
+    Ethernet interfaces on some hardware do not get enumerated in a way
+    that matches the marking on the chassis.
+
+  * HP Linux ProLiant Support Pack for SUSE Linux Enterprise Server 11
+
+    The hpilo driver is included in SUSE Linux Enterprise Server 11.
+    Therefore, no hp-ilo package will be provided in the Linux ProLiant
+    Support Pack for SUSE Linux Enterprise Server 11.
+
+    For more details, see Novell TID 700273.
+
+  * HP High Performance Mouse for iLO Remote Console.
+
+    The desktop in SUSE Linux Enterprise Server 11 now recognizes the HP
+    High Performance Mouse for iLO Remote Console and is configured to
+    accept and process events from it. For the desktop mouse and the HP
+    High Performance Mouse to stay synchronized, it is necessary to turn
+    off mouse acceleration. As a result, the HP iLO2 High-Performance mouse
+    (hpmouse) package is no longer needed with SUSE Linux Enterprise Server
+    11 once one of the three following options are implemented.
+
+     1. In a terminal run xset m 1 ? this setting will not survive a reset
+        of the desktop.
+
+     2. (Gnome) In a terminal run gconf-editor and go to desktop->gnome->
+        peripherals->mouse. Edit the "motion acceleration" field to be 1.
+
+        (KDE) Open "Personal Settings (Configure Desktop)" in the menu and
+        go to "Computer Administration->Keyboard&Mouse->Mouse->Advanced"
+        and change "Pointer Acceleration" to 1.
+
+     3. (Gnome) In a terminal run "gnome-mouse-properties" and adjust the
+        "Pointer Speed" slide scale until the HP High Performance Mouse and
+        the desktop mouse run at the same speed across the screen. The
+        recommended adjustment is close to the middle, slightly on the
+        "Slow" side.
+
+    After acceleration is turned off, sync the desktop mouse and the ILO
+    mouse by moving to the edges and top of the desktop to line them up in
+    the vertical and horizontal directions. Also if the HP High Performance
+    Mouse is disabled, pressing the <Ctrl> key will stop the desktop mouse
+    and allow easier synching of the two pointers.
+
+    For more details, see Novell TID 7002735.
+
+  * Missing 32-Bit Compatibility Libraries for libstdc++ and libg++ on
+    64-Bit Systems (x86_64)
+
+    32-bit (x86) compatibility libraries like "libstdc++-libc6.2-2.so.3"
+    have been available on x86_64 in the package "compat-32-bit" with SUSE
+    Linux Enterprise Server 9, SUSE Linux Enterprise Server 10, and are
+    also available on the SUSE Linux Enterprise Desktop 11 medium
+    (compat-32-bit-2009.1.19), but are not included in SUSE Linux
+    Enterprise Server 11.
+
+    Background
+
+    The respective libraries have been deprecated back in 2001 and shipped
+    in the compatibility package with the release of SUSE Linux Enterprise
+    Server 9 in 2004. The package was still shipped with SUSE Linux
+    Enterprise Server 10 to provide a longer transition period for
+    applications requiring the package.
+
+    With the release of SUSE Linux Enterprise Server 11 the compatibility
+    package is no longer supported.
+
+    Solution
+
+    In an effort to enable a longer transition period for applications
+    still requiring this package, it has been moved to the unsupported
+    "Extras" channel. This channel is visible on every SUSE Linux
+    Enterprise Server 11 system, which has been registered with the Novell
+    Customer Center. It is also mirrored via SMT alongside the supported
+    and maintained SUSE Linux Enterprise Server 11 channels.
+
+    Packages in the "Extras" channel are not supported or maintained.
+
+    The compatibility package is part of SUSE Linux Enterprise Desktop 11
+    due to a policy difference with respect to deprecation and deprecated
+    packages as compared to SUSE Linux Enterprise Server 11.
+
+    We encourage customers to work with SUSE and SUSE's partners to resolve
+    dependencies on these old libraries.
+
+  * 32-Bit Devel-Packages Missing from the Software Development Kit
+    (x86_64)
+
+    Example: libpcap0-devel-32-bit package was available in Software
+    Development Kit 10, but is missing from Software Development Kit 11
+
+    Background
+
+    SUSE supports running 32-bit applications on 64-bit architectures;
+    respective runtime libraries are provided with SUSE Linux Enterprise
+    Server 11 and fully supported. With SUSE Linux Enterprise 10 we also
+    provided 32-bit devel packages on the 64-bit Software Development Kit.
+    Having 32-bit devel packages and 64-bit devel packages installed in
+    parallel may lead to side-effects during the build process. Thus with
+    SUSE Linux Enterprise 11 we started to remove some (but not yet all) of
+    the 32-bit devel packages from the 64-bit Software Development Kit.
+
+    Solution
+
+    With the development tools provided in the Software Development Kit 11,
+    customers and partners have two options to build 32-bit packages in a
+    64-bit environment (see below). Beyond that, SUSE's appliance offerings
+    provide powerful environments for software building, packaging and
+    delivery.
+
+      o Use the "build" tool, which creates a chroot environment for
+        building packages.
+
+      o The Software Development Kit contains the software used for the
+        Open Build Service. Here the abstraction is provided by
+        virtualization.
+
+12.6.6. Virtualization
+
+  * KVM
+
+    Since SUSE Linux Enterprise Server 11 SP1, KVM is fully supported on
+    the x86_64 architecture. KVM is designed around hardware virtualization
+    features included in both AMD (AMD-V) and Intel (VT-x) CPUs produced
+    within the past few years, as well as other virtualization features in
+    even more recent PC chipsets and PCI devices. For example, device
+    assignment using IOMMU and SR-IOV.
+
+    The following websites identify processors, which support hardware
+    virtualization:
+
+      o http://wiki.xensource.com/xenwiki/HVM_Compatible_Processors
+
+      o http://en.wikipedia.org/wiki/X86_virtualization
+
+    The KVM kernel modules will not load if the basic hardware
+    virtualization features are not present and enabled in the BIOS. If KVM
+    does not start, please check the BIOS settings.
+
+    KVM allows for memory overcommit and disk space overcommit. It is up to
+    the user to understand the impact of doing so. Hard errors resulting
+    from exceeding available resources will result in guest failures. CPU
+    overcommit is supported but carries performance implications.
+
+    The following guest operating systems are supported:
+
+      o Starting with SLES 11 SP2, Windows guest operating systems are
+        fully supported on the KVM hypervisor, in addition to Xen. For the
+        best experience, we recommend using WHQL-certified virtio drivers,
+        which are part of SLE VMDP.
+
+        SUSE Linux Enterprise Server 11 SP1 and SP2 as fully virtualized.
+        The following virtualization aware drivers are available:
+        kvm-clock, virtio-net, virtio-block, virtio-balloon
+
+      o SUSE Linux Enterprise Server 10 SP3 and SP4 as fully virtualized.
+        The following virtualization aware drivers are available:
+        kvm-clock, virtio-net, virtio-block, virtio-balloon
+
+      o SUSE Linux Enterprise Server 9 SP4 as fully virtualized. For 32-bit
+        kernel, specify clock=pmtmr on the Linux boot line; for 64-bit
+        kernel, specify ignore_lost_ticks on the Linux boot line.
+
+    For further details, see /usr/share/doc/packages/kvm/kvm-supported.txt.
+
+  * VMI Kernel (x86, 32-bit only)
+
+    VMware, SUSE and the community improved the kernel infrastructure in a
+    way that VMI is no longer necessary. Starting with SUSE Linux
+    Enterprise Server 11 SP1, the separate VMI kernel flavor is obsolete
+    and therefore has been dropped from the media. When upgrading the
+    system, it will be automatically replaced by the PAE kernel flavor. The
+    PAE kernel provides all features, which were included in the separate
+    VMI kernel flavor.
+
+  * CPU Overcommit and Fully Virtualized Guest
+
+    SUSE and our partners are currently evaluating reports that with CPU
+    overcommit in place and under heavy load fully virtualized guests may
+    become unresponsive or hang.
+
+    Paravirtualized guests work flawlessly with CPU overcommit under heavy
+    load.
+
+    This problem is addressed with high priority. We will issue a
+    maintenance update via http://support.novell.com/ once this has been
+    resolved.
+
+  * IBM System X x3850/x3950 with ATI Radeon 7000/VE Video Cards and Xen
+    Hypervisor
+
+    When installing SUSE Linux Enterprise Server 11 on IBM System X x3850/
+    x3950 with ATI Radeon 7000/VE video cards, the boot parameter 'vga=
+    0x317' needs to be added to avoid video corruption during the
+    installation process.
+
+    Graphical environment (X11) in Xen is not supported on IBM System X
+    x3850/x3950 with ATI Radeon 7000/VE video cards.
+
+  * Video Mode Selection for Xen Kernels
+
+    In a few cases, following the installation of Xen, the hypervisor does
+    not boot into the graphical environment. To work around this issue,
+    modify /boot/grub/menu.lst and replace vga=<number> with vga=mode-
+    <number>. For example, if the setting for your native kernel is vga=
+    0x317, then for Xen you will need to use vga=mode-0x317.
+
+  * Time Synchronization in Paravirtualized Domains with NTP.
+
+    Paravirtualized (PV) DomUs usually receive the time from the
+    hypervisor. If you want to run "ntp" in PV DomUs, the DomU must be
+    decoupled from the Dom0's time. At runtime, this is done with:
+
+    echo 1 > /proc/sys/xen/independent_wallclock
+
+    To set this at boot time:
+
+     1. either append "independent_wallclock=1" to kernel cmd line in
+        DomU's grub configuration file
+
+     2. or append "xen.independent_wallclock = 1" to /etc/sysctl.conf in
+        the DomU.
+
+  * If you encounter time synchronization issues with Paravirtualized
+    Domains, we encourage you to use NTP.
+
+12.6.6.1. VirtFS
+
+Existing methods of exporting a file system from host to the guest include
+NFS and CIFS, which were not designed with virtualized environments in
+mind. There is need for a mechanism that provides faster access to exported
+file systems by exploiting the fact that the guest (client) is running on
+the same physical hardware as the host (server) that is exporting the file
+system.
+
+SUSE Linux Enterprise Server 11 SP2 provides VirtFS, which is a new way to
+export file systems from the host and mount it on the QEMU/KVM guest.
+VirtFS exploits virtio infrastructure provided by QEMU and hence provides
+the guest fast access to the exported file system. Conceptually, VirtFS is
+similar to running NFS server on the host and NFS mounting the exported
+file system on the guest. For more information about using VirtFS, refer to
+QEMU wiki at http://wiki.qemu.org/Documentation/9psetup .
+
+12.6.6.2. Update to XEN Version 4.1.2
+
+12.6.6.3. Amazon EC2 Availability
+
+SUSE Linux Enterprise Server 11 SP2 is available immediately for use on
+Amazon Web Services EC2. For more information about Amazon EC2 Running SUSE
+Linux Enterprise Server, please visit http://aws.amazon.com/suse
+
+12.6.6.4. Removing 32-Bit XEN Hypervisor
+
+With SLE 11 SP2, we removed the 32-bit hypervisor as a virtualization host.
+32-bit virtual guests are not affected and are fully supported with the
+provided 64-bit hypervisor.
+
+12.6.7. RAS
+
+12.6.7.1. Support for Memory/CPU hotadd support at Intel? Xeon? Processor
+7500 series-based Platforms
+
+Today's business has come to rely on the uninterrupted availability of
+platforms and services, thus the feature of "Reliability", "Availability"
+and "Serviceability" (RAS) has been growing more and more critical to the
+real-time, always-on enterprise environment. Adding physical processors and
+memory to a running system without ending the Operation System or powering
+down the system is supported at Intel? Xeon? Processor 7500 series-based
+Platforms.
+
+This Service Pack adds proper support for the mentioned Platforms.
+
+12.7. Intel Itanium (ia64) Specific Information
+
+  * Installation on Systems with Many LUNs (Storage)
+
+    While the number of LUNs for a running system is virtually unlimited,
+    we suggest not having more than 64 LUNs online while installing the
+    system, to reduce the time to initialize and scan the devices and thus
+    reduce the time to install the system in general.
+
+12.8. POWER (ppc64) Specific Information
+
+  * Supported Hardware and Systems
+
+    All POWER3, POWER4, PPC970 and RS64?based models that were supported by
+    SUSE Linux Enterprise Server 9 are no longer supported.
+
+  * Misleading Buffer I/O Error Messages
+
+    During installation, you may encounter error messages such as:
+
+    Buffer I/O error on device loop1, logical block 2632
+
+    These messages only occur during the initial setup, but the
+    installation will succeed nevertheless and newly created file systems
+    will be fine.
+
+  * Loading the Installation Kernel via Network on POWER
+
+    With SUSE Linux Enterprise Server 11 the bootfile DVD1/suseboot/inst64
+    can not be booted directly via network anymore, because its size is
+    larger than 12MB. To load the installation kernel via network, copy the
+    files yaboot.ibm, yaboot.cnf and inst64 from the DVD1/suseboot
+    directory to the TFTP server. Rename the yaboot.cnf file to
+    yaboot.conf. yaboot can also load config files for specific Ethernet
+    MAC addresses. Use a name like yaboot.conf-01-23-45-ab-cd-ef to match a
+    MAC address. An example yaboot.conf for TFTP booting looks like this:
+
+    default=sles11
+    timeout=100
+    image[64-bit]=inst64
+        label=sles11
+        append="quiet install=nfs://hostname/exported/sles11dir"
+
+    Note: This will not work on POWER4 systems. Their firmware only load
+    files up to 12MB via TFTP.
+
+  * Huge Page Memory Support on POWER
+
+    Huge Page Memory (16GB pages, enabled via HMC) is supported by the
+    Linux kernel, but special kernel parameters must be used to enable this
+    support. Boot with the parameters "hugepagesz=16G hugepages=N" in order
+    to use the 16GB huge pages, where N is the number of 16GB pages
+    assigned to the partition via the HMC. The number of 16GB huge pages
+    available can not be changed once the partition is booted. Also, there
+    are some restrictions if huge pages are assigned to a partition in
+    combination with eHEA / eHCA adapters:
+
+    IBM eHEA Ethernet Adapter:
+
+    The eHEA module will fail to initialize any eHEA ports if huge pages
+    are assigned to the partition and Huge Page kernel parameters are
+    missing. Thus, no huge pages should be assigned to the partition during
+    a network installation. To support huge pages after installation, the
+    huge page kernel parameters need to be added to the boot loader
+    configuration before huge pages are assigned to the partition.
+
+    IBM eHCA InfiniBand Adapter:
+
+    The current eHCA device driver is not compatible with huge pages. If
+    huge pages are assigned to a partition, the device driver will fail to
+    initialize any eHCA adapters assigned to the partition.
+
+  * Installation on POWER onto IBM VSCSI Target
+
+    The installation on a vscsi client will fail with old versions of the
+    AIX VIO server. Please upgrade the AIX VIO server to version
+    1.5.2.1-FP-11.1 or later.
+
+  * iSCSI Installations with Multiple NICs Losing Network Connectivity at
+    the End of Firstboot Stage
+
+    After installing SLES 11 SP1 on an iSCSI target, the system boots
+    properly, network is up and the iSCSI root device is found as expected.
+    The install completes (firstboot part) as usual. However, at the end of
+    firstboot, the network is shut down before the root file system is
+    unmounted, leading to read failures accessing the root (iSCSI) device;
+    the system hangs.
+
+    Solution: reboot the system.
+
+  * IBM Linux VSCSI Server Support in SUSE Linux Enterprise Server 11
+
+    Customers using SLES 9 or SLES 10 to serve Virtual SCSI to other LPARs,
+    using the ibmvscsis driver, who wish to migrate from these releases,
+    should consider migrating to the IBM Virtual I/O server. The IBM
+    Virtual I/O server supports all the IBM PowerVM virtual I/O features
+    and also provides integration with the Virtual I/O management
+    capabilities of the HMC. It can be downloaded from: http://
+    www14.software.ibm.com/webapp/set2/sas/f/vios/download/home.html
+
+  * Virtual Fibre Channel Devices
+
+    When using IBM Power Virtual Fibre Channel devices utilizing N-Port ID
+    Virtualization, the Virtual I/O Server may need to be updated in order
+    to function correctly. Linux requires VIOS 2.1, Fixpack 20.1, and the
+    LinuxNPIV I-Fix for this feature to work properly. These updates can be
+    downloaded from: http://www14.software.ibm.com/webapp/set2/sas/f/vios/
+    home.html
+
+  * Virtual Tape Devices
+
+    When using virtual tape devices served by an AIX VIO server, the
+    Virtual I/O Server may need to be updated in order to function
+    correctly. The latest updates can be downloaded from: http://
+    www14.software.ibm.com/webapp/set2/sas/f/vios/home.html
+
+  * For More Information
+
+    For more information about IBM Virtual I/O Server, see http://
+    www14.software.ibm.com/webapp/set2/sas/f/vios/documentation/home.html.
+
+  * Chelsio cxgb3 iSCSI Offload Engine
+
+    The Chelsio hardware supports ~16K packet size (the exact value depends
+    on the system configuration). It is recommended that you set the
+    parameter MaxRecvDataSegmentLength in /etc/iscsid.conf to 8192.
+
+    For the cxgb3i driver to work properly, this parameter needs to be set
+    to 8192.
+
+    In order to use the cxgb3i offload engine, the cxgb3i module needs to
+    be loaded manually after open-scsi has been started.
+
+    For additional information, refer to /usr/src/linux/Documentation/scsi/
+    cxgb3i.txt in the kernel source tree.
+
+  * Known TFTP Issues with Yaboot
+
+    When attempting to netboot yaboot, users may see the following error
+    message:
+
+    Can't claim memory for TFTP download (01800000 @ 01800000-04200000)
+
+    and the netboot will stop and immediately display the yaboot "boot:"
+    prompt. Use the following steps to work around the problem.
+
+      o Reboot the system and at the IBM splash screen select '8' to get to
+        an Open Firmware prompt "0>"
+
+      o At the Open Firmware prompt, type the following commands:
+
+        setenv load-base 4000
+        setenv real-base c00000
+        dev /packages/gui obe
+
+      o The second command will take the system back to the IBM splash
+        screen and the netboot can be attempted again.
+
+  * Graphical Administration of Remotely Installed Hardware
+
+    If you do a remote installation in text mode, but want to connect to
+    the machine later in graphical mode, be sure to set the default
+    runlevel to 5 via YaST. Otherwise xdm/kdm/gdm might not be started.
+
+  * InfiniBand - SDP Protocol Not Supported on IBM Hardware
+
+    To disable SDP on IBM hardware set SDP=no in openib.conf so that by
+    default SDP is not loaded. After you have set this setting in
+    openib.conf to 'no' run openibd restart or reboot the system for this
+    setting to take effect.
+
+  * RDMA NFS Server May Hang During Shutdown (OFED)
+
+    If your system is configured as an NFS over RDMA server, the system may
+    hang during a shutdown if a remote system has an active NFS over RDMA
+    mount. To avoid this problem, prior to shutting down the system, run
+    "openibd stop"; run it in the background, because the command will hang
+    and otherwise block the console:
+
+    /etc/init.d/openibd stop &
+
+    A shutdown can now be run cleanly.
+
+    Note: the steps to configure and start NFS over RDMA are as follows:
+
+      o On the server system:
+
+         1. Add an entry to the file /etc/exports, for example:
+
+            /home   192.168.0.34/255.255.255.0(fsid=0,rw,async,insecure,no_root_squash)
+
+         2. As the root user run the commands:
+
+            /etc/init.d/nfsserver start
+            echo rdma 20049 > /proc/fs/nfsd/portlist
+
+      o On the client system:
+
+         1. Run the command: modprobe xprtrdma.
+
+         2. Mount the remote file system using the command /sbin/mount.nfs.
+            Specify the ip address of the ip-over-ib network interface
+            (ib0, ib1...) of the server and the options: proto=rdma,port=
+            20049, for example:
+
+            /sbin/mount.nfs 192.168.0.64:/home /mnt \
+            -o proto=rdma,port=20049,nolock
+
+12.8.1. Suspend and Resume Support
+
+IBM Power 7 systems running firmware 7.2.0 SP1 or later along with version
+2.2.0.11-FP24 SP01 or later of the Virtual I/O Server and HMC v7r7.2.0 or
+later include support for long term suspension of logical partitions.
+Logical partitions can be suspended and resumed from the HMC. All I/O
+resources must be virtual I/O resources at the time of suspending. Once
+suspended, the memory and processor resources associated with the suspended
+logical partition are free to be used by other logical partitions.
+
+SLES 11 SP2 has been enhanced to support logical partition suspend and
+resume.
+
+12.8.2. Capture Oops and Panic Reports to NVRAM
+
+The kernel is able to capture the most recent oops or panic report from the
+dmesg buffer into NVRAM, where it can be examined after reboot.
+
+12.8.3. Page Hinting for Active Memory Deduplication
+
+PowerVM release 7.4 includes a new memory optimization feature called
+Active Memory Deduplication. This feature applies to logical partitions
+which are assigned to an Active Memory Sharing (AMS) pool. With Active
+Memory Deduplication, the PowerVM Hypervisor automatically detects memory
+pages in the pool that have identical contents, and remaps those pages to a
+single physical page, freeing up the duplicate pages for other purposes in
+the AMS pool.
+
+SLES 11 SP2 has been enhanced to provide the PowerVM Hypervisor with page
+hints to indicate which pages are good candidates for merging. This feature
+is automatically enabled in the kernel for AMS LPARs with Active Memory
+Deduplication enabled. Statistics on page merging is available through the
+amsstat utility.
+
+12.8.4. IBM Power Virtual Fibre Channel Driver Update
+
+The virtual fibre channel for IBM Power systems has been updated to support
+the 5729 PCIe 4-Port 8Gb FC adapter.
+
+12.8.5. ITrace Package Removed
+
+The ppc64-specific instruction tracing tool, ITrace, is no longer
+available.
+
+12.8.6. IBM Power Virtual Ethernet Driver Update
+
+The IBM Power Virtual Ethernet driver (ibmveth) has been updated with
+various performance enhancements, including support for IPv6 checksum
+offload.
+
+12.8.7. IBM Power Shared Storage Pools
+
+A shared storage pool is a server based storage virtualization that is
+clustered and is an extension of existing storage virtualization on the
+Virtual I/O Sever for IBM Power systems. Support for shared storage pools
+requires the latest Virtual I/O Server software, which can be obtained from
+http://www14.software.ibm.com/webapp/set2/sas/f/vios/home.html .
+
+SLES 11 SP2 adds multipath support for virtual disks backed by shared
+storage pools.
+
+12.9. System z (s390x) Specific Information
+
+More information, see http://www.ibm.com/developerworks/linux/linux390/
+documentation_novell_suse.html.
+
+IBM zEnterprise 196 (z196) and IBM zEnterprise 114 (z114) further on
+referred to as z196 and z114.
+
+12.9.1. Libdfp updated to version 1.0.7
+
+Updated version with several corrections: previous versions of libdfp
+exhibited minor bugs in printf_dfp and strtod[32|64|128], inconsistencies
+with POSIX with regard to classification functions, dfp header override
+include order problems, and missing classification function exports.
+
+12.9.2. Suspend to Disk for System z
+
+Fast shutdown and resume of Linux for System z in z/VM and LPAR.
+
+Suspend to disk allows fast suspend (freeze) of a system and resume work
+where it stopped.
+
+12.9.3. Hardware
+
+12.9.3.1. Performance indicator bytes
+
+Two new fields in /proc/sysinfo now export the contents of Capacity-Change
+Reason (CCR) and Capacity-Adjustment Indication (CAI) of SYSIB 1.1.1
+introduced by the IBM zEnterprise. They provide additional information for
+enhanced problem analysis.
+
+12.9.3.2. z196 and z114 enhanced node affinity support
+
+The System z196 & z114 hardware adds another level to the CPU cache
+hierarchy. Enhancements have been added to allow more efficient task
+scheduling to optimize the Linux scheduler, increases cache hits and
+therefore overall performance.
+
+12.9.3.3. Exploitation of System z10 prefetching instructions
+
+z10 has added more complexity for memory accesses and a faster processor.
+Pre-fetching instructions can be used to enhance memory access like all
+sorts of implementations of copying memory, zeroing out memory and
+predictable loops resulting in increased performance and better
+exploitation of the System z hardware. Requires System z optimizations from
+GCC 4.6 (available on the SDK).
+
+12.9.3.4. Access to raw ECKD data from Linux
+
+In raw-track access mode, the DASD device driver accesses full ECKD tracks,
+including record zero and the count and key data fields. With this mode,
+Linux can access an ECKD device regardless of the track layout. In
+particular, the device does not need to be formatted for Linux. This
+includes Linux ECKD disks that are used with LVM, Linux ECKD disks that are
+used directly, and z/OS ECKD disks.
+
+12.9.3.5. Oprofile System z10 Hardware Customer Mode Sampling
+
+12.9.4. Virtualization
+
+12.9.4.1. Deliver z/VM CP Special Messages to Userspace Using udev Events
+(uevents)
+
+This feature provides a new kernel device driver for receiving z/VM CP
+special messages (SMSG) and delivering these messages to user space as udev
+events (uevents). The device driver registers with the existing CP special
+message device driver to only receive messages starting with "APP". The
+created uevents contain message sender and content as environmental data.
+
+12.9.4.2. s390-tools: cmsfs read and write support
+
+A CMS minidisk can be mounted to Linux (cmsfs-fuse). The files on the
+minidisk can now be accessed by common Linux tools. Text files and
+configuration files can be accessed and automatically converted from EBCDIC
+to ASCII without eg. the restriction to shutdown Linux before access.
+cmsfs-fuse support for CMS file systems is limited to EDF, other CMS file
+systems like SFS, CFS and BFS are not supported. This feature is used to
+eg. provide config data and personalization to Linux guest in a HA/DR
+scenario (machine, LPAR, guest name, IP addr data, etc).
+
+12.9.4.3. snIPL: Tool to trigger SCSI dump on remote container
+
+This feature enhances snIPL to take a remote SCSI dump using the snIPL
+interface.
+
+12.9.4.4. s390-tools: Improve memory ballooning with cpuplugd
+
+Large scale server consolidation requires a way to deal with limited memory
+resources. Ideally this is done by the hypervisor or by optimizing the
+individual guest in terms of memory utilization. 'cpuplugd' has a rule
+based scheme to control the size of the CMM1 memory balloon. An enhanced
+default set of rules allows the administrator to define a virtual machine
+with a larger memory size and have cpuplugd deal with the surplus
+automatically.
+
+12.9.4.5. snIPL support for z/VM 6
+
+snIPL offers command line support for remote system management of LPARs and
+z/VM . This feature offers socket-based (AF_INET) remote system management
+of z/VM 6 guests with snipl and stonith if SMAPI support is available.
+
+12.9.4.6. Support of Live Guest Relocation (LGR) with z/VM 6.2 on SLES 11
+SP2
+
+Live guest relocation (LGR) with z/VM 6.2 on SLES 11 SP2 requires z/VM
+service applied, especially with Collaborative Memory Management (CMMA)
+active (cmma=on).
+
+Apply z/VM APAR VM65134.
+
+12.9.4.7. Linux Guests Running on z/VM 5.4 and 6.1 Require z/VM Service
+Applied
+
+Linux guests using dedicated devices may experience a loop, if an available
+path to the device goes offline prior to the IPL of Linux.
+
+Apply recommended z/VM service APARs VM65017 and VM64847
+
+12.9.5. Storage
+
+12.9.5.1. FICON, s390-tools: Additional device characteristics for Solid
+State Device displayed with dasdview
+
+Storage servers may provide solid state disks, which are transparent in use
+to the DASD device driver. A new flag in the device characteristics will
+show if a device is a solid state disk. The device characteristics are
+already exported per ioctl and can be read as binary data with the dasdview
+tool.
+
+12.9.5.2. FICON: Dynamic PAV toleration
+
+The DASD device driver tolerates dynamic Parallel Access Volume (PAV)
+changes for base PAV. PAV changes in the hardware configuration are
+detected and the mapping of base and alias devices in Linux is adjusted
+accordingly. The user is informed about the change by a kernel message with
+log level info.
+
+12.9.5.3. FICON: Multi-Track extensions for High Performance FICON
+
+Enables the DASD device driver to generate multi-track High Performance
+FICON (zHPF) requests. If the storage systems support multi-track High
+Performance FICON requests, read or write data can be done to more than one
+track to enhance I/O performance.
+
+12.9.5.4. zHW: Store I/O Operation Status and initiate logging (SIOSL)
+
+Logging I/O subchannel status information: a Linux interface for the
+store-I/O-operation-status-and-initiate-logging (SIOSL) CHSC command and
+its exploitation by the FCP device driver. It enhances the service toolset
+for determining field scenarios without interrupting operation, and can be
+used to synchronize log gathering between the operating system and the
+channel firmware.
+
+12.9.5.5. Automatic detection of read only DASDs
+
+This feature prevents unintentional write requests and subsequent I/O
+errors, by detecting if a z/VM attached device is read-only using the z/VM
+DIAG 210 interface and setting the respective Linux block device to
+read-only as well.
+
+12.9.5.6. Tunable default grace period for missing interrupts in DASD
+device driver
+
+This provides a new sysfs interface to specify the timeout for missing
+interrupts for standard I/O operations. The default value for this timeout
+was 300 seconds for standard ECKD and FBA I/O operations and 50 seconds for
+DIAG I/O operations. For ECKD devices the timeout value provided from the
+storage server is used as default instead of the generic 300 seconds. The
+timeout value can be read and set through a new DASD device attribute
+'expires' in sysfs.
+
+12.9.5.7. FICON: API & tool to query DASD reservation status
+
+Allows the DASD device driver to determine the reservation status of a
+given DASD in relation to the current Linux instance.
+
+12.9.5.8. FCP: End-To-End data consistency checking
+
+12.9.5.9. s390-tools: Additional partition types supported by DASD tools
+
+This feature introduces new partition types like RAID and LVM to the Linux
+dasd tools beside the existing support for "Linux native" and "swap"
+partitions types.
+
+12.9.6. Network
+
+12.9.6.1. qeth device driver: offload outbound checksumming to OSA hardware
+
+This feature introduces OSA adapter support for the checksum calculations
+which TCP and UDP use to ensure data integrity. Offloading this calculation
+to the OSA adapter (HW) will reduce the processor load compared to the
+current implementation where it is done in SW.
+
+12.9.6.2. s390-tools: Enhancements in the configuration tool for System z
+network devices
+
+This feature enhances the qethconf tool by providing improved information
+messages.
+
+12.9.6.3. s390-tools: YaST Allows to Configure LLADDR for Network Devices
+of Type OSX and OSM But Should Not
+
+zEnterprise Unified Resource Manager is responsible for OSX- and OSM-setup.
+It defines MAC-addresses for OSX and OSM devices. The qeth driver retrieves
+those MAC-addresses during activation of OSX and OSM devices. They must not
+be changed afterwards. This means the YaST-created ifcfg-files must not
+contain an LLADDR-definition.
+
+Remove the LLADDR entry from the ifcfg configuration file for an OSX- or
+OSM-device.
+
+12.9.6.4. NAPI support for qeth and qdio
+
+This feature adapts qeth to the standard Linux kernel network interface:
+NAPI. The qdio interface is extended to allow direct processing of inbound
+data in qeth. Using NAPI, the device driver can disable interrupts to
+reduce CPU load under high network traffic. It provides increased
+throughput and less CPU consumption for high speed network connections.
+
+12.9.6.5. Optimized Latency Mode (OLM) toleration
+
+This feature enhances the qeth driver with a meaningful message for the
+case that an OSA-connection fails due to an active OLM-connection on the
+shared OSA-adapter. OLM may be activated by z/OS on an OSA Express3
+adapter, which reduces the number of allowed concurrent connections, if
+adapter is used in shared mode.
+
+12.9.6.6. s390-tools: IPv6 support for qetharp tool
+
+12.9.6.7. Assisted VLAN null tagging support
+
+This feature exploits OSA support for VLAN tagging and null tagging (VLAN
+ID 0 can be used in tags). Such frames can carry priority information and
+improve the communication capabilities with z/OS.
+
+12.9.6.8. Limitations with the "qetharp" Utility
+
+qetharp -d
+
+    An ARP entry, which is part of Shared OSA should not get deleted from
+    the arp cache.
+
+    Current Behaviour: An ARP entry, which is part of shared OSA is getting
+    deleted from the arp cache.
+
+qetharp -p
+
+    Purge - It should remove all the remote entries, which are not part of
+    shared OSA.
+
+    Current Behaviour: It is only flushing out the remote entries, which
+    are not part of shared OSA for first time. Then, if the user pings any
+    of the purged ip address, the entry gets added back to the arp cache.
+    Later, if the user runs purge for a second time, that particular entry
+    is not getting removed from the arp cache.
+
+12.9.7. Security
+
+12.9.7.1. z196 / z114: CP ACF exploitation - kernel and libica
+
+This feature adds support to the kernel and libica to exploit new
+algorithms from Message Security Assist (CPACF) extension 4.
+
+12.9.7.2. z196 / z114: Support for 4096 bit RSA FastPath
+
+This feature extends the support for current hardware acceleration of RSA
+encryption and decryption from 2048-bit keys to the new maximum of 4096-bit
+keys in zcrypt Linux device driver. This new support will allow to handle
+with a zEnterprise Crypto Express3 card RSA mod expo operations with
+4096-bit RSA keys in ME (Modulus Exponent) and CRT (Chinese Remainder
+Theorem) format.
+
+12.9.7.3. openCryptoki
+
+Exploit z196 hardware accelerated crypto algorithms and Elliptic Curve
+cryptography features of the IBM PCIe Cryptographic Coprocessor.
+
+Added support for new CPACF algorithms in z196, AES-CTR mode for key
+lengths 128, 192 and 256. Also added support for Elliptic Curve crypto for
+customers with the IBM PCIe Cryptographic Coprocessor.
+
+12.9.7.4. Existing Data Execution Protection Removed for System z
+
+The existing data execution protection for Linux on System z relies on the
+System z hardware to distinguish instructions and data through the
+secondary memory space mode. As of System z10, new load-relative-long
+instructions do not make this distinction. As a consequence, applications
+that have been compiled for System z10 or later fail when running with the
+existing data execution protection.
+
+Therefore, data execution protection for Linux on System z has been
+removed.
+
+12.9.8. RAS
+
+12.9.8.1. Automated LUN scanning (NPIV only)
+
+For FCP subchannels running in NPIV mode, this features allows the Linux
+SCSI midlayer to scan and automatically attach SCSI devices that are
+available for the NPIV WWPN. The manual configuration of LUNs in zfcp is
+now only required for non-NPIV FCP subchannels. With this feature the
+behaviour of zfcp in NPIV mode is now similar to all other Linux SCSI
+drivers.
+
+12.9.8.2. cio: provide userspace handle to wait for pending work
+
+12.9.8.3. s390-tools: New "hyptop" tool for dynamic real-time view of a
+hypervisor environment on System z
+
+This feature provides the kernel infrastructure needed for a Linux tool
+called "hyptop" which provides a dynamic real-time view of a System z
+hypervisor environment. It works with either the z/VM or the LPAR
+hypervisor. Depending on the available data it shows for example CPU and
+memory consumption of active LPARs or z/VM guests. It provides a curses
+based user interface similar to the popular Linux "top" command.
+
+12.9.8.4. Improved QDIO Performance Statistics
+
+Upgrading from SUSE Linux Enterprise Server 11 SP1 to SP2 does not preserve
+the qdio performance statistics under /proc/qdio_perf. The corresponding
+file /sys/bus/ccw/qdio_performance_stats is also removed. SP2 adds support
+for qdio performance statistics by device. These statistics are located
+under <debugfs mount point>/qdio/<device bus id>/statistics. Writing 1 to
+the statistics file of a qdio device starts the collection of performance
+data for that device. Writing 0 to the statistics file of a qdio device
+stops the collection of performance data for that device. By default the
+statistics are disabled. For more information, see Chapter 8 of "Device
+Drivers, Features, and Commands on SUSE Linux Enterprise Server 11 SP2".
+
+12.9.8.5. Breaking-event-address for Userspace Programs
+
+This feature records breaking-event-addresses for user space processes
+using the PER-3 facility introduced with z10. There is one restriction in
+regard to the useable address range for the user space program. Any
+breaking-event in the range from 0 to 8MB will not be recorded. Useful for
+application development.
+
+12.9.8.6. s390-tools: Enhanced re-IPL tool, chreipl
+
+This feature provides four extensions to the chreipl tool: a) add support
+to re-IPL from device-mapper devices, including mirror devices and
+multipath devices, b) add support to re-IPL from named saved systems (NSS),
+c) add support to specify additional kernel parameters for the next re-IPL,
+d) add "auto target" support. This improves the usability experience, by
+enhancing and simplifying the interface to setup how and what to reboot.
+
+12.9.8.7. s390-tools: zipl tool automatically calculates Boot Device
+Ramdisk Address
+
+This feature will relax the need for a default address for the initial
+ramdisk on the boot device. The address is now calculated dependent on the
+locations of the other components. If the user provides an initrd_addr then
+this one is used. If the user does not provide an initrd_addr then -
+instead of a fixed value (0x800000) - a suitable calculated value is used.
+
+12.9.8.8. zipl automatic menu support
+
+This feature adds support for automatic menu generation to IBM's zipl
+package.
+
+12.9.8.9. cio: resume handling for reordered devices
+
+Improves cio resume handling to cope with devices that were attached on
+different subchannels prior to the suspend operation.
+
+12.9.8.10. cio: handle channel path description changes
+
+12.9.8.11. Unit Check handling
+
+This feature improves handling of unit checks reported during CIO-internal
+operations. Control units such as the DS8000 storage server are using Unit
+Checks as a means to inform Linux of events which may affect the
+operational state of the devices provided.
+
+12.9.8.12. CHPID reconfiguration handling
+
+Enhancements in the common I/O layer (CIO) that enable Linux in LPAR
+installation to handle dynamic IODF changes in the channel-path related
+setup and changed capabilities of channel paths, eg. the number of inbound/
+outbound queues of an OSA adapter or the maximum transmission unit.
+
+12.9.8.13. FICON: IPL & device discovery hardening
+
+12.9.8.14. FICON: Improve handling of lost device reservations
+
+Allows to specify a policy for the DASD device driver behavior in case of a
+lost device reservation. The policy can be specified via a new DASD sysfs
+attribute reservation_policy. Possible values are: ignore, fail.
+
+12.9.8.15. Dump on panic - Prevent re-IPL loop
+
+This feature provides tooling of a configurable time delay (activation of
+this trigger). A new keyword DELAY_MINUTES is introduced in the dumpconf
+configuration file. Using this keyword the activation of dumpconf can be
+delayed in order to prevent potential re-IPL loops.
+
+12.9.8.16. makedumpfile support: convert Linux on z dumps to ELF
+
+12.9.8.17. Remove Support for Multi-Volume Tape Dumps
+
+The multi-volume tape dump support will be removed from zipl and zgetdump.
+The reason for this decision is that current tape cartridges have hundreds
+of gigabyte capacity and therefore the multi-volume support is not needed
+any more.
+
+12.9.8.18. Tool to safely start getty through init
+
+12.9.8.19. OSA concurrent software/hardware trap
+
+This feature enables collective problem analysis through consolidated dumps
+of software and hardware. A command can be used to generate qeth/qdio trace
+data as well as trigger the internal dump of an OSA device.
+
+12.9.8.20. CPC name represented in sysfs
+
+This feature enables for dynamic changes in the GDPS environment definition
+to avoid possible failures from manual or non applied changes. GDPS changed
+to retrieve CPC and LPAR information dynamically - with the new function,
+GDPS is now able to always reset exactly the LPAR in which the OS is
+running.
+
+12.9.8.21. Extend and Improve zFCP trace utilities
+
+12.9.8.22. Crash Utility support to read compressed/filtered dumpfile
+generated by makedumpfile for s390x
+
+s390x kernel dumps may now be filtered by the makedumpfile tool. The crash
+dump analysis tool must be able to analyze these filtered dumps.
+
+The crash dump analysis tool was modified to recognize Linux on System z
+dumps filtered by makedumpfile
+
+12.9.8.23. makedumpfile for Linux on System z
+
+Linux on System z kernel crash dumps have traditionally not been in ELF
+core format. We now have infrastructure to convert the Linux on System z
+dumps to ELF core format. 'makedumpfile' can be used to compress system
+dumps by filtering out memory pages like free, user space or cache pages
+that are not necessary for dump analysis. Additionally, the 'crash' utility
+has been enhanced to read compressed/filtered s390x dumpfiles generated by
+'makedumpfile'.
+
+12.9.9. Performance
+
+12.9.9.1. Optimized qeth default settings
+
+This feature delivers optimized default settings for several qeth
+parameters. See 'Device Drivers, Features, and Commands on SUSE Linux
+Enterprise Server 11 SP2 ' chap. 8, 'Setting up the qeth device driver' for
+details.
+
+12.9.9.2. Spinning mutex performance enhancement
+
+Depending on the usage of mutexes, thread scheduling and the status of the
+physical and virtual processors, additional information provided to the
+scheduler allows for more efficient and less costy decisions optimizing
+processor cycles. The status of a thread owning a locked mutex is examined
+and waiting threads are not scheduled unless the first is scheduled on a
+virtual and physical processor.
+
+12.9.9.3. Turn off Default Compression in OpenSSL
+
+With SLES11SP1 openSSL compresses data before encryption with impact on
+throughput (down) and CPU load (up) on platforms with cryptographic
+hardware. The behavior is now adjustable by the environment variable
+"OPENSSL_NO_DEFAULT_ZLIB" depending on customer requirements. Set this
+environment variable per application or in a global config file.
+
+12.9.9.4. openssl-ibmca: exploit z196 Hardware Accelerated Crypto
+Algorithms
+
+Added support for new CPACF algorithms in z196 / z114. New hardware
+accelerated algorithms are: AES-CFB and AES-OFB modes for key lengths 128,
+192 and 256 / DES-CFB and DES-OFB modes / 3DES-CFB and 3DES-OFB modes.
+
+12.9.10. Miscellaneous
+
+  * IBM System z Architecture Level Set (ALS) Preparation
+
+    To exploit new IBM System z architecture capabilities during the
+    lifecycle of SUSE Linux Enterprise Server 11, support for machines of
+    the types z900, z990, z800, z890 is deprecated in this release. SUSE
+    plans to introduce an ALS earliest with SUSE Linux Enterprise Server 11
+    Service Pack 1 (SP1), latest with SP2. After ALS, SUSE Linux Enterprise
+    Server 11 only executes on z9 or newer processors.
+
+    With SUSE Linux Enterprise Server 11 GA, only machines of type z9 or
+    newer are supported.
+
+    When developing software, we recommend to switch gcc to z9/z10
+    optimization:
+
+      o install gcc
+
+      o install gcc-z9 package (change gcc options to -march=z9-109 -mtune=
+        z10)
+
+  * The minimum required machine loader level for IPL of SUSE Linux
+    Enterprise Server 11 from a SCSI disk is v1.4, which is included in the
+    follow MCLs:
+
+      o z9, driver 67L, MCL G40943.001
+
+      o z10, driver 75J, no MCL required on top of GA-level
+
+    For older levels of the machine loader, the ramdisk load address of the
+    installed SUSE Linux Enterprise Server 11 system needs to be manually
+    changed from 0x2000000 to 0x1000000. To do this, open the /etc/
+    zipl.conf file and change the lines containing ramdisk = <initrd
+    filename>,0x2000000 to ramdisk = <initrd filename>,0x1000000 and run
+    the zipl command afterwards. Note that this workaround may not work on
+    systems with large amount of memory.
+
+  * Minimum Storage Firmware Level for LUN Scanning
+
+    For LUN Scanning to work properly, the minimum storage firmware level
+    should be:
+
+      o DS8000 Code Bundle Level 64.0.175.0
+
+      o DS6000 Code Bundle Level 6.2.2.108
+
+  * Large Page Support in IBM System z
+
+    Large Page support allows processes to allocate process memory in
+    chunks of 1 MiB instead of 4 KiB. This works through the hugetlbfs.
+
+  * Collaborative memory management Stage II (CMM2) is currently not
+    available.
+
+    IBM and SUSE are working to integrate this technology into the Linux
+    Kernel and move it to a supported solution in SUSE Linux Enterprise
+    Server as soon as available upstream.
+
+  * Issue with SLES 11 and NSS under z/VM
+
+    Starting SLES 11 under z/VM with NSS sometimes causes a guest to logoff
+    by itself.
+
+    Solution: IBM addresses this issue with APAR VM64578.
+
+Chapter 13. Resolved Issues
+
+  * Bugfixes
+
+    This Service Pack contains all the latest bugfixes for each package
+    released via the maintenance Web since the GA version.
+
+  * Security Fixes
+
+    This Service Pack contains all the latest security fixes for each
+    package released via the maintenance Web since the GA version.
+
+  * Program Temporary Fixes
+
+    This Service Pack contains all the PTFs (Program Temporary Fix) for
+    each package released via the maintenance Web since the GA version
+    which were suitable for integration into the maintained common
+    codebase.
+
+Chapter 14. Technical Information
+
+This section contains information about system limits, a number of
+technical changes and enhancements for the experienced user.
+
+When talking about CPUs we are following this terminology:
+
+CPU Socket
+
+    The visible physical entity, as it is typically mounted to a
+    motherboard or an equivalent.
+
+CPU Core
+
+    The (usually not visible) physical entity as reported by the CPU
+    vendor.
+
+    On System z this is equivalent to an IFL.
+
+Logical CPU
+
+    This is what the Linux Kernel recognizes as a "CPU".
+
+    We avoid the word "thread" (which is sometimes used), as the word
+    "thread" would also become ambiguous subsequently.
+
+Virtual CPU
+
+    A logical CPU as seen from within a Virtual Machine.
+
+14.1. Kernel Limits
+
+http://www.suse.com/products/server/technical-information/#Kernel
+
+This table summarizes the various limits which exist in our recent kernels
+and utilities (if related) for SUSE Linux Enterprise Server 11.
+
++-------------------------------------------------------------------------+
+|  SLES 11 (3.0.10)   |   x86   |  ia64   |  x86_64   |  s390x  |  ppc64  |
+|---------------------+---------+---------+-----------+---------+---------|
+|CPU bits             |32       |64       |64         |64       |64       |
+|---------------------+---------+---------+-----------+---------+---------|
+|max. # Logical CPUs  |32       |4096     |4096       |64       |1024     |
+|---------------------+---------+---------+-----------+---------+---------|
+|max. RAM (theoretical|64/16 GiB|1 PiB/8+ |64 TiB/16  |4 TiB/256|1 PiB/512|
+|/ certified)         |         |TiB      |TiB        |GiB      |GiB      |
+|---------------------+---------+---------+-----------+---------+---------|
+|max. user-/          |3/1 GiB  |2 EiB/?  |128 TiB/128|?/?      |2 TiB/2  |
+|kernelspace          |         |         |TiB        |         |EiB      |
+|---------------------+---------------------------------------------------|
+|max. swap space      |up to 29 * 64 GB (i386 and x86_64) or 30 * 64 GB   |
+|                     |(other architectures)                              |
+|---------------------+---------------------------------------------------|
+|max. #processes      |1048576                                            |
+|---------------------+---------------------------------------------------|
+|max. #threads per    |tested with more than 120000; maximum limit depends|
+|process              |on memory and other parameters                     |
+|---------------------+---------------------------------------------------|
+|max. size per block  |up to 16 |and up to 8 EiB on all 64-bit            |
+|device               |TiB      |architectures                            |
+|---------------------+---------------------------------------------------|
+|FD_SETSIZE           |1024                                               |
++-------------------------------------------------------------------------+
+
+14.1.1. Howto Run Applications that Do Not Recognize Linux Kernel 3.0 as
+Valid and Require Kernel 2.6 Instead
+
+With SUSE Linux Enterprise 11 SP2 we introduce Linux Kernel 3.0. This
+kernel is a direct successor of the Linux kernel 2.6 series, thus all
+applications run without change.
+
+However, some broken applications or installation programs may check for
+"2.6" literally, thus failing to accept the compatibility of our kernel.
+
+We provide two mechanisms to encourage applications to recognize the kernel
+3.0 in SUSE Linux Enterprise 11 SP2 as a Linux kernel 2.6 compatible
+system:
+
+ 1. Use the uname26 command line tool, to start a single application in a
+    2.6 context. Usage is as easy as typing uname26 [PROGRAM] . More
+    information can be found in the manpage of "setarch".
+
+ 2. Some database systems and enterprise business applications expect
+    processes and tasks run under a specific user name (not root). The
+    Pluggable Authentication Modules (PAM) stack in SUSE Linux Enterprise
+    allows to put a user into a 2.6 context. To achieve this, please add
+    the username to the file /etc/security/uname26.conf . For more
+    information, see the manpage for "pam_unix2". Caveat: we do not support
+    the "root" user to run in a 2.6 context.
+
+If you are running SAP applications please have a look at SAP Note #1310037
+for more information on running SAP Applications within a Kernel 2.6
+compatibility environment.
+
+14.2. KVM Limits
+
++-------------------------------------------------------------------------+
+|Guest RAM size |512 GiB                                                  |
+|---------------+---------------------------------------------------------|
+|Virtual CPUs   |64                                                       |
+|per guest      |                                                         |
+|---------------+---------------------------------------------------------|
+|Maximum number |                                                         |
+|of NICs per    |8                                                        |
+|guest          |                                                         |
+|---------------+---------------------------------------------------------|
+|Block devices  |4 emulated, 20 para-virtual                              |
+|per guest      |                                                         |
+|---------------+---------------------------------------------------------|
+|Maximum number |Limit is defined as the total number of vCPUs in all     |
+|of guests      |guests being no greater than eight times the number of   |
+|               |CPU cores in the host.                                   |
++-------------------------------------------------------------------------+
+
+14.3. Xen Limits
+
++---------------------------------------------------------+
+|               SLES 11 SP2               |      x86      |
+|-----------------------------------------+---------------|
+|CPU bits                                 |64             |
+|-----------------------------------------+---------------|
+|Logical CPUs (Xen Hypervisor)            |255            |
+|-----------------------------------------+---------------|
+|Virtual CPUs per VM                      |32             |
+|-----------------------------------------+---------------|
+|Maximum supported memory (Xen Hypervisor)|2 TiB          |
+|-----------------------------------------+---------------|
+|Maximum supported memory (Dom0)          |512 GiB        |
+|-----------------------------------------+---------------|
+|Virtual memory per VM                    |128 MiB-256 GiB|
+|-----------------------------------------+---------------|
+|Total virtual devices per host           |2048           |
+|-----------------------------------------+---------------|
+|Maximum number of NICs per host          |8              |
+|-----------------------------------------+---------------|
+|Maximum number of vNICs per guest        |8              |
+|-----------------------------------------+---------------|
+|Maximum number of guests per host        |128            |
++---------------------------------------------------------+
+
+In Xen 4.1, the hypervisor bundled with SUSE Linux Enterprise Server 11
+SP2, dom0 is able to see and handle a maximum of 512 logical CPUs. The
+hypervisor itself, however, can access up to logical 256 logical CPUs and
+schedule those for the VMs.
+
+With SUSE Linux Enterprise Server 11 SP2, we removed the 32-bit hypervisor
+as a virtualization host. 32-bit virtual guests are not affected and are
+fully supported with the provided 64-bit hypervisor.
+
+14.4. File Systems
+
+http://www.novell.com/linux/filesystems/features.html
+
+SUSE Linux Enterprise was the first enterprise Linux distribution to
+support journaling file systems and logical volume managers back in 2000.
+Today, we have customers running XFS and ReiserFS with more than 8TiB in
+one file system, and our own SUSE Linux Enterprise engineering team is
+using all 3 major Linux journaling file systems for all its servers.
+
+We are excited to add the OCFS2 cluster file system to the range of
+supported file systems in SUSE Linux Enterprise.
+
+We propose to use XFS for large-scale file systems, on systems with heavy
+load and multiple parallel read- and write-operations (e.g., for file
+serving with Samba, NFS, etc.). XFS has been developed for such conditions,
+while typical desktop use (single write or read) will not necessarily
+benefit from its capabilities.
+
+Due to technical limitations (of the bootloader), we do not support XFS to
+be used for /boot.
+
++-------------------------------------------------------------------------+
+|  Feature   |  Ext 3  |  Reiserfs 3.6  |  XFS   | Btrfs *  |  OCFS 2 **  |
+|------------+---------+----------------+--------+----------+-------------|
+|Data/       |         |                |        |          |             |
+|Metadata    |?/?      |?/?             |?/?     |n/a *     |?/?          |
+|Journaling  |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|Journal     |         |                |        |          |             |
+|internal/   |?/?      |?/?             |?/?     |n/a *     |?/?          |
+|external    |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|Offline     |         |                |        |          |             |
+|extend/     |?/?      |?/?             |?/?     |?/?       |?/?          |
+|shrink      |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|Online      |         |                |        |          |             |
+|extend/     |?/?      |?/?             |?/?     |?/?       |?/?          |
+|shrink      |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|Sparse Files|?        |?               |?       |?         |?            |
+|------------+---------+----------------+--------+----------+-------------|
+|Tail Packing|?        |?               |?       |?         |?            |
+|------------+---------+----------------+--------+----------+-------------|
+|Defrag      |?        |?               |?       |?         |?            |
+|------------+---------+----------------+--------+----------+-------------|
+|Extended    |         |                |        |          |             |
+|Attributes/ |         |                |        |          |             |
+|Access      |?/?      |?/?             |?/?     |?/?       |?/?          |
+|Control     |         |                |        |          |             |
+|Lists       |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|Quotas      |?        |?               |?       |^         |?            |
+|------------+---------+----------------+--------+----------+-------------|
+|Dump/Restore|?        |?               |?       |?         |?            |
+|------------+------------------------------------------------------------|
+|Blocksize   |                            4KiB                            |
+|default     |                                                            |
+|------------+------------------------------------------------------------|
+|max. File   |16 TiB   |16 TiB          |8 EiB   |16 EiB    |16 TiB       |
+|System Size |         |                |        |          |             |
+|------------+---------+----------------+--------+----------+-------------|
+|max.        |2 TiB    |1 EiB           |8 EiB   |16 EiB    |1 EiB        |
+|Filesize    |         |                |        |          |             |
+|------------+------------------------------------------------------------|
+|            |* Btrfs is supported in SUSE Linux Enterprise Server 11     |
+|            |Service Pack 2; 1. Btrfs is a copy-on-write logging-style   |
+|            |file system. Rather than journaling changes before writing  |
+|            |them in-place, it writes them to a new location, then links |
+|            |it in. Until the last write, the new changes are not        |
+|            |"committed". Due to the nature of the filesystem, Quotas    |
+|            |will be implemented based on subvolumes in a future release.|
+|------------+------------------------------------------------------------|
+|            |** OCFS2 is fully supported as part of the SUSE Linux       |
+|            |Enterprise High Availability Extension.                     |
++-------------------------------------------------------------------------+
+
+The maximum file size above can be larger than the file system's actual
+size due to usage of sparse blocks. Note that unless a file system comes
+with large file support (LFS), the maximum file size on a 32-bit system is
+2 GB (2^31 bytes). Currently all of our standard file systems (including
+ext3 and ReiserFS) have LFS, which gives a maximum file size of 2^63 bytes
+in theory. The numbers in the above tables assume that the file systems are
+using 4 KiB block size. When using different block sizes, the results are
+different, but 4 KiB reflects the most common standard.
+
+In this document: 1024 Bytes = 1 KiB; 1024 KiB = 1 MiB; 1024 MiB = 1 GiB;
+1024 GiB = 1 TiB; 1024 TiB = 1 PiB; 1024 PiB = 1 EiB. See also http://
+physics.nist.gov/cuu/Units/binary.html.
+
+NFSv4 with IPv6 is only supported for the client side. A NFSv4 server with
+IPv6 is not supported.
+
+This version of Samba delivers integration with Windows 7 Active Directory
+Domains. In addition we provide the clustered version of Samba as part of
+SUSE Linux Enterprise High Availability 11 SP 1.
+
+14.4.1. Support for the btrfs File System
+
+Btrfs is a copy-on-write (CoW) general purpose file system. Based on the
+CoW functionality, btrfs provides snapshoting. Beyond that data and
+metadata checksums improve the reliability of the file system. btrfs is
+highly scalable, but also supports online shrinking to adopt to real-life
+environments. On appropriate storage devices btrfs also supports the TRIM
+command.
+
+Support
+
+With SUSE Linux Enterprise 11 SP2 the btrfs file system is supported as
+root file system, i.e. the file system for the operating system, across all
+architectures of SUSE Linux Enterprise 11 SP2. Customers are adviced to use
+the YaST partitioner (or AutoYaST) to build their systems: YaST will
+prepare the btrfs file system for use with subvolumes and snapshots.
+Snapshots will be automatically enabled for the root file system using
+SUSE's snapper infrastructure. For more information about snapper, it's
+integration into ZYpp and YaST, and the YaST snapper module, see the SUSE
+Linux Enterprise documentation.
+
+Offline-Migration from existing "ext" file systems (ext2, ext3, ext4) is
+supported.
+
+RAID
+
+Btrfs is supported on top of MD (multiple devices) and DM (device mapper)
+configurations. Please use the YaST partitioner to achieve a proper setup.
+
+Future Plans
+
+  * We are planning to announce support for btrfs' built-in multi volume
+    handling and RAID in a later version of SUSE Linux Enterprise.
+
+  * Transparent compression is implemented and mature. We are planning to
+    support this functionality in the YaST partitioner in a future release.
+
+  * We are commited to actively work on the btrfs file system with the
+    community, and we keep customers and partners informed about progress
+    and experience in terms of scalability and performance. This may also
+    apply to cloud and cloud storage infrastructures.
+
+Online Check and Repair Functionality
+
+Check and repair functionality ("scrub") is available as part of the btrfs
+command line tools. "Scrub" is aimed to verify data and metadata assuming
+the tree structures are fine. "Scrub" can (and should) be run periodically
+on a mounted file system: it runs as a background process during normal
+operation.
+
+With the release of SUSE Linux Enterprise 11 SP2, the long awaited
+"fsck.btrfs" tool is available in the SUSE Linux Enterprise update
+repositories.
+
+Capacity Planning
+
+If you are planning to use btrfs with its snapshot capability, it is
+advisable to reserve twice as much disk space than the standard storage
+proposal. This is automatically done by the YaST2 partitioner for the root
+file system.
+
+More information about btrfs can be found in the SUSE Linux Enterprise 11
+documentation.
+
+14.5. Kernel Modules
+
+An important requirement for every Enterprise operating system is the level
+of support a customer receives for his environment. Kernel modules are the
+most relevant connector between hardware ("controllers") and the operating
+system. Every kernel module in SUSE Linux Enterprise Server 11 has a flag
+'supported' with three possible values: "yes", "external", "" (empty, not
+set, "unsupported").
+
+The following rules apply:
+
+  * All modules of a self-recompiled kernel are by default marked as
+    unsupported.
+
+  * Kernel Modules supported by SUSE partners and delivered using SUSE's
+    Partner Linux Driver process are marked "external".
+
+  * If the "supported" flag is not set, loading this module will taint the
+    kernel. Tainted kernels are not supported. To avoid this, not supported
+    Kernel modules are included in an extra RPM (kernel-<flavor>-extra) and
+    will not be loaded by default ("flavor"=default|smp|xen|...). In
+    addition, these unsupported modules are not available in the installer,
+    and the package kernel-$flavor-extra is not on the SUSE Linux
+    Enterprise Server media.
+
+  * Kernel Modules not provided under a license compatible to the license
+    of the Linux kernel will also taint the kernel; see /usr/src/linux/
+    Documentation/sysctl/kernel.txt and the state of /proc/sys/kernel/
+    tainted.
+
+Technical Background
+
+  * Linux Kernel
+
+    The value of /proc/sys/kernel/unsupported defaults to 2 on SUSE Linux
+    Enterprise Server 11 ("do not warn in syslog when loading unsupported
+    modules"). This is the default used in the installer as well as in the
+    installed system. See /usr/src/linux/Documentation/sysctl/kernel.txt
+    for more information.
+
+  * modprobe
+
+    The modprobe utility for checking module dependencies and loading
+    modules appropriately checks for the value of the "supported" flag. If
+    the value is "yes" or "external" the module will be loaded, otherwise
+    it will not. See below, for information on how to override this
+    behavior.
+
+    Note: SUSE does not generally support removing of storage modules via
+    modprobe -r.
+
+Working with Unsupported Modules
+
+While the general supportability is important, there might occur situations
+where loading an unsupported module is required (e.g., for testing or
+debugging purposes, or if your hardware vendor provides a hotfix):
+
+  * You can override the default by changing the variable
+    allow_unsupported_modules in /etc/modprobe.d/unsupported-modules and
+    set the value to "1".
+
+    If you only want to try loading a module once, the
+    --allow-unsupported-modules command-line switch can be used with
+    modprobe. (For more information, see man modprobe).
+
+  * During installation, unsupported modules may be added through driver
+    update disks, and they will be loaded.
+
+    To enforce loading of unsupported modules during boot and afterwards,
+    please use the kernel command line option oem-modules.
+
+    While installing and initializing the module-init-tools package, the
+    kernel flag "TAINT_NO_SUPPORT" (/proc/sys/kernel/tainted) will be
+    evaluated. If the kernel is already tainted, allow_unsupported_modules
+    will be enabled. This will prevent unsupported modules from failing in
+    the system being installed. (If no unsupported modules are present
+    during installation and the other special kernel command line option is
+    not used, the default will still be to disallow unsupported modules.)
+
+  * If you install unsupported modules after the initial installation and
+    want to enable those modules to be loaded during system boot, please do
+    not forget to run depmod and mkinitrd.
+
+Remember that loading and running unsupported modules will make the kernel
+and the whole system unsupported by SUSE.
+
+14.6. IPv6 Implementation and Compliance
+
+SUSE Linux Enterprise Server 11 is compliant to IPv6 Logo Phase 2. However,
+when running the respective tests, you may see some tests failing. For
+various reasons, we cannot enable all the configuration options by default,
+which are necessary to pass all the tests. For details, see below.
+
+  * Section 3: RFC 4862 - IPv6 Stateless Address Autoconfiguration
+
+    Some tests fail because of the default DAD handling in Linux; disabling
+    the complete interface is possible, but not the default behavior
+    (because security-wise, this might open a DoS attack vector, a
+    malicious node on a network could shutdown the complete segment) this
+    is still conforming to RFC 4862: the shutdown of the interface is a
+    "should", not a mandatory ("must") rule.
+
+    The Linux kernel allows you to change the default behavior with a
+    sysctl parameter. To do this on SUSE Linux Enterprise Server 11, you
+    need to make the following changes in configuration:
+
+      o Add ipv6 to the modules load early on boot
+
+        Edit /etc/sysconfig/kernel and add ipv6 to MODULES_LOADED_ON_BOOT
+        e.g. MODULES_LOADED_ON_BOOT="ipv6". This is needed for the second
+        change to work, if ipv6 is not loaded early enough, setting the
+        sysctl fails.
+
+      o Add the following lines to /etc/sysctl.conf
+
+        ## shutdown IPV6 on MAC based duplicate address detection
+        net.ipv6.conf.default.accept_dad = 2
+        net.ipv6.conf.all.accept_dad = 2
+        net.ipv6.conf.eth0.accept_dad = 2
+        net.ipv6.conf.eth1.accept_dad = 2
+
+
+        Note: if you use other interfaces (e.g., eth2), please modify the
+        lines. With these changes, all tests for RFC 4862 should pass.
+
+  * Section 4: RFC 1981 - Path MTU Discovery for IPv6
+
+      o Test v6LC.4.1.10: Multicast Destination - One Router
+
+      o Test v6LC.4.1.11: Multicast Destination - Two Routers
+
+    On these two tests ping6 needs to be told to allow defragmentation of
+    multicast packets. Newer ping6 versions have this disabled by default.
+    Use: ping6 -M want <other parameters>. See man ping6 for more
+    information.
+
+  * Enable IPv6 in YaST for SCTP Support
+
+    SCTP is dependent on IPv6, so in order to successfully insert the SCTP
+    module, IPv6 must be enabled in YaST. This allows for the IPv6 module
+    to be automatically inserted when modprobe sctp is called.
+
+14.7. Other Technical Information
+
+14.7.1. Storing Log Files on the tmpfs File System Is Unsupported
+
+Ensure all your logs go through permanent local storage or the network. For
+example, putting /var/log on a tmpfs file system means that they will not
+survive a system boot. This limits your ability, and the one of SUSE, to
+analyze log files in case of a support request.
+
+Exceptions are configurations where you save log files via syslog on a
+remote log server and permanently store the log files on the log server.
+Note: Not all log files can be redirected to a remote log server (e.g.
+yast-logs, boot logs and others); if these files are not available, support
+may be very hard to effectively diagnose issues and support the system.
+
+14.7.2. libica 2.0.2 is available in SLES 11 SP2 for s390x customers
+
+The libica package contains the interface library routines used by IBM
+modules to interface with IBM Cryptographic Hardware (ICA). Starting with
+SLES 11 SP1, libica is provided in the s390x distribution in two flavors of
+packages: libica-1_3_9 and libica-2_0_2, providing libica versions 1.3.9
+and 2.0.2 respectively.
+
+libica 1.3.9 is provided for compatibility reasons with legacy hardware
+present e.g. in the ppc64 architecture. For s390x users it's always
+recommended to use the new libica 2.0.2 library since it supports all newer
+s390x hardware, larger key sizes and is backwards compatible with any ICA
+device driver in the s390x architecture.
+
+You may choose to continue using libica 1.3.9 if you don't have newer
+Cryptographic hardware to exploit or wish continue using custom
+applications that don't support the libica 2.0.2 library yet. Both
+openCryptoki and openssl-ibmca, the two main exploiters for the libica
+interface, are provided in SLES 11 SP2 to support the newer libica 2.0.2
+library.
+
+14.7.3. Yast support for layer 2 devices
+
+YaST writes the MAC address for layer 2 devices only if they of the
+card_types:
+
+ 1. OSD_100
+
+ 2. OSD_1000
+
+ 3. OSD_10GIG
+
+ 4. OSD_FE_LANE
+
+ 5. OSD_GbE_LANE
+
+ 6. OSD_Express
+
+Per intent Yast does not write the MAC address for devices of the types:
+
+ 1. HiperSockets
+
+ 2. GuestLAN/VSWITCH QDIO
+
+ 3. OSM
+
+ 4. OSX
+
+14.7.4. Changes to Network Setup
+
+The script modify_resolvconf is removed in favor of a more versatile script
+called netconfig. This new script handles specific network settings from
+multiple sources more flexibly and transparently. See the documentation and
+man-page of netconfig for more information.
+
+14.7.5. Memory cgroups
+
+Memory cgroups are now disabled for machines where they cause memory
+exhaustion and crashes. Namely, X86 32-bit systems with PAE support and
+more than 8G in any memory node have this feature disabled.
+
+14.7.6. MCELog
+
+The mcelog package logs and parses/translates Machine Check Exceptions
+(MCE) on hardware errors (also including memory errors). Formerly this has
+been done by a cron job executed hourly. Now hardware errors are
+immediately processed by an mcelog daemon.
+
+However, the mcelog service is not enabled by default resulting in memory
+and CPU errors also not being logged by default. In addition, mcelog has a
+new feature to also handle predictive bad page offlining and automatic core
+offlining when cache errors happen.
+
+The service can either be enabled via the YaST runlevel editor or via
+commandline with:
+
+chkconfig mcelog on
+rcmcelog start
+
+14.7.7. Locale Settings in ~/.i18n
+
+If you are not satisfied with locale system defaults, change the settings
+in ~/.i18n. Entries in ~/.i18n override system defaults from /etc/sysconfig
+/language. Use the same variable names but without the RC_ namespace
+prefixes; for example, use LANG instead of RC_LANG. For more information
+about locales in general, see "Language and Country-Specific Settings" in
+the Administration Guide.
+
+14.7.8. Configuration of kdump
+
+kdump is useful, if the kernel is crashing or otherwise misbehaving and a
+kernel core dump needs to be captured for analysis.
+
+Use YaST (System+Kernel Kdump) to configure your environment.
+
+14.7.9. Configuring Authentication for kdump through YaST with ssh/scp as
+Target
+
+When kdump is configured through YaST with ssh/scp as target and the target
+system is SUSE Linux Enterprise, then enable authentication using either of
+the following ways:
+
+ 1. Copy the public keys to the target system:
+
+    ssh-copy-id -i ~/.ssh/id_*.pub  <username>@<target system IP>
+
+    or
+
+ 2. Change the PasswordAuthentication setting in /etc/ssh/sshd_config of
+    the target system from:
+
+    PasswordAuthentication no
+
+    to:
+
+    PasswordAuthentication yes
+
+ 3. After the changing PasswordAuthentication in /etc/ssh/sshd_config
+    restart the sshd service on the target system with:
+
+    rcsshd restart
+
+14.7.10. JPackage Standard for Java Packages
+
+Java packages are changed to follow the JPackage Standard (http://
+www.jpackage.org/). For more information, see the documentation in /usr/
+share/doc/packages/jpackage-utils/.
+
+14.7.11. Pulseaudio
+
+For better sound functionality on SUSE Linux Enterprise systems we strongly
+recommend that pulseaudio 0.9.14 or higher is installed. This version is
+available via maintenance channels for SUSE Linux Enterprise systems
+registered with SUSE.
+
+14.7.12. Stopping Cron Status Messages
+
+To avoid the mail-flood caused by cron status messages, the default value
+of SEND_MAIL_ON_NO_ERROR in /etc/sysconfig/cron is now set to "no" for new
+installations. Even with this setting to "no", cron data output will still
+be send to the MAILTO address, as documented in the cron manpage.
+
+In the update case it is recommended to set these values according to your
+needs.
+
+Chapter 15. Documentation and Other Information
+
+  * Read the READMEs on the DVDs.
+
+  * Get the detailed changelog information about a particular package from
+    the RPM (with filename <FILENAME>):
+
+    rpm --changelog -qp <FILENAME>.rpm
+
+
+  * Check the ChangeLog file in the top level of DVD1 for a chronological
+    log of all changes made to the updated packages.
+
+  * Find more information in the docu directory of DVD1 of the SUSE Linux
+    Enterprise Server 11 Service Pack 2 DVDs. This directory includes PDF
+    versions of the SUSE Linux Enterprise Server 11 Installation Quick
+    Start and Deployment Guides.
+
+  * http://www.suse.com/documentation/sles11/ contains additional or
+    updated documentation for SUSE Linux Enterprise Server 11 Service Pack
+    2.
+
+  * These Release Notes are identical across all architectures, and are
+    available online at http://www.suse.com/releasenotes/.
+
+  * Visit http://www.suse.com/products/ for the latest product news from
+    SUSE and http://www.suse.com/download-linux/source-code.html for
+    additional information on the source code of SUSE Linux Enterprise
+    products.
+
+15.1. AutoYaST Documentation
+
+AutoYaST documentation is available as part of the sles-manuals_en package
+(HTML) and as the sles-autoyast_en-pdf subpackage (PDF).
+
+Chapter 16. Legal Notices
+
+SUSE makes no representations or warranties with respect to the contents or
+use of this documentation, and specifically disclaims any express or
+implied warranties of merchantability or fitness for any particular
+purpose. Further, SUSE reserves the right to revise this publication and to
+make changes to its content, at any time, without the obligation to notify
+any person or entity of such revisions or changes.
+
+Further, SUSE makes no representations or warranties with respect to any
+software, and specifically disclaims any express or implied warranties of
+merchantability or fitness for any particular purpose. Further, SUSE
+reserves the right to make changes to any and all parts of SUSE software,
+at any time, without any obligation to notify any person or entity of such
+changes.
+
+Any products or technical information provided under this Agreement may be
+subject to U.S. export controls and the trade laws of other countries. You
+agree to comply with all export control regulations and to obtain any
+required licenses or classifications to export, re-export, or import
+deliverables. You agree not to export or re-export to entities on the
+current U.S. export exclusion lists or to any embargoed or terrorist
+countries as specified in U.S. export laws. You agree to not use
+deliverables for prohibited nuclear, missile, or chemical/biological
+weaponry end uses. Please refer to http://www.novell.com/info/exports/ for
+more information on exporting SUSE software. SUSE assumes no responsibility
+for your failure to obtain any necessary export approvals.
+
+Copyright ? 2010, 2011, 2012 SUSE. All rights reserved. No part of this
+publication may be reproduced, photocopied, stored on a retrieval system,
+or transmitted without the express written consent of the publisher.
+
+SUSE has intellectual property rights relating to technology embodied in
+the product that is described in this document. In particular, and without
+limitation, these intellectual property rights may include one or more of
+the U.S. patents listed at http://www.novell.com/company/legal/patents/ and
+one or more additional patents or pending patent applications in the U.S.
+and other countries.
+
+For SUSE trademarks, see Novell Trademark ad Service Mark list (http://
+www.novell.com/company/legal/trademarks/tmlist.html). All third-party
+trademarks are the property of their respective owners.
+
+Colophon
+
+Thanks for using SUSE Linux Enterprise Server in your business.
+
+The SUSE Linux Enterprise Server Team.
+
