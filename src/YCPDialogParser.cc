@@ -3432,6 +3432,7 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
     {
 	if      ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_stepsEnabled ) wizardMode = YWizardMode_Steps;
 	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_treeEnabled  ) wizardMode = YWizardMode_Tree;
+	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_titleOnLeft  ) wizardMode = YWizardMode_TitleOnLeft;
 	else logUnknownOption( term, optList->value(o) );
     }
 
