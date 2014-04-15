@@ -98,6 +98,8 @@ public:
     static YCPValue 	PollInput			();
     static YCPBoolean	TextMode			();
     static YCPValue	SetReleaseNotes			( const YCPMap & relnotes );
+    static YCPValue	SetLogoFileName			( const YCPString & filename);
+
 
 
     /**

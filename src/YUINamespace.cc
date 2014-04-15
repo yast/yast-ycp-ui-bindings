@@ -247,6 +247,17 @@ YUINamespace::SetReleaseNotes( const YCPMap & relnotes )
 
 
 YCPValue
+YUINamespace::SetLogoFileName( const YCPString & filename)
+{
+    if ( YUIComponent::ui() )
+	return YCP_UI::SetLogoFileName( filename );
+    else
+	return YCPVoid();
+}
+
+
+
+YCPValue
 YUINamespace::ChangeWidget( const YCPTerm & widget_id, const YCPSymbol & property, const YCPValue & new_value )
 {
     if ( YUIComponent::ui() )

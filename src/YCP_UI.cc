@@ -1665,5 +1665,15 @@ YCPValue YCP_UI::SetReleaseNotes( const YCPMap & relnotes )
     return YCPVoid();
 }
 
+YCPValue YCP_UI::SetLogoFileName( const YCPString & filename)
+{
+    yuiMilestone() << "Setting heading log to " << filename << std::endl;
+
+    YUI::application()->setProductLogo( filename->value());
+
+    return YCPVoid();
+}
+
+
 
 // EOF
