@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 17 08:01:25 UTC 2014 - jsrain@suse.cz
+
+- Added built-in for setting wizard logo
+- 3.1.7
+
+-------------------------------------------------------------------
 Wed Apr  9 12:53:42 UTC 2014 - mvidner@suse.com
 
 - Enable wizard title on the left instead of on top (bnc#868859)

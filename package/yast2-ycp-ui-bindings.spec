@@ -17,7 +17,7 @@
 
 
 Name:           yast2-ycp-ui-bindings
-Version:        3.1.6
+Version:        3.1.7
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -43,7 +43,7 @@ Conflicts:	yast2-core < 2.16.38
 Conflicts:	yast2 < 2.23.0
 Conflicts:	yast2-libyui < 2.42.0
 
-BuildRequires:	libyui-devel >= 3.0.11
+BuildRequires:	libyui-devel >= 3.1.1
 
 # libyui ImplPtr
 BuildRequires:	boost-devel
