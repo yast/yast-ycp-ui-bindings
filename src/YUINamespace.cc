@@ -247,10 +247,10 @@ YUINamespace::SetReleaseNotes( const YCPMap & relnotes )
 
 
 YCPValue
-YUINamespace::SetLogoFileName( const YCPString & filename)
+YUINamespace::SetProductLogo( const YCPBoolean & show_logo)
 {
     if ( YUIComponent::ui() )
-	return YCP_UI::SetLogoFileName( filename );
+	return YCP_UI::SetProductLogo( show_logo );
     else
 	return YCPVoid();
 }
