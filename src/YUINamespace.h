@@ -316,6 +316,9 @@ public:
     /* TYPEINFO: void (map<any,any>) */
     YCPValue SetReleaseNotes( const YCPMap & relnotes );
 
+    /* TYPEINFO: void(boolean) */
+    YCPValue SetProductLogo( const YCPBoolean & show_logo);
+
 
     
     YCPValue

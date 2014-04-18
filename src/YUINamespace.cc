@@ -247,6 +247,17 @@ YUINamespace::SetReleaseNotes( const YCPMap & relnotes )
 
 
 YCPValue
+YUINamespace::SetProductLogo( const YCPBoolean & show_logo)
+{
+    if ( YUIComponent::ui() )
+	return YCP_UI::SetProductLogo( show_logo );
+    else
+	return YCPVoid();
+}
+
+
+
+YCPValue
 YUINamespace::ChangeWidget( const YCPTerm & widget_id, const YCPSymbol & property, const YCPValue & new_value )
 {
     if ( YUIComponent::ui() )
