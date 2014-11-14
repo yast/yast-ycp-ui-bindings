@@ -3,8 +3,9 @@ compiler:
     - gcc
 before_install:
     - wget https://raw.githubusercontent.com/yast/yast-devtools/SLE-12-GA/travis-tools/travis_setup.sh
-    - sh ./travis_setup.sh -p "docbook-xsl xsltproc yast2-core-dev yast2-devtools libyui-dev"
+    - sh ./travis_setup.sh -p "rake docbook-xsl xsltproc yast2-core-dev yast2-devtools libyui-dev" -g "yast-rake"
 script:
+    - rake check:syntax
     - make -f Makefile.cvs
     - make -j 4
     - make check
