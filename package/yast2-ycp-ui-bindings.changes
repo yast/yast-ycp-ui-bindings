@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Feb 25 09:06:23 CET 2015 - gs@suse.de
+
+- Enhance example DateField1.rb
+- Add RELEASE-NOTES*.es.* files to examples
+
+-------------------------------------------------------------------
 Thu Apr 17 08:01:25 UTC 2014 - jsrain@suse.cz
 
 - Added built-in for setting wizard logo (bnc#868722)
