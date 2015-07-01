@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 # Example for a RichText widget
+# Purpose: Have a possibility to see whether files (.txt, .rtf)
+#          such as licenses, release-notes are displayed correctly
+#          in text mode (ncurses) or graphical UI (qt).
 module Yast
   class RichTextLicenseClient < Client
     def main
@@ -23,11 +26,17 @@ module Yast
       @button = nil
       @name = ""
       @text = ""
+      if UI.TextMode()
+        @file_ext = "*.txt *orig"
+      else
+        @file_ext = "*.txt *orig *rtf"
+      end
+
       begin
         @button = UI.UserInput
 
         if @button == :load
-          @name = UI.AskForExistingFile(".", "*.txt *orig", "Select text file")
+          @name = UI.AskForExistingFile(".", @file_ext, "Select text file")
           @text2 = Convert.to_string(SCR.Read(path(".target.string"), @name))
 
           @text2 = "" if @text2 == nil
