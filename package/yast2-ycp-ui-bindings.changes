@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
 Wed Jul  1 11:28:01 UTC 2015 - jreidinger@suse.com
 
-- added built-in to set application icon only (bnc#894220)
+- added built-in SeApplicationIcon for setting application icon
+  only (bnc#894220)
 - 3.1.8
 
 -------------------------------------------------------------------
