@@ -1,0 +1,386 @@
+openSUSE 13.1 Notas de la versión
+
+Version: 13.1.4 (2013-10-17)
+
+Copyright © 2007-2008 Camaleón
+
+Copyright © 2007 César
+
+Copyright © 2007-2013 Sergio Gabriel Teves
+
+Copyright © 2009 Jorge Mata
+
+Copyright © 2013 Javier Llorente
+
+Copyright © 2013 SUSE LLC
+
+Queda permitida la copia, distribución y /o modificación de este documento
+bajo los términos de la licencia de GNU Free Documentation -Documentación
+libre de GNU-, versión 1.2 o cualquier otra versión posterior publicada por
+la Free Software Foundation; sin secciones invariables, textos de portada y
+contraportada. Se incluye una copia de la licencia en el archivo fdl.txt.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Miscelánea
+2. Instalación
+
+    2.1. Para información detallada de la instalación
+    2.2. Sin red después de la instalación
+    2.3. El controlador propietario NVIDIA requiere que los usuarios tengan
+        acceso a los dispositivos /dev/nvidia*
+
+3. General
+
+    3.1. Documentación de openSUSE
+    3.2. Dropped YaST Modules
+    3.3. UEFI—Interface Unificada Extensible del Firmware
+    3.4. Habilitar Secure Boot en YaST no es Habilitado por Defecto cuando
+        se encuentra en modo seguro.
+    3.5. Cargador de inicie equivocado al instalar desde un medio Live en
+        un entorno UEFI
+    3.6. LVM Cifrado en modo UEFI Requiere una Partición /boot
+
+4. Actualización del sistema
+
+    4.1. systemd: Activando NetworkManager mediante el alias
+        network.service
+    4.2. Variable SYSLOG_DAEMON eliminada
+
+5. Cuestiones técnicas
+
+    5.1. Inicializando gráficos con KMS (Kernel Mode Setting)
+    5.2. Configurando Postfix
+    5.3. GNOME: Solución temporal para establecer Shift o Ctrl+Shift como
+        teclas de acceso para selección de origen de entrada
+    5.4. xinetd: Escribiendo en el registro del sistema
+    5.5. Apache Version 2.4
+    5.6. tomcat: Escribiendo en el registro del Sistema
+    5.7. Darktable: Necesidad de actualizar archivos de cache
+
+Si actualiza desde una versión anterior de openSUSE, lea las notas de las
+versiones anteriores listadas aquí: http://en.opensuse.org/Release_Notes
+
+Estas notas de versión cubren los siguientes aspectos:
+
+  • Sección 1, “Miscelánea”: Estas entradas se incluyen automáticamente
+    desde openFATE, el sistema de manejo de Características y
+    Requerimientos (http://features.opensuse.org).
+
+    N/D
+
+  • Sección 2, “Instalación”: Lea aquí si desea instalar el sistema desde
+    cero.
+
+  • Sección 3, “General”: Información que todos deberían leer.
+
+  • Sección 4, “Actualización del sistema”: Problemas relacionados al
+    proceso de realizar una actualización del sistema desde una versión
+    anterior de openSUSE.
+
+  • Sección 5, “Cuestiones técnicas”: Esta sección contiene una serie de
+    cambios técnicos y mejoras dirigidas a usuarios experimentados.
+
+1. Miscelánea
+
+N/D
+
+2. Instalación
+
+2.1. Para información detallada de la instalación
+
+Para obtener información detallada de instalación, vea Sección 3.1,
+“Documentación de openSUSE”.
+
+2.2. Sin red después de la instalación
+
+CHECKIT:12.3
+
+Después de la instalación, NetworkManager no se inicia automáticamente y no
+es posible configurar las redes WiFi. Para habilitar redes (WiFi), reincie
+el equipo manualmente.
+
+2.3. El controlador propietario NVIDIA requiere que los usuarios tengan
+acceso a los dispositivos /dev/nvidia*
+
+CHECKIT:12.3
+
+Los usuarios nuevos y por defecto, ya no se añaden automáticamente al grupo
+video. Pero el controlador propietario NVIDIA requiere que los usuarios
+tengan acceso a los dispositivos /dev/nvidia*.
+
+Debido a que el controlador NVIDIA no utiliza los métodos usuales del
+kernel que permiten instalar ACLs en los nodos de los dispositivos, los
+usuarios deben ser añadidos manualmente al grupo video; como root ejecute
+(reemplace $USER con el nombre de usuario):
+
+usermod -a -G video $USER
+
+3. General
+
+3.1. Documentación de openSUSE
+
+  • En Inicio, se encuentran las intrucciones de instalación paso a paso,
+    asi como también introducciones a los escritorios KDE y Gnome y la
+    suite LibreOffice. También se cubren aspectos básicos de
+    administración, tales como instalación y administración de software, y
+    una introducción al shell bash.
+
+Find the documentation in /usr/share/doc/manual/opensuse-manuals_$LANG
+after installing the package opensuse-startup_$LANG, or online on http://
+doc.opensuse.org.
+
+3.2. Dropped YaST Modules
+
+The following YaST modules were obsolete and rarely used these days:
+
+  • yast2-autofs
+
+  • yast2-dbus-client
+
+  • yast2-dirinstall
+
+  • yast2-fingerprint-reader
+
+  • yast2-irda
+
+  • yast2-mouse
+
+  • yast2-phone-services
+
+  • yast2-power-management
+
+  • yast2-profile-manager
+
+  • yast2-sshd
+
+  • yast2-tv
+
+The main reason for dropping was to decrease the maintenance effort and
+better focus on other more used modules.
+
+3.3. UEFI—Interface Unificada Extensible del Firmware
+
+CHECKIT:12.3
+
+Antes de instalar openSUSE en un sistema que inicia utilizando UEFI
+(Interface Unificada Extensible del Kernel), se recomienda verificar for
+actualizaciones del firmware del fabricante, y, de existir, instalar las
+actualizaciones. Un sistema con Windows 8 pre instalado, es un indicador de
+que su sistema inicia utilizando UEFI.
+
+Más información: Algunos firmwares UEFI tienen defectos que causan
+problemas si demasiada información es escrita en el áera de almacenamiento
+UEFI. Nadie sabe realmente cuanto es realmente "demasiado". openSUSE
+minimiza el riesgo al no escribir más que el mínimo necesario requerido
+para iniciar el sistema. Lo mínimo significa, indicar al firmware UEFI la
+ubicación del cargado de arranque de openSUSE. El kernel linux tiene
+características que utilizan el área de almacenamiento UEFI para grabar
+información de inicio e información de fallos (pstore), las cuales han sido
+deshabilitadas. Aún así, se recomienda instalar cualquier actualización de
+firmware recomendada por el fabricante.
+
+3.4. Habilitar Secure Boot en YaST no es Habilitado por Defecto cuando se
+encuentra en modo seguro.
+
+CHECKIT:12.3
+
+Esto afecta sólo a equipos en modo UEFI con secure boot habilitado.
+
+YaST no detecta automáticamente si el equipo tiene secure boot habilitado,
+y por lo tanto instalará un cargado de arranque sin firmar, el cual no es
+aceptado por el firmware. Para instalar un cargador de arranque firmado,
+habilite manualmente la opción "Habilitar Secure Boot".
+
+3.5. Cargador de inicie equivocado al instalar desde un medio Live en un
+entorno UEFI
+
+CHECKIT:12.3
+
+Esto afecta sólo a equipos en modo UEFI.
+
+Al utilizar el instalador del medio Live, YaST no detecta el modo UEFI, e
+instala un cargador de arranque estandar, lo que impide iniciar el sistema.
+El cargador de arranque debe cambiarse manualmente de grub2 a grub2-efi.
+
+3.6. LVM Cifrado en modo UEFI Requiere una Partición /boot
+
+CHECKIT:12.3
+
+Esto afecta sólo a instalaciones en modo UEFI.
+
+En la propuesta de particionamiento, al seleccionar la opción LVM (el cual
+es requerido para cifrar el disco completo), YaST no crea una partición /
+boot separada, esto significa que initrd y el kernel serán ubicados
+(posiblemente cifrados) en el contenedor LVM, inaccesible para el cargador
+de arranque. Para poder cifrar el disco al utilizar UEFI, el
+particionamiento debe realizarse manualmente.
+
+4. Actualización del sistema
+
+4.1. systemd: Activando NetworkManager mediante el alias network.service
+
+CHECKIT:12.3
+
+Por defecto, se utiliza el cuadro de Configuración de Red de YaST (yast2
+network) para activar NetworkManager. Si desea activar NetworkManager,
+proceda de la siguiente manera.
+
+La variable sysconfig NETWORKMANAGER en /etc/sysconfig/network/config para
+activar NetworkManager, fue reemplazada con un alias de servicio systemd
+network.service, el cual será created con el
+
+systemctl enable  NetworkManager.service
+
+comando. Esto provoca la creación del alias network.service apuntando al
+servicio NetworkManager.service, y esto desactiva el script /etc/init.d/
+network. El comando
+
+systemctl -p Id show network.service
+
+permite consultar el servicio de red actualmente seleccionado.
+
+Para habilitar el servicio de NetworkManager, utilice:
+
+  • En primer lugar, detenga el servicio en ejecución:
+
+    systemctl     is-active network.service && \
+     systemctl     stop      network.service
+
+  • Habilitar el servico de NetworkManager:
+
+    systemctl --force        enable NetworkManager.service
+
+  • Iniciar el servicio de NetworkManager:
+
+    systemctl     start     network.service
+
+Para deshabilitar NetworkManager, utilice:
+
+  • Detener servicios en ejecución:
+
+    systemctl     is-active network.service && \
+    systemctl     stop      network.service
+
+  • Deshabilitar el servicio de NetworkManager:
+
+    systemctl disable NetworkManager.service
+
+  • Inicie el servicio /etc/init.d/network:
+
+    systemctl     start  network.service
+
+Para consultar el servicio seleccionado actualmente, utilice:
+
+systemctl -p Id show     network.service
+
+Devuelve "Id=NetworkManager.service" si el servicio NetworkManager se
+encuentra habilitado, de lo contrario "Id=network.service" y /etc/init.d/
+network está funcionando como el servicio de red.
+
+4.2. Variable SYSLOG_DAEMON eliminada
+
+CHECKIT:12.3
+
+La variable SYSLOG_DAEMON ha sido eliminada. Anteriormente era utilizada
+para seleccionar el daemon syslog. A partir de openSUSE 12.3, sólo una
+implementación de syslog puede ser instalada por vez en un sistema y será
+seleccionada para su uso automáticamente.
+
+Para más detalles, vea el manual syslog(8).
+
+5. Cuestiones técnicas
+
+5.1. Inicializando gráficos con KMS (Kernel Mode Setting)
+
+CHECKIT:12.3
+
+Con openSUSE 11.3 cambiamos a KMS (Configuración Modo Kernel) para gráficos
+Intel, ATI y NVIDIA, el cual es ahora nuestro valor por defecto. Si se
+encuentran problemas con el soporte del controlador KMS (intel, radeon,
+nouveau), puede deshabilitar KMS agregando nomodeset a la línea de comandos
+de arranque del kernel. Para establecer esto de forma permanente usando
+Grub 2, edite como root el archivo /etc/default/grub y agregue el valor a
+las opciones de carga GRUB_CMDLINE_LINUX_DEFAULT.
+
+sudo /usr/sbin/grub2-mkconfig --output=/boot/grub2/grub.cfg
+
+En el caso de Grub Legacy, edite /boot/grub/menu.lst y agregue el valor a
+la linea de comando del kernel. Con esta opción se asegura que se cague el
+módulo del kernel apropiado (intel, radeon, nouveau) con modeset=0 en
+initrd, es decir, KMS deshabilitado.
+
+En raros casos, cuando la carga del módulo DRM se realiza desde initrd, se
+trata de un problema general y no está relacionado con KMS, es aún posible
+desactivar la carga del módulo DRM en initrd completamente. Para esto,
+establecer la variable de sysconfig NO_KMS_IN_INITRD en yes usando YaST,
+quien luego regenera initrd. Reinicie su sistema.
+
+En Intel sin KMS el Xserver regresa al controlador fbdev (el controlador
+intel sólo soporta KMS), altenativamente, para GPUs Intel legacy, el
+controlador "intellegacy" (paquete xorg-x11-driver-video-intel-legacy) esta
+disponible, el cual todavía soporta UMS (Configuración de Modo de Usuario).
+Para usarlo, editar /etc/X11/xorg.conf.d/50-device.conf y cambiar el
+parámetro del controlador a intellegacy.
+
+En ATI para los GPUs actuales, se regresa a radeonhd. En NVIDIA sin KMS se
+utiliza el controlador nv (el controlador nouveau sólo soporta KMS). Nota,
+los nuevos GPU de ATI y NVIDIA vuelven a fbdev si agrega y el parémetro
+nomodeset a las opciones de inicio del kernel.
+
+5.2. Configurando Postfix
+
+CHECKIT:12.3
+
+En openSUSE 12.3, el archivo SuSEconfig.postfix fue renombrado a /usr/sbin/
+config.postfix. Si establece variables sysconfig en /etc/sysconfig/postfix
+o /etc/sysconfig/mail, debe ejecutar manualmente como root/usr/sbin/
+config.postfix.
+
+5.3. GNOME: Solución temporal para establecer Shift o Ctrl+Shift como
+teclas de acceso para selección de origen de entrada
+
+CHECKIT:12.3
+
+En Gnome 3.6 utilice la siguiente solución temporal para establecer Shift o
+Ctrl+Shift como teclas de acceso para selección de origen de entrada:
+
+ 1. Instalar gnome-tweak-tool.
+
+ 2. Inice gnome-tweak-tool ('Actividades'>'configuración avanzada').
+
+ 3. En el menú de la izquierda, seleccione 'Escribiendo', en la ventana de
+    la derecha, cambie su configuración.
+
+También se está haciendo un seguimiento de este problema en https://
+bugzilla.gnome.org/show_bug.cgi?id=689839.
+
+5.4. xinetd: Escribiendo en el registro del sistema
+
+El nuevo comportamiento por defecto de xinetd cambiar el destino de
+registro de /var/log/xinetd.log al registro del sistema. Esto significa que
+todos los mensajes de xinetd se verán en el registro del sistema como un
+servicio simple y nivel de registro info.
+
+Si desea volver al modo anterior, busque un ejemplo en /etc/xinetd.conf. La
+plantilla para el script logrotate para xinetd.log puede ser encontrada en
+/usr/share/doc/packages/xinetd/logrotate.
+
+5.5. Apache Version 2.4
+
+Apache 2.4 features various changes in the configuration files. For more
+information about upgrading from a previous version, see http://
+httpd.apache.org/docs/2.4/upgrading.html.
+
+5.6. tomcat: Escribiendo en el registro del Sistema
+
+Los scripts de inicio de tomcat ya no escriben su salida a /var/log/tomcat/
+catalina.out. Todos los mensajes son dirigidos al registro del sistema
+usando tomcat.service (tomcat-jsvc.service) y nivel de registro info.
+
+5.7. Darktable: Necesidad de actualizar archivos de cache
+
+Si está actualizando a openSUSE 13.1 desde una versión anterior, los
+archivos de cache pueden dejar de funcionar. En este caso, será necesario
+eliminar ~/.cache/darktable/mipmaps.
+
