@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Jul  1 11:28:01 UTC 2015 - jreidinger@suse.com
+
+- added built-in SetApplicationIcon for setting application icon
+  only (bnc#894220)
+- 3.1.8
+
+-------------------------------------------------------------------
 Wed Feb 25 09:06:23 CET 2015 - gs@suse.de
 
 - Enhance example DateField1.rb

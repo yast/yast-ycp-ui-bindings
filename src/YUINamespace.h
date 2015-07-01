@@ -319,8 +319,9 @@ public:
     /* TYPEINFO: void(boolean) */
     YCPValue SetProductLogo( const YCPBoolean & show_logo);
 
+    /* TYPEINFO: void(string) */
+    YCPValue SetApplicationIcon( const YCPString & icon);
 
-    
     YCPValue
     CallHandler( void * ptr, int argc, YCPValue argv[] );
 };

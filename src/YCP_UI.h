@@ -99,6 +99,7 @@ public:
     static YCPBoolean	TextMode			();
     static YCPValue	SetReleaseNotes			( const YCPMap & relnotes );
     static YCPValue	SetProductLogo			( const YCPBoolean & show_logo);
+    static YCPValue	SetApplicationIcon      	( const YCPString & icon);
 
 
 

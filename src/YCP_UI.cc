@@ -1674,6 +1674,13 @@ YCPValue YCP_UI::SetProductLogo( const YCPBoolean & show_logo )
     return YCPVoid();
 }
 
+YCPValue YCP_UI::SetApplicationIcon( const YCPString & icon )
+{
+    yuiMilestone() << "Setting application icon to " << icon << std::endl;
 
+    YUI::application()->setApplicationIcon( icon->value() );
+
+    return YCPVoid();
+}
 
 // EOF
