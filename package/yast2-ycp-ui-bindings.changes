@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jul  8 12:40:33 UTC 2015 - mvidner@suse.com
+
+- Added OpenUI, CloseUI (boo#937026).
+- 3.1.9
+
+-------------------------------------------------------------------
 Wed Jul  1 11:28:01 UTC 2015 - jreidinger@suse.com
 
 - added built-in SetApplicationIcon for setting application icon

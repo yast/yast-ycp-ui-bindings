@@ -17,7 +17,7 @@
 
 
 Name:           yast2-ycp-ui-bindings
-Version:        3.1.8
+Version:        3.1.9
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
@@ -37,13 +37,9 @@ BuildRequires:	sgml-skel
 
 Requires:	yast2-core
 BuildRequires:	yast2-core-devel
-Conflicts:	yast2-core < 2.16.38
 
-# dependecies for new libyui
-Conflicts:	yast2 < 2.23.0
-Conflicts:	yast2-libyui < 2.42.0
-
-BuildRequires:	libyui-devel >= 3.1.2
+# YApplication::openUI/closeUI
+BuildRequires:	libyui-devel >= 3.2.0
 
 # libyui ImplPtr
 BuildRequires:	boost-devel
