@@ -218,6 +218,25 @@ YUINamespace::CloseDialog()
 
 
 YCPValue
+YUINamespace::OpenUI()
+{
+    if ( YUIComponent::ui() )
+        YCP_UI::OpenUI();
+
+    return YCPVoid();
+}
+
+YCPValue
+YUINamespace::CloseUI()
+{
+    if ( YUIComponent::ui() )
+        YCP_UI::CloseUI();
+
+    return YCPVoid();
+}
+
+
+YCPValue
 YUINamespace::ChangeWidget( const YCPSymbol & widget_id, const YCPSymbol & property, const YCPValue & new_value )
 {
     if ( YUIComponent::ui() )

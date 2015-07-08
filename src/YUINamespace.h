@@ -189,6 +189,12 @@ public:
     /* TYPEINFO: boolean() */
     YCPValue CloseDialog();
 
+    /* TYPEINFO: void() */
+    YCPValue OpenUI();
+
+    /* TYPEINFO: void() */
+    YCPValue CloseUI();
+
     /* TYPEINFO: boolean (symbol, symbol, any) */
     YCPValue ChangeWidget( const YCPSymbol & widget_id, const YCPSymbol & property, const YCPValue & /*nil*/ new_value );
 

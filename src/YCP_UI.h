@@ -58,6 +58,7 @@ public:
     static YCPValue 	ChangeWidget			( const YCPValue & widgetId, const YCPValue & property, const YCPValue & new_value );
     static void 	CheckShortcuts			();
     static YCPValue 	CloseDialog			();
+    static void 	CloseUI				();
     static void 	DumpWidgetTree			();
     static void 	FakeUserInput			( const YCPValue & nextInput );
     static YCPMap 	GetDisplayInfo			();
@@ -69,6 +70,7 @@ public:
     static void 	NormalCursor			();
     static YCPBoolean 	OpenContextMenu			( const YCPTerm & term );
     static YCPBoolean 	OpenDialog			( const YCPTerm & opts, const YCPTerm & dialogTerm );
+    static void 	OpenUI				();
     static void 	PlayMacro			( const YCPString & filename );
     static void 	PostponeShortcutCheck		();
     static YCPValue 	QueryWidget			( const YCPValue & widgetId, const YCPValue& property );

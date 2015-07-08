@@ -619,6 +619,35 @@ YCPValue YCP_UI::CloseDialog()
 }
 
 
+/**
+ * @builtin OpenUI()
+ * @short Opens NCurses and disables stdout
+ * @description
+ * To mix TUI (NCurses) with stdio, enclose the UI parts
+ * within an OpenUI/CloseUI pair.
+ *
+ * @return void
+ */
+
+void YCP_UI::OpenUI()
+{
+    YUI::app()->openUI();
+}
+
+
+/**
+ * @builtin CloseUI()
+ * @short Closes NCurses and enables stdout
+ *
+ * @return void
+ */
+
+void YCP_UI::CloseUI()
+{
+    YUI::app()->closeUI();
+}
+
+
 
 /**
  * @builtin ChangeWidget
