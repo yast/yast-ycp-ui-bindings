@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# helper script for publishing generated documentation to surge.sh
+# Manual uploading require credentials, so only travis can do this.
+# For more info see https://surge.sh/
+
 set -x
 
 if [ "$TRAVIS_EVENT_TYPE" = "push" -a "$TRAVIS_BRANCH" = "master" ]; then
