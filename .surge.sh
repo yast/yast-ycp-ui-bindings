@@ -8,7 +8,7 @@ if [ "$TRAVIS_EVENT_TYPE" = "push" -a "$TRAVIS_BRANCH" = "master" ]; then
     yast-ycp-ui-bindings-image \
     /bin/bash -c \
     "zypper  in -y npm doxygen; npm install --global surge; rake doc;
-    surge --project ./autodoc/html --domain yast-ui-bindings.surge.sh"
+    surge --project ./autodocs/html --domain yast-ui-bindings.surge.sh"
 else
   echo "not published"
 fi

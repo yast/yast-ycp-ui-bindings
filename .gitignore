@@ -10,7 +10,7 @@
 package/*.bz2
 stamp-h*
 aclocal.m4
-autodoc/
+autodocs/
 autodocs-cc.ami
 autodocs-cc-base.ami
 autodocs-cc-off.ami
