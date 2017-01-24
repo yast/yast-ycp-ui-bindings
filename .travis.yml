@@ -11,6 +11,4 @@ script:
   - docker run -it -e TRAVIS=1 -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" yast-ycp-ui-bindings-image yast-travis-cpp
 
 after_success:
-  - echo $TRAVIS_EVENT_TYPE
-  - echo $TRAVIS_BRANCH
   - ./.surge.sh
