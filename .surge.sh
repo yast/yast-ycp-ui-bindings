@@ -2,7 +2,9 @@
 
 # helper script for publishing generated documentation to surge.sh
 # Manual uploading require credentials, so only travis can do this.
-# For more info see https://surge.sh/
+# ENV SURGE_LOGIN and SURGE_TOKEN si set on travis only.
+# For more info see https://surge.sh/ including how to get login and token
+# variables.
 
 if [ "$TRAVIS_EVENT_TYPE" = "push" -a "$TRAVIS_BRANCH" = "master" ]; then
   docker run -it -e TRAVIS=1 -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" \
