@@ -2574,8 +2574,11 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	IntField
- * @short	Numeric limited range input field
  * @class	YIntField
+ * @short	Numeric limited range input field
+ *
+ * <code> IntField(label, minValue, maxValue, initialValue) </code>
+ *
  * @arg		\c string \b label         Explanatory label above the input field
  * @arg		\c integer \b minValue	   minimum value
  * @arg		\c integer \b maxValue	   maximum value
