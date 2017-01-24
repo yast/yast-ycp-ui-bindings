@@ -1,6 +1,10 @@
 #! /bin/bash
 
-set -x
+# helper script for publishing generated documentation to surge.sh
+# Manual uploading require credentials, so only travis can do this.
+# ENV SURGE_LOGIN and SURGE_TOKEN si set on travis only.
+# For more info see https://surge.sh/ and especially integration of travis
+# and surge https://surge.sh/help/integrating-with-travis-ci
 
 if [ "$TRAVIS_EVENT_TYPE" = "push" -a "$TRAVIS_BRANCH" = "master" ]; then
   docker run -it -e TRAVIS=1 -e TRAVIS_JOB_ID="$TRAVIS_JOB_ID" \
@@ -8,7 +12,7 @@ if [ "$TRAVIS_EVENT_TYPE" = "push" -a "$TRAVIS_BRANCH" = "master" ]; then
     yast-ycp-ui-bindings-image \
     /bin/bash -c \
     "zypper  in -y npm doxygen; npm install --global surge; rake doc;
-    surge --project ./autodoc/html --domain yast-ui-bindings.surge.sh"
+    surge --project ./autodocs/html --domain yast-ui-bindings.surge.sh"
 else
   echo "not published"
 fi

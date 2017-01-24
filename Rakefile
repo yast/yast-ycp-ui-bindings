@@ -6,8 +6,8 @@ Yast::Tasks.configuration do |conf|
 end
 
 task :doc do
-  rm_rf "autodoc"
-  mkdir "autodoc"
+  rm_rf "autodocs"
+  mkdir "autodocs"
   sh "doc/generate_index.rb"
   sh "doxygen Doxyfile"
 end
