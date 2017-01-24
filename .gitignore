@@ -10,6 +10,7 @@
 package/*.bz2
 stamp-h*
 aclocal.m4
+autodoc/
 autodocs-cc.ami
 autodocs-cc-base.ami
 autodocs-cc-off.ami
@@ -28,6 +29,7 @@ configure.ac
 COPYING
 COPYRIGHT.english
 depcomp
+doc/index.md
 install-sh
 libtool
 ltconfig

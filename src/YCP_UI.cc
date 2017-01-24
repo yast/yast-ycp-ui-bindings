@@ -1144,7 +1144,7 @@ void YCP_UI::RecordMacro( const YCPString & filename )
 
 
 /**
- * @builtin StopRecordingMacro
+ * @builtin StopRecordMacro
  * @short Stops recording macro
  * @description
  * Stops macro recording. This is only necessary if you don't wish to record
@@ -1593,9 +1593,6 @@ YCPValue YCP_UI::Recode( const YCPString & fromEncoding,
 
 
 /**
- * @builtin WFM/SCR
- * @id WFM_SCR
- * @short callback
  * @description
  * This is used for a callback mechanism. The expression will
  * be sent to the WFM interpreter and evaluated there.
