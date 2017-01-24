@@ -13,4 +13,4 @@ script:
 after_success:
   - echo $TRAVIS_EVENT_TYPE
   - echo $TRAVIS_BRANCH
-  - .surge.sh
+  - ./.surge.sh
