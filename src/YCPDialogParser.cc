@@ -2576,13 +2576,11 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
  * @widget	IntField
  * @short	Numeric limited range input field
  * @class	YIntField
- * @arg		string	label		Explanatory label above the input field
- * @arg		integer minValue	minimum value
- * @arg		integer maxValue	maximum value
- * @arg		integer initialValue	initial value
+ * @arg		\c string \b label         Explanatory label above the input field
+ * @arg		\c integer \b minValue	   minimum value
+ * @arg		\c integer \b maxValue	   maximum value
+ * @arg		\c integer \b initialValue initial value
  *
- * @example	IntField1.rb
- * @example	IntField2.rb
  *
  * A numeric input field for integer numbers within a limited range.
  * This can be considered a lightweight version of the
@@ -2592,6 +2590,15 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
  * those limits are very large (e.g. +/- MAXINT).
  *
  * Fractional numbers are currently not supported.
+ *
+ * @example	IntField1.rb
+ * @example	IntField2.rb
+ *
+ * \par how widget look like:
+ * @image html IntField1.png
+ *
+ * \par another example:
+ * @image html IntField2.png
  *
  **/
 
