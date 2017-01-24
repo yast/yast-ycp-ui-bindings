@@ -124,6 +124,61 @@ using std::string;
     } while ( 0 )
 
 
+/**
+ * @widget	AAA_All-Widgets
+ * @short	Generic options for all widgets
+ * @class	YWidget
+ *
+ * @option	notify		Make UserInput() return on any action in this widget.
+ *				Normally UserInput() returns only when a button is clicked;
+ *				with this option on you can make it return for other events, too,
+ *				e.g. when the user selects an item in a SelectionBox
+ *				( if Opt( :notify ) is set for that SelectionBox ).
+ *				Only widgets with this option set are affected.
+ *
+ * @option	notifyContextMenu Make this widget to send an event when the context menu is requested
+ *				e.g. when the user clicks right mouse button
+ *				( if Opt( :notifyContextMenu ) is set for that SelectionBox ).
+ *				Only widgets with this option set are affected.
+ *
+ * @option	disabled	Set this widget insensitive, i.e. disable any user interaction.
+ *				The widget will show this state by being greyed out
+ *				(depending on the specific UI).
+ *
+ * @option	hstretch	Make this widget stretchable in the horizontal dimension.
+ *
+ * @option	vstretch	Make this widget stretchable in the vertical   dimension.
+ *
+ * @option	hvstretch	Make this widget stretchable in both dimensions.
+ *
+ * @option	autoShortcut	Automatically choose a keyboard shortcut for this widget and don't complain
+ *				in the log file about the missing
+ *				shortcut.
+ *				Don't use this regularly for all widgets - manually chosen keyboard shortcuts
+ *				are almost always better than those automatically assigned. Refer to the style guide
+ *				for details.
+ *				This option is intended used for automatically generated data, e.g., RadioButtons
+ *				for software selections that come from file or from some other data base.
+ *
+ * @option	key_F1		(NCurses only) activate this widget with the F1 key
+ * @option	key_F2		(NCurses only) activate this widget with the F2 key
+ * @option	key_Fxx		(NCurses only) activate this widget with the Fxx key
+ * @option	key_F24		(NCurses only) activate this widget with the F24 key
+ * @option	key_none	(NCurses only) no function key for this widget
+ *
+ * @option	keyEvents	(NCurses only) Make UserInput() / WaitForEvent() return on keypresses within this widget.
+ *				Exactly which keys trigger such a key event is UI specific.
+ *				This is not for general use.
+ *
+ * This is not a widget for general usage, this is just a placeholder for
+ * descriptions of options that all widgets have in common.
+ *
+ * Use them for any widget whenever it makes sense.
+ *
+ * @example AutoShortcut1.rb
+ * @example AutoShortcut2.rb
+ **/
+
 YWidget *
 YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 				      YWidgetOpt &	opt,
@@ -136,69 +191,11 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     YCPValue id = getWidgetId( term, &n );
 
 
-    // Extract optional widget options `opt( `xyz )
+    // Extract optional widget options Opt( :xyz )
 
     YCPList rawopt = getWidgetOptions( term, &n );
 
     // Handle generic options
-
-    /**
-     * @widget	AAA_All-Widgets
-     * @usage	---
-     * @short	Generic options for all widgets
-     * @class	YWidget
-     *
-     * @option	notify		Make UserInput() return on any action in this widget.
-     *				Normally UserInput() returns only when a button is clicked;
-     *				with this option on you can make it return for other events, too,
-     *				e.g. when the user selects an item in a SelectionBox
-     *				( if `opt( `notify ) is set for that SelectionBox ).
-     *				Only widgets with this option set are affected.
-     *
-     * @option	notifyContextMenu Make this widget to send an event when the context menu is requested
-     *				e.g. when the user clicks right mouse button
-     *				( if `opt( `notifyContextMenu ) is set for that SelectionBox ).
-     *				Only widgets with this option set are affected.
-     *
-     * @option	disabled	Set this widget insensitive, i.e. disable any user interaction.
-     *				The widget will show this state by being greyed out
-     *				(depending on the specific UI).
-     *
-     * @option	hstretch	Make this widget stretchable in the horizontal dimension.
-     *
-     * @option	vstretch	Make this widget stretchable in the vertical   dimension.
-     *
-     * @option	hvstretch	Make this widget stretchable in both dimensions.
-     *
-     * @option	autoShortcut	Automatically choose a keyboard shortcut for this widget and don't complain
-     *				in the log file about the missing
-     *				shortcut.
-     *				Don't use this regularly for all widgets - manually chosen keyboard shortcuts
-     *				are almost always better than those automatically assigned. Refer to the style guide
-     *				for details.
-     *				This option is intended used for automatically generated data, e.g., RadioButtons
-     *				for software selections that come from file or from some other data base.
-     *
-     * @option	key_F1		(NCurses only) activate this widget with the F1 key
-     * @option	key_F2		(NCurses only) activate this widget with the F2 key
-     * @option	key_Fxx		(NCurses only) activate this widget with the Fxx key
-     * @option	key_F24		(NCurses only) activate this widget with the F24 key
-     * @option	key_none	(NCurses only) no function key for this widget
-     *
-     * @option	keyEvents	(NCurses only) Make UserInput() / WaitForEvent() return on keypresses within this widget.
-     *				Exactly which keys trigger such a key event is UI specific.
-     *				This is not for general use.
-     *
-     * @description
-     *
-     * This is not a widget for general usage, this is just a placeholder for
-     * descriptions of options that all widgets have in common.
-     *
-     * Use them for any widget whenever it makes sense.
-     *
-     * @example AutoShortcut1.ycp AutoShortcut2.ycp
-     **/
-
     YCPList ol;
 
     for ( int o=0; o<rawopt->size(); o++ )
@@ -416,14 +413,16 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget * parent, const YCPTerm & term )
  * @short	Pseudo widget to replace parts of a dialog
  * @class	YReplacePoint
  * @arg		term child the child widget
- * @usage	`ReplacePoint( `id( `rp ), `Empty() )
- * @example	ReplacePoint1.ycp DumbTab2.ycp ShortcutCheckPostponed.ycp WidgetExists.ycp
+ * @example	ReplacePoint1.rb
+ * @example	DumbTab2.rb
+ * @example	ShortcutCheckPostponed.rb
+ * @example	WidgetExists.rb
  *
- * @description
+ *
  *
  * A ReplacePoint can be used to dynamically change parts of a dialog.
  * It contains one widget. This widget can be replaced by another widget
- * by calling <tt>ReplaceWidget( `id( id ), newchild )</tt>, where <tt>id</tt> is the
+ * by calling <tt>ReplaceWidget( Id( id ), newchild )</tt>, where <tt>id</tt> is the
  * the id of the new child widget of the replace point. The ReplacePoint widget
  * itself has no further effect and no optical representation.
  **/
@@ -450,12 +449,9 @@ YCPDialogParser::parseReplacePoint( YWidget * parent, YWidgetOpt & opt, const YC
 
 
 /**
- * @widgets	Empty
+ * @widget	Empty
  * @short	Placeholder widget
  * @class	YEmpty
- * @usage	`Empty()
- *
- * @description
  *
  * The Empty widget does nothing and has a default size of zero in both
  * dimensions. It is useful as a placeholder, for example as the initial child
@@ -479,17 +475,19 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	HSpacing VSpacing HStretch VStretch
+ * @widget	HSpacing VSpacing HStretch VStretch
  * @id          Spacing
  * @short	Fixed size empty space for layout
  * @class	YSpacing
  * @optarg	integer|float size
- * @usage	`HSpacing( 0.3 ) or `HStretch() or `HStretch( 0.7 )
- * @example	Spacing1.ycp Layout-Buttons-Equal-Even-Spaced2.ycp
- * 		HStretch1.ycp Layout-Buttons-Equal-Even-Spaced1.ycp
- *		Table2.ycp Table3.ycp
+ * @example	Spacing1.rb
+ * @example	Layout-Buttons-Equal-Even-Spaced2.rb
+ * @example	HStretch1.rb
+ * @example	Layout-Buttons-Equal-Even-Spaced1.rb
+ * @example	Table2.rb
+ * @example     Table3.rb
  *
- * @description
+ *
  *
  * HSpacing and VSpacing are layout helpers to add empty space between widgets.
  *
@@ -551,16 +549,18 @@ YCPDialogParser::parseSpacing( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	Left Right Top Bottom HCenter VCenter HVCenter
+ * @widget	Left Right Top Bottom HCenter VCenter HVCenter
  * @id          Alignment
  * @short	Layout alignment
  * @class	YAlignment
- * @optarg	`BackgroundPixmap( "dir/pixmap.png" )	background pixmap
+ * @optarg	BackgroundPixmap( "dir/pixmap.png" )	background pixmap
  * @arg		term child The contained child widget
- * @usage	`Left( `CheckBox( "Don't ask this again" ) )
- * @example	HCenter1.ycp HCenter2.ycp HCenter3.ycp Alignment1.ycp
+ * @example	HCenter1.rb
+ * @example     HCenter2.rb
+ * @example     HCenter3.rb
+ * @example     Alignment1.rb
  *
- * @description
+ *
  *
  * The Alignment widgets are used to control the layout of a dialog. They are
  * useful in situations, where to a widget is assigned more space than it can
@@ -568,13 +568,13 @@ YCPDialogParser::parseSpacing( YWidget * parent, YWidgetOpt & opt,
  * the VBox is determined by the CheckBox with the longest label. The other
  * CheckBoxes are centered per default.
  *
- * With <tt>`Left( widget )</tt> you tell a
+ * With <tt>Left( widget )</tt> you tell a
  * widget that it should be laid out leftmost of the space that is available to
  * it. <tt>Right, Top</tt> and <tt>Bottom</tt> are working accordingly.	 The
  * other three widgets center their child widget horizontally, vertically or in
  * both directions.
  *
- * As a very special case, alignment widgets that have `opt(`hvstretch) (and related)
+ * As a very special case, alignment widgets that have Opt(:hvstretch) (and related)
  * set promote their child widget's stretchability to the parent layout.
  * I.e., they do not align a child that is stretchable in that dimension,
  * but stretch it to consume the available space. This is only very rarely
@@ -600,12 +600,12 @@ YCPDialogParser::parseAlignment( YWidget * parent, YWidgetOpt & opt,
     string	background_pixmap;
 
 
-    if ( argc == 1 &&				// Simple case: `Center( widget )
+    if ( argc == 1 &&				// Simple case: Center( widget )
 	 term->value( argnr )->isTerm() )
     {
 	childTerm = term->value( argnr )->asTerm();
     }
-    else if ( argc == 2 &&		// `Center( `BackgroundPixmap( "somedir/pixmap.png" ), widget )
+    else if ( argc == 2 &&		// Center( BackgroundPixmap( "somedir/pixmap.png" ), widget )
 	      term->value( argnr   )->isTerm() &&
 	      term->value( argnr   )->asTerm()->name() == YUISymbol_BackgroundPixmap &&
 	      term->value( argnr   )->asTerm()->value(0)->isString() &&
@@ -639,17 +639,18 @@ YCPDialogParser::parseAlignment( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	MinWidth MinHeight MinSize
+ * @widget	MinWidth MinHeight MinSize
  * @id          MinSize
  * @short	Layout minimum size
  * @class	YAlignment
  * @arg		float|integer size minimum width (for MinWidth or MinSize) or minimum heigh (for MinHeight)
  * @optarg	float|integer height (only for MinSize)
  * @arg		term child The contained child widget
- * @usage	`MinWidth( 30, InputField(`id(`name), "Name" ) );
- * @example	MinWidth1.ycp MinHeight1.ycp MinSize1.ycp
+ * @example	MinWidth1.rb
+ * @example     MinHeight1.rb
+ * @example     MinSize1.rb
  *
- * @description
+ *
  *
  * This widget makes sure its one child never gets less screen space than the specified amount.
  * It implicitly makes the child stretchable in that dimension.
@@ -713,11 +714,10 @@ YCPDialogParser::parseMinSize( YWidget * parent, YWidgetOpt & opt,
  * @arg		float horMargin	 margin left and right of the child widget
  * @arg		float vertMargin margin above and below the child widget
  * @arg		term child The contained child widget
- * @usage	`MarginBox( 0.2, 0.3, `Label( "Hello" ) );
- * @usage	`MarginBox( `leftMargin( 0.7,), `rightMargin( 2.0 ), `topMargin( 0.3 ), `bottomMargin( 0.8 ), `Label( "Hello" ) );
- * @example	MarginBox1.ycp MarginBox2.ycp
+ * @example	MarginBox1.rb
+ * @example     MarginBox2.rb
  *
- * @description
+ *
  *
  * This widget is a shorthand to add margins to the sides of a child widget
  * (which may of course also be a VBox or a HBox, i.e. several widgets).
@@ -743,7 +743,7 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
     YCPTerm	childTerm	= YCPNull();
 
 
-    if ( argc == 3 &&				// `MarginBox( horMargin, vertMargin, child )
+    if ( argc == 3 &&				// MarginBox( horMargin, vertMargin, child )
 	 isNum( term->value( argnr   ) ) &&
 	 isNum( term->value( argnr+1 ) ) &&
 	 term->value( argnr+2 )->isTerm() )
@@ -754,7 +754,7 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
 	paramOK    = true;
     }
 
-    if ( ! paramOK && argc == 5 ) // `MarginBox(`leftMargin(99), `rightMargin(99), `topMargin(99), `bottomMargin(99), child );
+    if ( ! paramOK && argc == 5 ) // MarginBox(leftMargin(99), rightMargin(99), topMargin(99), bottomMargin(99), child );
     {
  	paramOK = term->value( argnr+4)->isTerm();
 
@@ -802,15 +802,16 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	Frame
+ * @widget	Frame
  * @short	Frame with label
  * @class	YFrame
  * @arg		string label title to be displayed on the top left edge
  * @arg		term child the contained child widget
- * @usage	`Frame( `RadioButtonGroup( `id( rb ), `VBox( ... ) ) );
- * @examples	Frame1.ycp Frame2.ycp InputField5.ycp
+ * @example	Frame1.rb
+ * @example	Frame2.rb
+ * @example     InputField5.rb
  *
- * @description
+ *
  *
  * This widget draws a frame around its child and displays a title label within
  * the top left edge of that frame. It is used to visually group widgets
@@ -843,15 +844,14 @@ YCPDialogParser::parseFrame( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	HSquash VSquash HVSquash
+ * @widget	HSquash VSquash HVSquash
  * @id          Squash
  * @short	Layout aid: Minimize widget to its preferred size
  * @class	YSquash
  * @arg		term child the child widget
- * @usage	HSquash( `InputField( "Name:" ) )
- * @example	HSquash1.ycp
+ * @example	HSquash1.rb
  *
- * @description
+ *
  *
  * The Squash widgets are used to control the layout. A <tt>HSquash</tt> widget
  * makes its child widget <b>nonstretchable</b> in the horizontal dimension.
@@ -859,10 +859,10 @@ YCPDialogParser::parseFrame( YWidget * parent, YWidgetOpt & opt,
  * dimensions.
  *
  * You can used this for example to reverse the effect of
- * <tt>`Left</tt> making a widget stretchable. If you want to make a VBox
+ * <tt>Left</tt> making a widget stretchable. If you want to make a VBox
  * containing for left aligned CheckBoxes, but want the VBox itself to be
  * non-stretchable and centered, than you enclose each CheckBox with a
- * <tt>`Left( .. )</tt> and the whole VBox with a <tt>HSquash( ... )</tt>.
+ * <tt>Left( .. )</tt> and the whole VBox with a <tt>HSquash( ... )</tt>.
  *
  *
  **/
@@ -889,22 +889,21 @@ YCPDialogParser::parseSquash( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	HWeight VWeight
+ * @widget	HWeight VWeight
  * @id          Weight
  * @short	Control relative size of layouts
- * @class	(YWeight)
+ * @class	YWeight
  * @arg		integer weight the new weight of the child widget
  * @arg		term child the child widget
- * @usage	`HWeight( 2, `SelectionBox( "Language" ) )
- * @examples	Weight1.ycp
- *		Layout-Buttons-Equal-Even-Spaced1.ycp
- *		Layout-Buttons-Equal-Even-Spaced2.ycp
- *		Layout-Buttons-Equal-Growing.ycp
- *		Layout-Mixed.ycp
- *		Layout-Weights1.ycp
- *		Layout-Weights2.ycp
+ * @example	Weight1.rb
+ * @example	Layout-Buttons-Equal-Even-Spaced1.rb
+ * @example     Layout-Buttons-Equal-Even-Spaced2.rb
+ * @example	Layout-Buttons-Equal-Growing.rb
+ * @example	Layout-Mixed.rb
+ * @example	Layout-Weights1.rb
+ * @example	Layout-Weights2.rb
  *
- * @description
+ *
  *
  *
  * This widget is used to control the layout. When a <tt>HBox</tt> or
@@ -951,7 +950,7 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	HBox VBox
+ * @widget	HBox VBox
  * @id          Box
  * @short	Generic layout: Arrange widgets horizontally or vertically
  * @class	LayoutBox
@@ -960,19 +959,19 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
  * @optarg	term child3 the third child widget
  * @optarg	term child4 the fourth child widget ( and so on... )
  * @option	debugLayout verbose logging
- * @usage	HBox( `PushButton( `id( `ok ), "OK" ), `PushButton( `id( `cancel ), "Cancel" ) )
  *
- * @examples	VBox1.ycp HBox1.ycp
- *		Layout-Buttons-Equal-Growing.ycp
- *		Layout-Fixed.ycp
- *		Layout-Mixed.ycp
+ * @example	VBox1.rb
+ * @example	HBox1.rb
+ * @example     Layout-Buttons-Equal-Growing.rb
+ * @example     Layout-Fixed.rb
+ * @example     Layout-Mixed.rb
  *
- * @description
+ *
  *
  * The layout boxes are used to split up the dialog and layout a number of
  * widgets horizontally ( <tt>HBox</tt> ) or vertically ( <tt>VBox</tt> ).
  *
- * Rather than `HBox use `ButtonBox for placing `PushButton items in a pop-up
+ * Rather than HBox use ButtonBox for placing PushButton items in a pop-up
  * dialog. Then it automatically places them in the correct order depending
  * on a selected UI.
  *
@@ -1009,18 +1008,17 @@ YCPDialogParser::parseLayoutBox( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	ButtonBox
+ * @widget	ButtonBox
  * @id          ButtonBox
  * @short	Layout for push buttons that takes button order into account
  * @class	ButtonBox
  * @arg		term button1 the first button
  * @optarg	term button2 the second button (etc.)
  * @option	relaxSanityCheck less stringent requirements for button roles
- * @usage	`ButtonBox(`PushButton( `id( `ok ), "OK" ), `PushButton( `id( `cancel ), "Cancel" ) )
  *
- * @examples	ButtonBox1.ycp
+ * @example	ButtonBox1.rb
  *
- * @description
+ *
  *
  * This widget arranges its push button child widgets according to the current
  * button order.
@@ -1064,19 +1062,19 @@ YCPDialogParser::parseLayoutBox( YWidget * parent, YWidgetOpt & opt,
  * The UI automatically recognizes standard button labels and assigns the
  * proper role. This is done very much like assigning function keys (see
  * UI::SetFunctionKeys()). The UI also has some built-in heuristics to
- * recognize standard button IDs like `id(`ok), `id("ok"), `id(`yes), etc.
+ * recognize standard button IDs like Id(:ok), Id("ok"), Id(:yes), etc.
  *
  * Sometimes it makes sense to use something like [Print] or [Delete] for the
  * okButton role if printing or deleting is what the respective dialog is all
  * about. In that case, the application has to explicitly specify that button
- * role: Use `opt(`okButton).
+ * role: Use Opt(:okButton).
  *
- * Similarly, there are `opt(`cancelButton), `opt(`applyButton),
- * `opt(`helpButton).
+ * Similarly, there are Opt(:cancelButton), Opt(:applyButton),
+ * Opt(:helpButton).
  *
  * By default, a ButtonBox with more than one button is required to have one
  * okButton and one cancelButton.
- * `opt(`relaxSanityCheck) relaxes those requirements: It does not check for
+ * Opt(:relaxSanityCheck) relaxes those requirements: It does not check for
  * one okButton and one cancelButton. This should be used very sparingly -- use
  * your common sense. One Example where this is legitimate is a pop-up dialog
  * with [OK] [Details] for error messages that can be explained in more
@@ -1182,18 +1180,22 @@ bool YCPDialogParser::startsWith( const string & str, const char * word )
 
 
 /**
- * @widgets	Label Heading
+ * @widget	Label Heading
  * @short	Simple static text
  * @class	YLabel
  * @arg		string label
  * @option	outputField make the label look like an input field in read-only mode
  * @option	boldFont use a bold font
- * @usage	`Label( "Here goes some text\nsecond line" )
  *
- * @examples	Label1.ycp Label2.ycp Label3.ycp Label4.ycp
- *		Heading1.ycp Heading2.ycp Heading3.ycp
+ * @example	Label1.rb
+ * @example	Label2.rb
+ * @example	Label3.rb
+ * @example	Label4.rb
+ * @example	Heading1.rb
+ * @example	Heading2.rb
+ * @example	Heading3.rb
  *
- * @description
+ *
  *
  * A <tt>Label</tt> is static text displayed in the dialog.
  * A <tt>Heading</tt> is static text with a bold and/or larger font.
@@ -1245,10 +1247,12 @@ YCPDialogParser::parseLabel( YWidget * parent, YWidgetOpt & opt,
  * @option	plainText don't interpret text as HTML
  * @option	autoScrollDown automatically scroll down for each text change
  * @option	shrinkable make the widget very small
- * @usage	`RichText( "This is a <b>bold</b> text" )
- * @example	RichText1.ycp RichText2.ycp RichText3.ycp RichText-hyperlinks.ycp
+ * @example	RichText1.rb
+ * @example	RichText2.rb
+ * @example	RichText3.rb
+ * @example	RichText-hyperlinks.rb
  *
- * @description
+ *
  *
  *
  * A <tt>RichText</tt> is a text area with two major differences to a
@@ -1304,10 +1308,9 @@ YCPDialogParser::parseRichText( YWidget * parent, YWidgetOpt & opt,
  * @arg		string label (above the log lines)
  * @arg		integer visibleLines number of visible lines (without scrolling)
  * @arg		integer maxLines number of log lines to store (use 0 for "all")
- * @usage	`LogView( "Log file", 4, 200 );
- * @example	LogView1.ycp
+ * @example	LogView1.rb
  *
- * @description
+ *
  *
  *
  * A scrolled output-only text window where ASCII output of any kind can be
@@ -1319,13 +1322,13 @@ YCPDialogParser::parseRichText( YWidget * parent, YWidgetOpt & opt,
  * "visibleLines" lines will be visible by default (without scrolling) unless
  * you stretch the widget in the layout.
  *
- * Use <tt>ChangeWidget( `id( `log ), `LastLine, "bla blurb...\n" )</tt> to append
+ * Use <tt>ChangeWidget( Id( :log ), :LastLine, "bla blurb...\n" )</tt> to append
  * one or several line(s) to the output. Notice the newline at the end of each line!
  *
- * Use <tt>ChangeWidget( `id( `log ), `Value, "bla blurb...\n" )</tt> to replace
+ * Use <tt>ChangeWidget( Id( :log ), :Value, "bla blurb...\n" )</tt> to replace
  * the entire contents of the LogView.
  *
- * Use <tt>ChangeWidget( `id( `log ), `Value, "" )</tt> to clear the contents.
+ * Use <tt>ChangeWidget( Id( :log ), :Value, "" )</tt> to clear the contents.
  **/
 
 YWidget *
@@ -1358,15 +1361,17 @@ YCPDialogParser::parseLogView( YWidget * parent, YWidgetOpt & opt,
  * @arg		string iconName (IconButton only)
  * @arg		string label
  * @option	default makes this button the dialogs default button
- * @option	helpButton automatically shows topmost `HelpText
+ * @option	helpButton automatically shows topmost HelpText
  * @option	okButton     assign the [OK] role to this button (see ButtonBox)
  * @option	cancelButton assign the [Cancel] role to this button (see ButtonBox)
  * @option	applyButton  assign the [Apply] role to this button (see ButtonBox)
  * @option	customButton override any other button role assigned to this button
- * @usage	`PushButton( `id( `click ), `opt( `default, `hstretch ), "Click me" )
- * @examples	PushButton1.ycp PushButton2.ycp IconButton1.ycp ButtonBox1.ycp
+ * @example	PushButton1.rb
+ * @example	PushButton2.rb
+ * @example	IconButton1.rb
+ * @example	ButtonBox1.rb
  *
- * @description
+ *
  *
  *
  * A <tt>PushButton</tt> is a button with a text label the user can
@@ -1390,9 +1395,9 @@ YCPDialogParser::parseLogView( YWidget * parent, YWidgetOpt & opt,
  * a dialog together. Then it can properly sort the buttons on a screen
  * depending on the selected UI (GTK, Qt, ncurses).
  *
- * If a button has `opt(`helpButton) set, it is the official help button of
+ * If a button has Opt(:helpButton) set, it is the official help button of
  * this dialog. When activated, this will open a new dialog with the topmost
- * help text in this dialog (the topmost widget that has a property `HelpText)
+ * help text in this dialog (the topmost widget that has a property :HelpText)
  * in a pop-up dialog with a local event loop. Note that this is not done
  * during UI::PollInput() to prevent the application from blocking as long as
  * the help dialog is open.
@@ -1485,10 +1490,10 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
  * @class	YMenuButton
  * @arg		string		label
  * @arg		itemList	menu items
- * @usage	`MenuButton( "button label", [ `item( `id( `doit ), "&amp; Do it" ), `item( `id( `something ), "&amp; Something" ) ] );
- * @examples	MenuButton1.ycp MenuButton2.ycp
+ * @example	MenuButton1.rb
+ * @example	MenuButton2.rb
  *
- * @description
+ *
  *
  * This is a widget that looks very much like a <tt>PushButton</tt>, but unlike
  * a <tt>PushButton</tt> it doesn't immediately start some action but opens a
@@ -1547,10 +1552,12 @@ YCPDialogParser::parseMenuButton( YWidget * parent, YWidgetOpt & opt,
  * @optarg	boolean|nil checked whether the check box should start checked -
  *		nil means tristate condition, i.e. neither on nor off
  * @option	boldFont use a bold font
- * @usage	`CheckBox( `id( `cheese ), "&amp; Extra cheese" )
- * @examples	CheckBox1.ycp CheckBox2.ycp CheckBox3.ycp CheckBox4.ycp
+ * @example	CheckBox1.rb
+ * @example	CheckBox2.rb
+ * @example	CheckBox3.rb
+ * @example	CheckBox4.rb
  *
- * @description
+ *
  *
  * A checkbox widget has two states: Checked and not checked. It returns no
  * user input but you can query and change its state via the <tt>Value</tt>
@@ -1592,13 +1599,14 @@ YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
  * @arg		string label the text describing the check box
  * @arg		boolean checked whether the check box should start checked
  * @arg		term child the child widgets for frame content - typically
- *		`VBox(...) or `HBox(...)
+ *		VBox(...) or HBox(...)
  * @option	noAutoEnable do not enable/disable frame children upon status change
  * @option	invertAutoAnable disable frame children if check box is checked
- * @usage	`CheckBoxFrame( `id( `custom), "&Custom", true, `VBox(`InputField(...), ... )
- * @examples	CheckBoxFrame1.ycp CheckBoxFrame2.ycp CheckBoxFrame3.ycp
+ * @example	CheckBoxFrame1.rb
+ * @example	CheckBoxFrame2.rb
+ * @example	CheckBoxFrame3.rb
  *
- * @description
+ *
  *
  * This is a combination of the check box widget and the frame widget:
  * A frame that has a check box where a simple frame would have its frame title.
@@ -1606,13 +1614,13 @@ YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
  * By default, the frame content (the child widgets) get disabled if the check box
  * is set to "off" (unchecked) and enabled if the check box is set to "on" (cheched).
  *
- * `opt(`invertAutoEnable) inverts this behaviour: It makes YCheckBoxFrame
+ * Opt(:invertAutoEnable) inverts this behaviour: It makes YCheckBoxFrame
  * disable its content (its child widgets) if it is set to "on" (checked) and
  * enable its content if it is set to "off".
  *
- * `opt(`noAutoEnable) switches off disabling and enabling the frame content (the
+ * Opt(:noAutoEnable) switches off disabling and enabling the frame content (the
  * child widgets) completely. In that case, use QueryWidget() and/or
- * `opt(`immediate).
+ * Opt(:immediate).
  *
  * Please note that unlike YCheckBox this widget does not support tri-state -
  * it is always either on or off.
@@ -1677,10 +1685,12 @@ YCPDialogParser::parseCheckBoxFrame( YWidget * parent, YWidgetOpt & opt,
  * @arg		string label
  * @optarg	boolean selected
  * @option	boldFont use a bold font
- * @usage	`RadioButton( `id( `now ), "Crash now", true )
- * @examples	RadioButton1.ycp RadioButton2.ycp Frame2.ycp ShortcutConflict3.ycp
+ * @example	RadioButton1.rb
+ * @example	RadioButton2.rb
+ * @example	Frame2.rb
+ * @example	ShortcutConflict3.rb
  *
- * @description
+ *
  *
  * A radio button is not usefull alone. Radio buttons are group such that the
  * user can select one radio button of a group. It is much like a selection
@@ -1723,10 +1733,10 @@ YCPDialogParser::parseRadioButton( YWidget * parent, YWidgetOpt & opt,
  * @short	Radio box - select one of many radio buttons
  * @class	YRadioButtonGroup
  * @arg		term child the child widget
- * @usage	`RadioButtonGroup( `id( rb ), `VBox( ... ) )
- * @examples	RadioButton1.ycp Frame2.ycp
+ * @example	Frame2.rb
+ * @example	RadioButton1.rb
  *
- * @description
+ *
  *
  * A <tt>RadioButtonGroup</tt> is a container widget that has neither impact on
  * the layout nor has it a graphical representation. It is just used to
@@ -1761,20 +1771,24 @@ YCPDialogParser::parseRadioButtonGroup( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	InputField TextEntry Password
+ * @widget	InputField TextEntry Password
  * @short	Input field
  * @class	YInputField
  * @arg		string label the label describing the meaning of the entry
  * @optarg	string defaulttext The text contained in the text entry
  * @option	shrinkable make the input field very small
- * @usage	`InputField( `id( `name ), "Enter your name:", "Kilroy" )
  *
- * @examples	InputField1.ycp InputField2.ycp InputField3.ycp InputField4.ycp
- *		InputField5.ycp InputField6.ycp
- *		Password1.ycp Password2.ycp
- *              InputField-setInputMaxLength.ycp
+ * @example	InputField1.rb
+ * @example	InputField2.rb
+ * @example	InputField3.rb
+ * @example	InputField4.rb
+ * @example	InputField5.rb
+ * @example	InputField6.rb
+ * @example	Password1.rb
+ * @example	Password2.rb
+ * @example     InputField-setInputMaxLength.rb
  *
- * @description
+ *
  *
  * This widget is a one line text entry field with a label above it. An initial
  * text can be provided.
@@ -1783,14 +1797,14 @@ YCPDialogParser::parseRadioButtonGroup( YWidget * parent, YWidgetOpt & opt,
  * label. When the user presses the hotkey, the corresponding text entry widget
  * will get the keyboard focus.
  *
- * @note	Bug compatibility mode: If used as TextEntry(), `opt(`hstretch)
+ * @note	Bug compatibility mode: If used as TextEntry(), Opt(:hstretch)
  *		is automatically added (with a warning in the log about that fact)
  *		to avoid destroying dialogs written before fixing a geometry bug
  *		in the widget. The bug had caused all TextEntry widgets to be
  *		horizontally stretchable, so they consumed all the horizontal
  *		space they could get, typically making them as wide as the dialog.
  *		When used with the new name InputField(), they use a reasonable
- *		default width. You can still add `opt(`hstretch), of course.
+ *		default width. You can still add Opt(:hstretch), of course.
  **/
 
 YWidget *
@@ -1856,16 +1870,18 @@ YCPDialogParser::parseInputField( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	MultiLineEdit
+ * @widget	MultiLineEdit
  * @short	multiple line text edit field
  * @class	YMultiLineEdit
  * @arg		string label label above the field
  * @optarg	string initialValue the initial contents of the field
- * @usage	`MultiLineEdit( `id( `descr ), "Enter problem &amp; description:", "No problem here." )
  *
- * @examples	MultiLineEdit1.ycp MultiLineEdit2.ycp MultiLineEdit3.ycp MultiLineEdit-setInputMaxLength.ycp
+ * @example	MultiLineEdit1.rb
+ * @example	MultiLineEdit2.rb
+ * @example	MultiLineEdit3.rb
+ * @example	MultiLineEdit-setInputMaxLength.rb
  *
- * @description
+ *
  *
  *
  * This widget is a multiple line text entry field with a label above it.
@@ -1913,25 +1929,24 @@ YCPDialogParser::parseMultiLineEdit( YWidget * parent, YWidgetOpt & opt,
  * @arg		string label
  * @optarg	list items the items contained in the selection box
  * @option	shrinkable make the widget very small
- * @option	immediate	make `notify trigger immediately when the selected item changes
- * @usage	`SelectionBox( `id( `pizza ), "select your Pizza:", [ "Margarita", `item( `id( `na ), "Napoli" ) ] )
- * @examples	SelectionBox1.ycp
- *		SelectionBox2.ycp
- *		SelectionBox3.ycp
- *		SelectionBox4.ycp
- *		SelectionBox-icons.ycp
- *		SelectionBox-replace-items1.ycp
- *		SelectionBox-replace-items2.ycp
+ * @option	immediate	make :notify trigger immediately when the selected item changes
+ * @example	SelectionBox1.rb
+ * @example	SelectionBox2.rb
+ * @example	SelectionBox3.rb
+ * @example	SelectionBox4.rb
+ * @example	SelectionBox-icons.rb
+ * @example	SelectionBox-replace-items1.rb
+ * @example	SelectionBox-replace-items2.rb
  *
- * @description
+ *
  *
  * A selection box offers the user to select an item out of a list. Each item
  * has a label and an optional id. When constructing the list of items, you
  * have two way of specifying an item. Either you give a plain string, in which
  * case the string is used both for the id and the label of the item. Or you
- * specify a term <tt>`item( term id, string label )</tt> or <tt>`item( term id,
+ * specify a term <tt>Item( term id, string label )</tt> or <tt>Item( term id,
  * string label, boolean selected )</tt>, where you give an id of the form
- * <tt>`id( any v )</tt> where you can store an aribtrary value as id. The third
+ * <tt>Id( any v )</tt> where you can store an aribtrary value as id. The third
  * argument controls whether the item is the selected item.
  *
  **/
@@ -1986,21 +2001,20 @@ YCPDialogParser::parseSelectionBox( YWidget * parent, YWidgetOpt & opt,
  * @arg		string	label
  * @optarg	list	items	the items initially contained in the selection box
  * @option	shrinkable make the widget very small
- * @usage	`MultiSelectionBox( `id( `topping ), "select pizza toppings:", [ "Salami", `item( `id( `cheese ), "Cheese", true ) ] )
- * @examples	MultiSelectionBox1.ycp
- *		MultiSelectionBox2.ycp
- *		MultiSelectionBox3.ycp
- *		MultiSelectionBox-replace-items1.ycp
- *		MultiSelectionBox-replace-items2.ycp
+ * @example	MultiSelectionBox1.rb
+ * @example	MultiSelectionBox2.rb
+ * @example	MultiSelectionBox3.rb
+ * @example	MultiSelectionBox-replace-items1.rb
+ * @example	MultiSelectionBox-replace-items2.rb
  *
- * @description
+ *
  *
  * The MultiSelectionBox displays a ( scrollable ) list of items from which any
  * number (even nothing!) can be selected. Use the MultiSelectionBox's
  * <tt>SelectedItems</tt> property to find out which.
  *
  * Each item can be specified either as a simple string or as
- * <tt>`item( ... )</tt> which includes an ( optional ) ID and an (optional)
+ * <tt>Item( ... )</tt> which includes an ( optional ) ID and an (optional)
  * 'selected' flag that specifies the initial selected state ('not selected',
  * i.e. 'false', is default).
  *
@@ -2052,15 +2066,14 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
  * @arg		string label
  * @optarg	list items the items contained in the combo box
  * @option	editable the user can enter any value.
- * @usage	`ComboBox( `id( `pizza ), "select your Pizza:", [ "Margarita", `item( `id( `na ), "Napoli" ) ] )
- * @examples	ComboBox1.ycp
- *		ComboBox2.ycp
- *		ComboBox3.ycp
- *		ComboBox4.ycp
- * 		ComboBox-replace-items1.ycp
- * 		ComboBox-setInputMaxLength.ycp
+ * @example	ComboBox1.rb
+ * @example	ComboBox2.rb
+ * @example	ComboBox3.rb
+ * @example	ComboBox4.rb
+ * @example	ComboBox-replace-items1.rb
+ * @example	ComboBox-setInputMaxLength.rb
  *
- * @description
+ *
  *
  * A combo box is a combination of a selection box and an input field. It gives
  * the user a one-out-of-many choice from a list of items.  Each item has a
@@ -2129,31 +2142,30 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
  *			]
  *		item ::=
  *			string |
- *			`item(
- *				[ `id( string  ),]
+ *			Item(
+ *				[ Id( string  ),]
  *				string
  *				[ , true | false ]
  *				[ , itemList ]
  *			)
  *              </code>
  *
- *		The boolean parameter inside `item() indicates whether or not
+ *		The boolean parameter inside Item() indicates whether or not
  *		the respective tree item should be opened by default - if it
  *		has any subitems and if the respective UI is capable of closing
  *		and opening subtrees. If the UI cannot handle this, all
  *		subtrees will always be open.
  *
  * @option	multiSelection	user can select multiple items at once 
- * @option	immediate	make `notify trigger immediately when the selected item changes
- * @usage	`Tree( `id( `treeID ), "treeLabel", [ "top1", "top2", "top3" ] );
- * @examples	Tree1.ycp
- *		Tree2.ycp
- *		Tree3.ycp
- *		Tree-icons.ycp
- *		Tree-replace-items.ycp
- *		Wizard4.ycp
+ * @option	immediate	make :notify trigger immediately when the selected item changes
+ * @example	Tree1.rb
+ * @example	Tree2.rb
+ * @example	Tree3.rb
+ * @example	Tree-icons.rb
+ * @example	Tree-replace-items.rb
+ * @example	Wizard4.rb
  *
- * @description
+ *
  *
  * A tree widget provides a selection from a hierarchical tree structure. The
  * semantics are very much like those of a SelectionBox. Unlike the
@@ -2225,19 +2237,22 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  * @class	YTable
  * @arg		term header the headers of the columns
  * @optarg	list items the items contained in the selection box
- * @option	immediate make `notify trigger immediately when the selected item changes
+ * @option	immediate make :notify trigger immediately when the selected item changes
  * @option	keepSorting keep the insertion order - don't let the user sort manually by clicking
  * @option	multiSelection	user can select multiple items (rows) at once (shift-click, ctrl-click)
- * @usage	`Table( `header( "Game", "Highscore" ), [ `item( `id(1), "xkobo", "1708" ) ] )
- * @examples	Table1.ycp Table2.ycp Table3.ycp Table4.ycp Table5.ycp
+ * @example	Table1.rb
+ * @example	Table2.rb
+ * @example	Table3.rb
+ * @example	Table4.rb
+ * @example	Table5.rb
  *
- * @description
+ *
  *
  * The Table widget is a selection list with multiple columns. By default, the user can
  * select exactly one row (with all its columns) from that list. With
- * `opt(`multiSelection), the user can select one or more rows (with all their
- * columns) from that list (In that case, use the `SelectedItems property, not
- * `Value).
+ * Opt(:multiSelection), the user can select one or more rows (with all their
+ * columns) from that list (In that case, use the :SelectedItems property, not
+ * :Value).
  *
  * Each cell (each column within each row) has a label text and an optional
  * icon.
@@ -2254,31 +2269,33 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  * want to be. Actions are performed on rows, not on individual cells (columns
  * within one row).
  *
- * The first argument (after `opt() and `id() which both are optional) is
- * `header() which specifies the column headers (and implicitly the number of
+ * The first argument (after Opt() and Id() which both are optional) is
+ * Header() which specifies the column headers (and implicitly the number of
  * columns) and optionally the alignment for each column. Default alignment is
  * left.
  *
  * In the list of items, an ID is specified for each item. Each item can have
- * less cells (columns) than the table has columns (from `header()), in which
+ * less cells (columns) than the table has columns (from Header()), in which
  * case any missing cells are assumed to be empty. If an item has more cells
  * than the table has columns, any extra cells are ignored.
  *
  * Each cell has a text label (which might also be an empty string) and
  * optionally an icon. If a cell has an icon, it has to be specified with
- * `cell(`icon("myiconname.png", "Label text")).
+ * cell(Icon("myiconname.png", "Label text")).
  *
  * A simple table is specified like this:
  *
- * `Table(`id(`players),
- *        `header("Nick", "Age", "Role"),
+ * @code
+ * Table(Id(:players),
+ *        Header("Nick", "Age", "Role"),
  *        [
- *         `item(`id("Bluebird"), "Bluebird,	18, 	"Scout"  ),
- *         `item(`id("Ozzz"    ), "Ozzz",	23, 	"Wizard" ),
- *         `item(`id("Wannabe" ), "Wannabe",	17 ),
- *         `item(`id("Coxxan"  ), "Coxxan",	26, 	"Warrior")
+ *         Item(Id("Bluebird"), "Bluebird,	18, 	"Scout"  ),
+ *         Item(Id("Ozzz"    ), "Ozzz",	23, 	"Wizard" ),
+ *         Item(Id("Wannabe" ), "Wannabe",	17 ),
+ *         Item(Id("Coxxan"  ), "Coxxan",	26, 	"Warrior")
  *        ]
- *        )
+ * )
+ * @endcode
  *
  * This will create a 3-column table. The first column ("Nick") and the third
  * column ("Role") will be left aligned. The second column ("Age") will be
@@ -2287,15 +2304,17 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  *
  * A table that uses icons is specified like this:
  *
- * `Table(`id(`players),
- *        `header("Nick", "Age", "Role"),
+ * @code
+ * Table(Id(:players),
+ *        Header("Nick", "Age", "Role"),
  *        [
- *         `item(`id("Bluebird"), "Bluebird, 18, `cell(`icon("scout.png"),    "Scout" )  ),
- *         `item(`id("Ozzz"    ), "Ozzz",    23,                              "Wizard"   ),
- *         `item(`id("Wannabe" ), "Wannabe", `cell(`icon("underage.png", 17 )            ),
- *         `item(`id("Coxxan"  ), "Coxxan",  `cell(`icon("oldman.png",   26 ), "Warrior" )
+ *         Item(Id("Bluebird"), "Bluebird, 18, cell(Icon("scout.png"),    "Scout" )  ),
+ *         Item(Id("Ozzz"    ), "Ozzz",    23,                              "Wizard"   ),
+ *         Item(Id("Wannabe" ), "Wannabe", cell(Icon("underage.png", 17 )            ),
+ *         Item(Id("Coxxan"  ), "Coxxan",  cell(Icon("oldman.png",   26 ), "Warrior" )
  *        ]
- *        )
+ * )
+ * @endcode
  *
  * In this example, "Bluebird" has an additional icon in his "Role" column, and
  * "Wannabe" and "Coxxan" both have additional icons in their "Age" columns.
@@ -2421,10 +2440,10 @@ YCPDialogParser::parseTableHeader( const YCPTerm & headerTerm )
  * @arg		string label the label describing the bar
  * @optarg	integer maxvalue the maximum value of the bar
  * @optarg	integer progress the current progress value of the bar
- * @usage	`ProgressBar( `id( `pb ), "17 of 42 Packages installed", 42, 17 )
- * @examples	ProgressBar1.ycp ProgressBar2.ycp
+ * @example	ProgressBar1.rb
+ * @example	ProgressBar2.rb
  *
- * @description
+ *
  *
  * A progress bar is a horizontal bar with a label that shows a progress
  * value. If you omit the optional parameter <tt>maxvalue</tt>, the maximum
@@ -2478,27 +2497,29 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
  * @option	scaleToFit	scale the pixmap so it fits the available space: zoom in or out as needed
  * @option	zeroWidth	make widget report a preferred width of 0
  * @option	zeroHeight 	make widget report a preferred height of 0
- * @example	Image1.ycp Image-animated.ycp Image-scaled.ycp
+ * @example	Image1.rb
+ * @example	Image-animated.rb
+ * @example	Image-scaled.rb
  *
- * @description
+ *
  *
  * Displays an image if the respective UI is capable of that.
  *
- * Use <tt>`opt( `zeroWidth )</tt> and / or <tt>`opt( `zeroHeight )</tt>
+ * Use <tt>Opt( :zeroWidth )</tt> and / or <tt>Opt( :zeroHeight )</tt>
  * if the real size of the image widget is determined by outside factors, e.g. by the size
  * of neighboring widgets. With those options you can override the preferred size of
  * the image widget and make it show just a part of the image.  If more screen space is
  * available, more of the image is shown, if not, the layout engine doesn't complain about
  * the image widget not getting its preferred size.
  *
- * `opt( `scaleToFit ) scales the image to fit into the available space, i.e. the
+ * Opt( :scaleToFit ) scales the image to fit into the available space, i.e. the
  * image will be zoomed in or out as needed.
  *
- * This option implicitly sets `opt( `zeroWidth ) and `opt( zeroHeight ),
+ * This option implicitly sets Opt( :zeroWidth ) and Opt( :zeroHeight ),
  * too since there is no useful default size for such an image. Use MinSize()
  * or other layout helpers to explicitly set a size on such a widget.
  *
- * Please note that setting both `opt( `tiled ) and `opt( `scaleToFit ) at once
+ * Please note that setting both Opt( :tiled ) and Opt( :scaleToFit ) at once
  * doesn't make any sense.
  **/
 
@@ -2551,7 +2572,7 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	IntField
  * @short	Numeric limited range input field
  * @class	YIntField
@@ -2559,15 +2580,13 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
  * @arg		integer minValue	minimum value
  * @arg		integer maxValue	maximum value
  * @arg		integer initialValue	initial value
- * @usage	`IntField( "Percentage", 1, 100, 50 )
  *
- * @examples	IntField1.ycp IntField2.ycp
- *
- * @description
+ * @example	IntField1.rb
+ * @example	IntField2.rb
  *
  * A numeric input field for integer numbers within a limited range.
  * This can be considered a lightweight version of the
- * <link linkend="Slider_widget">Slider</link> widget, even as a replacement for
+ * \ref {Slider} widget, even as a replacement for
  * this when the specific UI doesn't support the Slider.
  * Remember it always makes sense to specify limits for numeric input, even if
  * those limits are very large (e.g. +/- MAXINT).
@@ -2604,7 +2623,7 @@ YCPDialogParser::parseIntField( YWidget * parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	PackageSelector
  * @short	Complete software package selection
  * @class	YPackageSelector
@@ -2616,11 +2635,10 @@ YCPDialogParser::parseIntField( YWidget * parent, YWidgetOpt & opt,
  * @option	repoMode start with the "repositories" filter view
  * @option	repoMgr enable "Repository Manager" menu item
  * @option	confirmUnsupported user has to confirm all unsupported (non-L3) packages
- * @usage	`PackageSelector()
  *
- * @examples	PackageSelector.ycp
+ * @example	PackageSelector.rb
  *
- * @description
+ *
  *
  * A very complex widget that handles software package selection completely
  * transparently. Set up the package manager (the backend) before creating this
@@ -2679,13 +2697,12 @@ YCPDialogParser::parsePackageSelector( YWidget * parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	PkgSpecial
  * @short	Package selection special - DON'T USE IT
  * @class	YPkgSpecial
- * @usage	`PkgSpecial( "subwidget_name" )
  *
- * @description
+ *
  *
  * Use only if you know what you are doing - that is, DON'T USE IT.
  *
@@ -2733,20 +2750,21 @@ YCPDialogParser::parseDummySpecialWidget( YWidget *parent, YWidgetOpt & opt,
 
 // ----------------------------------------------------------------------
 
-/*
+/**
  * @widget	BarGraph
  * @short	Horizontal bar graph (optional widget)
  * @class	YBarGraph
  * @arg		list values the initial values (integer numbers)
  * @optarg	list labels the labels for each part; use "%1" to include the
  *		current numeric value. May include newlines.
- * @usage	if ( HasSpecialWidget( `BarGraph ) {...
- *		`BarGraph( [ 450, 100, 700 ],
+ *		BarGraph( [ 450, 100, 700 ],
  *		[ "Windows used\n%1 MB", "Windows free\n%1 MB", "Linux\n%1 MB" ] )
  *
- * @examples	BarGraph1.ycp BarGraph2.ycp BarGraph3.ycp
+ * @example	BarGraph1.rb
+ * @example	BarGraph2.rb
+ * @example	BarGraph3.rb
  *
- * @description
+ *
  *
  * A horizontal bar graph for graphical display of proportions of integer
  * values.  Labels can be passed for each portion; they can include a "%1"
@@ -2754,7 +2772,7 @@ YCPDialogParser::parseDummySpecialWidget( YWidget *parent, YWidgetOpt & opt,
  * newlines. If no labels are specified, only the values will be
  * displayed. Specify empty labels to suppress this.
  * @note        This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `BarGraph )</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( BarGraph )</tt> before using it.
  *
  **/
 
@@ -2825,19 +2843,18 @@ YCPDialogParser::parseBarGraph( YWidget *parent, YWidgetOpt & opt,
 // ----------------------------------------------------------------------
 
 
-/*
+/**
  * @widget	DownloadProgress
  * @short	Self-polling file growth progress indicator (optional widget)
  * @class	YDownloadProgress
  * @arg		string label label above the indicator
  * @arg		string filename file name with full path of the file to poll
  * @arg		integer expectedSize expected final size of the file in bytes
- * @usage	if ( HasSpecialWidget( `DownloadProgress ) {...
- *		`DownloadProgress( "Base system (230k)", "/tmp/aaa_base.rpm", 230*1024 );
+ *		DownloadProgress( "Base system (230k)", "/tmp/aaa_base.rpm", 230*1024 );
  *
- * @examples	DownloadProgress1.ycp
+ * @example	DownloadProgress1.rb
  *
- * @description
+ *
  *
  * This widget automatically displays the progress of a lengthy download
  * operation. The widget itself (i.e. the UI) polls the specified file and
@@ -2845,7 +2862,7 @@ YCPDialogParser::parseBarGraph( YWidget *parent, YWidgetOpt & opt,
  * place in the foreground.
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `DownloadProgress )</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :DownloadProgress )</tt> before using it.
  *
  **/
 
@@ -2877,18 +2894,18 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
 
 // ----------------------------------------------------------------------
 
-/*
+/**
  * @widget	DumbTab
  * @short	Simplistic tab widget that behaves like push buttons
  * @class	YDumbTab
  * @arg		list tabs page headers
  * @arg		term contents page contents - usually a ReplacePoint
- * @usage	if ( HasSpecialWidget( `DumbTab) {...
- *		`DumbTab( [ `item(`id(`page1), "Page &1" ), `item(`id(`page2), "Page &2" ) ], contents; }
+ *		DumbTab( [ Item(Id(:page1), "Page &1" ), Item(Id(:page2), "Page &2" ) ], contents; }
  *
- * @examples	DumbTab1.ycp DumbTab2.ycp
+ * @example	DumbTab1.rb
+ * @example	DumbTab2.rb
  *
- * @description
+ *
  *
  * This is a very simplistic approach to tabbed dialogs: The application
  * specifies a number of tab headers and the page contents and takes care of
@@ -2901,7 +2918,7 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
  * data in a Table or RichText widget if this is the tab contents). Hence the
  * name <i>Dumb</i>Tab.
  *
- * The items in the item list can either be simple strings or `item() terms
+ * The items in the item list can either be simple strings or Item() terms
  * with an optional ID for each individual item (which will be returned upon
  * UI::UserInput() and related when the user selects this tab), a (mandatory)
  * user-visible label and an (optional) flag that indicates that this tab is
@@ -2909,7 +2926,7 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
  * return this string.
  *
  * This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `DumbTab )</tt> before
+ * for availability with <tt>HasSpecialWidget( :DumbTab )</tt> before
  * using it.
  *
  * @note Please notice that using this kind of widget more often than not is the
@@ -2967,17 +2984,17 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	VMultiProgressMeter HMultiProgressMeter
  * @short	Progress bar with multiple segments (optional widget)
  * @class	YMultiProgressMeter
  * @arg		List<integer> maxValues		maximum values
- * @usage	if ( HasSpecialWidget( `MultiProgressMeter ) {...
- *		`MultiProgressMeter( "Percentage", 1, 100, 50 )
+ *		MultiProgressMeter( "Percentage", 1, 100, 50 )
  *
- * @examples	MultiProgressMeter1.ycp MultiProgressMeter2.ycp
+ * @example	MultiProgressMeter1.rb
+ * @example	MultiProgressMeter2.rb
  *
- * @description
+ *
  *
  * A vertical (VMultiProgressMeter) or horizontal (HMultiProgressMeter)
  * progress display with multiple segments. The numbers passed on widget
@@ -2990,7 +3007,7 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
  *
  * Set actual values later with
  * <code>
- * UI::ChangeWidget(`id(...), `Values, [ 1, 2, ...] );
+ * UI::ChangeWidget(Id(...), :Values, [ 1, 2, ...] );
  * </code>
  *
  * The widget may choose to reserve a minimum amount of space for each segment
@@ -2998,7 +3015,7 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
  * proportion.
  *
  * @note  This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `MultiProgressMeter )</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :MultiProgressMeter )</tt> before using it.
  **/
 
 YWidget *
@@ -3064,7 +3081,7 @@ YCPDialogParser::parseNumList( const YCPList & yList )
 
 
 
-/*
+/**
  * @widget	Slider
  * @short	Numeric limited range input (optional widget)
  * @class	YSlider
@@ -3072,21 +3089,21 @@ YCPDialogParser::parseNumList( const YCPList & yList )
  * @arg		integer minValue	minimum value
  * @arg		integer maxValue	maximum value
  * @arg		integer initialValue	initial value
- * @usage	if ( HasSpecialWidget( `Slider ) {...
- *		`Slider( "Percentage", 1, 100, 50 )
+ *		Slider( "Percentage", 1, 100, 50 )
  *
- * @examples	Slider1.ycp Slider2.ycp
+ * @example	Slider1.rb
+ * @example	Slider2.rb
  *
- * @description
+ *
  * A horizontal slider with (numeric) input field that allows input of an
  * integer value in a given range. The user can either drag the slider or
  * simply enter a value in the input field.
  *
- * Remember you can use <tt>`opt( `notify )</tt> in order to get instant response
+ * Remember you can use <tt>Opt( :notify )</tt> in order to get instant response
  * when the user changes the value - if this is desired.
  *
  * @note  This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `Slider )</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :Slider )</tt> before using it.
  *
  **/
 
@@ -3117,7 +3134,7 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
 }
 
 
-/*
+/**
  * @widget	PartitionSplitter
  * @short	Hard disk partition splitter tool (optional widget)
  * @class	YPartitionSplitter
@@ -3133,13 +3150,13 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
  * @arg string	newPartLabel  		BarGraph label for the new partition
  * @arg string	freeFieldLabel		label for the remaining free space field
  * @arg string	newPartFieldLabel	label for the new size field
- * @usage	if ( HasSpecialWidget( `PartitionSplitter ) {...
- *		`PartitionSplitter( 600, 1200, 800, 300, 50,
+ *		PartitionSplitter( 600, 1200, 800, 300, 50,
  *                                 "Windows used\n%1 MB", "Windows used\n%1 MB", "Linux\n%1 MB", "Linux ( MB )" )
  *
- * @examples	PartitionSplitter1.ycp PartitionSplitter2.ycp
+ * @example	PartitionSplitter1.rb
+ * @example	PartitionSplitter2.rb
  *
- * @description
+ *
  *
  * A very specialized widget to allow a user to comfortably split an existing
  * hard disk partition in two parts. Shows a bar graph that displays the used
@@ -3155,7 +3172,7 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
  * <tt>totalFreeSize-minFreeSize</tt>.
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `PartitionSplitter )</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :PartitionSplitter )</tt> before using it.
  **/
 
 YWidget *
@@ -3208,17 +3225,17 @@ YCPDialogParser::parsePartitionSplitter( YWidget *parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	PatternSelector
  * @short	High-level widget to select software patterns (selections)
  * @class	YPatternSelector
- * @usage	if ( UI::HasSpecialWidget( `PatternSelector) {...
- *		`PatternSelector()...
+ *		PatternSelector()...
  *		UI::RunPkgSelection();
  *
- * @examples	PatternSelector-solo.ycp PatternSelector-wizard.ycp
+ * @example	PatternSelector-solo.rb
+ * @example	PatternSelector-wizard.rb
  *
- * @description
+ *
  *
  * This widget is similar to the PackageSelector in its semantics: It is a very
  * high-level widget that lets the user select software, but unlike the
@@ -3240,17 +3257,17 @@ YCPDialogParser::parsePatternSelector( YWidget *parent, YWidgetOpt & opt,
 }
 
 
-/*
+/**
  * @widget	SimplePatchSelector
  * @short	Simplified approach to patch selection
  * @class	YSimplePatchSelector
- * @usage	if ( UI::HasSpecialWidget( `SimplePatchSelector) {...
- *		`SimplePatchSelector()...
+ *		SimplePatchSelector()...
  *		UI::RunPkgSelection();
  *
- * @examples	SimplePatchSelector-empty.ycp SimplePatchSelector-stable.ycp
+ * @example	SimplePatchSelector-empty.rb
+ * @example	SimplePatchSelector-stable.rb
  *
- * @description
+ *
  *
  * This is a stripped-down version of the PackageSelector widget in "online
  * update" ("patches") mode. It provides a very simplistic view on patches. It does
@@ -3289,19 +3306,22 @@ YCPDialogParser::parseSimplePatchSelector( YWidget *parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	DateField
+ * @widget	DateField
  * @short	Date input field
  * @class	YDateField
  * @arg		string label
  * @optarg	string initialDate
- * @usage	if ( HasSpecialWidget( `DateField ) {...
- *		    `DateField( "Date:", "2004-10-12" )
+ * @code{.unparsed}
+ * if (UI.HasSpecialWidget( :DateField)
+ *   DateField("Date:", "2004-10-12")
+ * end
+ * @endcode
  *
- * @description
+ *
  * An input field for entering a date.
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `TimeField)</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :TimeField)</tt> before using it.
  **/
 
 YWidget *
@@ -3335,19 +3355,18 @@ YCPDialogParser::parseDateField( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	TimeField
+ * @widget	TimeField
  * @short	Time input field
  * @class	YTimeField
  * @arg		string label
  * @optarg	string initialTime
- * @usage	if ( HasSpecialWidget( `TimeField ) {...
- * 		    `TimeField( "Time:" , "20:20:20" )
+ * 		    TimeField( "Time:" , "20:20:20" )
  *
- * @description
+ *
  * An input field for entering a time of day in 24 hour format.
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `TimeField)</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :TimeField)</tt> before using it.
  **/
 YWidget *
 YCPDialogParser::parseTimeField( YWidget * parent, YWidgetOpt & opt,
@@ -3378,7 +3397,7 @@ YCPDialogParser::parseTimeField( YWidget * parent, YWidgetOpt & opt,
 
 
 
-/*
+/**
  * @widget	Wizard
  * @short	Wizard frame - not for general use, use the Wizard:: module instead!
  * @class	YWizard
@@ -3395,20 +3414,18 @@ YCPDialogParser::parseTimeField( YWidget * parent, YWidgetOpt & opt,
  * @arg		any	nextButtonId		ID to return when the user presses the "Next" button
  * @arg		string	nextButtonLabel		Label of the "Next" button
  *
- * @usage	`Wizard(`id(`back), "&Back", `id(`abort), "Ab&ort", `id(`next), "&Next" )
- * @usage	`Wizard(`back, "&Back", `abort, "Ab&ort", `next, "&Next" )
  *
- * @description
+ *
  *
  * This is the UI-specific technical implementation of a wizard dialog's main widget.
  * This is not intended for general use - use the Wizard:: module instead which will use this
  * widget properly.
  *
- * A wizard widget always has ID `wizard.
- * The ID of the single replace point within the wizard is always `contents.
+ * A wizard widget always has ID :wizard.
+ * The ID of the single replace point within the wizard is always :contents.
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `Wizard)</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :Wizard)</tt> before using it.
  **/
 
 YWidget *
@@ -3453,11 +3470,11 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
 						    wizardMode );
     YUI_CHECK_NEW( wizard );
 
-    // All wizard widgets have a fixed ID `wizard
+    // All wizard widgets have a fixed ID :wizard
     YWidgetID * wizardId = new YCPValueWidgetID( YCPSymbol( YWizardID ) );
     wizard->setId( wizardId );
 
-    // The wizard internal contents ReplacePoint has a fixed ID `contents
+    // The wizard internal contents ReplacePoint has a fixed ID :contents
     YWidgetID * contentsId =  new YCPValueWidgetID( YCPSymbol( YWizardContentsReplacePointID ) );
 
     if ( wizard->backButton()  ) 		wizard->backButton()->setId ( backButtonId  );
@@ -3469,7 +3486,7 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
 }
 
 /**
- * @widgets	TimezoneSelector
+ * @widget	TimezoneSelector
  * @short	Timezone selector map
  * @class	YTimezoneSelector
  *
@@ -3478,14 +3495,13 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
  * @arg         map timezones     a map of timezones. The map should be between e.g. Europe/London
  *                                and the tooltip to be displayed ("United Kingdom")
  *
- * @usage	if ( HasSpecialWidget( `TimezoneSelector ) {...
- * 		    `TimezoneSelector( "world.jpg", timezones )
+ * 		    TimezoneSelector( "world.jpg", timezones )
  *
- * @description
+ *
  * An graphical timezone selector map
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget( `TimezoneSelector)</tt> before using it.
+ * for availability with <tt>HasSpecialWidget( :TimezoneSelector)</tt> before using it.
  **/
 YWidget *
 YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
@@ -3513,18 +3529,17 @@ YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
- * @widgets	Graph
+ * @widget	Graph
  * @short	graph
  * @class	YGraph
  *
- * @usage	if ( HasSpecialWidget( `Graph ) {...
- * 		    `Graph( "graph.dot", "dot" )
+ * 		    Graph( "graph.dot", "dot" )
  *
- * @description
+ *
  * An graph
  *
  * @note This is a "special" widget, i.e. not all UIs necessarily support it.  Check
- * for availability with <tt>HasSpecialWidget(`Graph)</tt> before using it.
+ * for availability with <tt>HasSpecialWidget(:Graph)</tt> before using it.
  **/
 YWidget *
 YCPDialogParser::parseGraph( YWidget * parent, YWidgetOpt & opt,
@@ -3554,10 +3569,9 @@ YCPDialogParser::parseGraph( YWidget * parent, YWidgetOpt & opt,
  * @class	YBusyIndicator
  * @arg		string	label	the label describing the bar
  * @optarg	integer	timeout	the timeout in milliseconds until busy indicator changes to stalled state, 1000ms by default
- * @usage	`BusyIndicator(`id(`busy), "background action", 2000 ),
- * @example	BusyIndicator.ycp
+ * @example	BusyIndicator.rb
  *
- * @description
+ *
  *
  * A busy indicator is a bar with a label that gives feedback to the user that
  * a task is in progress and the user has to wait. It is similar to a progress bar.

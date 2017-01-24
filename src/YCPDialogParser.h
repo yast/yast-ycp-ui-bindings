@@ -290,10 +290,10 @@ protected:
     /**
      * Look for a widget id in a widget term. If it finds one, returns
      * it and sets argnr to point after `id(), whether it turned out valid
-     * or not. Otherwise it creates a new unique widget id and sets 
+     * or not. Otherwise it creates a new unique widget id and sets
      * argnr to 0. For example PushButton( `id( 17 ), .... ) has with id 17.
      * If it cannot find an id, or the id is a duplicate of an existing one
-     * YCPNull is returned 
+     * YCPNull is returned
      * Return value: The widget id on success or YCPNull on failure
      **/
     static YCPValue getWidgetId( const YCPTerm & term, int *argnr );
@@ -302,8 +302,8 @@ protected:
      * Look for widget options in the term. Returns the list
      * of options if available, otherwise an empty list.
      * Increases argnr by 1 if options are found.
-     * For example PushButton( `id( 17 ), `opt( `kilroy, `color( `red ) )
-     * has the option list [ `kilroy, `color( `red ) ]
+     * For example PushButton( Id( 17 ), Opt( :kilroy, Color( :red ) )
+     * has the option list [ :kilroy, Color( :red ) ]
      * 'term': the Widget term
      * 'argnr' (in/out): The number of the first non-id argument.
      * Returns the number of the first non-id and non-opt argument.
@@ -326,7 +326,7 @@ protected:
      * 'optList': the list of options not yet processed
      **/
     static void rejectAllOptions( const YCPTerm & term, const YCPList & optList );
-    
+
     /**
      * Return 'true' if 'str' starts with 'word'. This is case insensitive.
      **/
