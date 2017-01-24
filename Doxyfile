@@ -238,13 +238,13 @@ TAB_SIZE               = 4
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
 
-ALIASES                = optarg="\par Optional Argument:\n \c"
-ALIASES               += widget="<b> Following widget variants exist:</b> "
-ALIASES               += id="\par Id of widget:\n \c"
-ALIASES               += usage="\par Usage:\n"
-ALIASES               += option="\par Non-standard Opt() arguments:\n \c"
+ALIASES                = optarg="<b>Optional Argument:</b> \c"
+ALIASES               += widget="<b>Following widget variants exist:</b> "
+ALIASES               += id="Id of widget: \c"
+ALIASES               += usage="\b Usage:\n"
+ALIASES               += option="<b>Non-standard Opt() arguments:</b> \c"
 # overwrite example as doxygen cannot parse ruby for example linking (JR: at least I do not find it)
-ALIASES               += example="\include"
+ALIASES               += example="\b Example: \n \include"
 ALIASES               += builtin="\fn YCP_UI::"
 # ignore description
 ALIASES               += description=""
