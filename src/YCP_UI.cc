@@ -1709,4 +1709,21 @@ YCPValue YCP_UI::SetApplicationIcon( const YCPString & icon )
     return YCPVoid();
 }
 
+/**
+ * @builtin SetApplicationTitle
+ * @short Sets the title for application.
+ * @description
+ * The argument is a string to display. Empty string means clear the title.
+ *
+ * @param string title string to display.
+ */
+YCPValue YCP_UI::SetApplicationTitle( const YCPString & title )
+{
+    yuiMilestone() << "Setting application title to '" << title << "'" << std::endl;
+
+    YUI::application()->setApplicationTitle( title->value() );
+
+    return YCPVoid();
+}
+
 // EOF

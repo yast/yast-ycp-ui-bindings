@@ -284,6 +284,15 @@ YUINamespace::SetApplicationIcon( const YCPString & icon)
 	return YCPVoid();
 }
 
+YCPValue
+YUINamespace::SetApplicationTitle( const YCPString & text)
+{
+    if ( YUIComponent::ui() )
+	YCP_UI::SetApplicationTitle( text );
+
+    return YCPVoid();
+}
+
 
 YCPValue
 YUINamespace::ChangeWidget( const YCPTerm & widget_id, const YCPSymbol & property, const YCPValue & new_value )
