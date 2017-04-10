@@ -316,7 +316,7 @@ public:
     /* TYPEINFO: boolean () */
     YCPBoolean TextMode();
 
-    /* TYPEINFO: boolean (term) */	
+    /* TYPEINFO: boolean (term) */
     YCPBoolean OpenContextMenu( const YCPTerm & term );
 
     /* TYPEINFO: void (map<any,any>) */
@@ -327,6 +327,9 @@ public:
 
     /* TYPEINFO: void(string) */
     YCPValue SetApplicationIcon( const YCPString & icon);
+
+    /* TYPEINFO: void(string) */
+    YCPValue SetApplicationTitle( const YCPString & text);
 
     YCPValue
     CallHandler( void * ptr, int argc, YCPValue argv[] );
