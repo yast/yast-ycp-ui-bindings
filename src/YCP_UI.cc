@@ -1719,7 +1719,7 @@ YCPValue YCP_UI::SetApplicationIcon( const YCPString & icon )
  */
 YCPValue YCP_UI::SetApplicationTitle( const YCPString & title )
 {
-    yuiMilestone() << "Setting application icon to " << title << std::endl;
+    yuiMilestone() << "Setting application title to " << title << std::endl;
 
     YUI::application()->setApplicationTitle( title->value() );
 
