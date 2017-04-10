@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Apr 10 10:31:28 UTC 2017 - jreidinger@suse.com
+
+- added built-in SetApplicationTitle for setting application title
+  (bnc#1033161)
+- 3.2.0
+
+-------------------------------------------------------------------
 Wed Jul  8 12:40:33 UTC 2015 - mvidner@suse.com
 
 - Added OpenUI, CloseUI (boo#937026).
