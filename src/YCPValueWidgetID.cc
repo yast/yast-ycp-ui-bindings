@@ -44,7 +44,7 @@ YCPValueWidgetID::isEqual( YWidgetID * otherID ) const
     YCPValueWidgetID * otherYCPValueID =
 	dynamic_cast<YCPValueWidgetID *> (otherID);
 
-    if ( otherID )
+    if ( otherYCPValueID )
 	return _value->equal( otherYCPValueID->value() );
 
     if ( _value->isString() || _value->isSymbol() )
@@ -52,14 +52,17 @@ YCPValueWidgetID::isEqual( YWidgetID * otherID ) const
 	YStringWidgetID * otherStringID =
 	    dynamic_cast<YStringWidgetID *> (otherID);
 
-	if ( _value->isString() )
-	{
-	    return _value->asString()->value() == otherStringID->value();
-	}
-	else // _value->isSymbol()
-	{
-	    return _value->asSymbol()->symbol() == otherStringID->value();
-	}
+        if ( otherStringID )
+        {
+            if ( _value->isString() )
+            {
+                return _value->asString()->value() == otherStringID->value();
+            }
+            else // _value->isSymbol()
+            {
+                return _value->asSymbol()->symbol() == otherStringID->value();
+            }
+        }
     }
 
     return false;
