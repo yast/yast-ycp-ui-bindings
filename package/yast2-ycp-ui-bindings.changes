@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Nov 15 17:31:59 CET 2017 - shundhammer@suse.de
+
+- Fixed segfault when comparing YCPValueWidgetIDs with
+  YStringWidgetIDs (fate#324098)
+- 4.0.0
+
+-------------------------------------------------------------------
 Mon Apr 10 10:31:28 UTC 2017 - jreidinger@suse.com
 
 - added built-in SetApplicationTitle for setting application title
