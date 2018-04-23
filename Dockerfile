@@ -1,2 +1,3 @@
-FROM yastdevel/cpp:sle12-sp3
+FROM yastdevel/cpp:sle12-sp4
+
 COPY . /usr/src/app
