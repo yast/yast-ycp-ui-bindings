@@ -113,23 +113,35 @@ YCPTableItemParser::parseTableItem( const YCPTerm & itemTerm )
 	    y2debug( "Parsing term arg #%d: %s", i, arg->toString().c_str() );
 #endif
 
-	    if ( arg->isTerm() )			// `id(), `cell()
+	    if ( arg->isTerm() && arg->asTerm()->name() == YUISymbol_id) // `id()
 	    {
 		YCPTerm term = arg->asTerm();
 
-		if ( term->name() == YUISymbol_id	// `id(...)
-		     && term->size() == 1
-		     && ! item->hasId() )		// and don't have an ID yet
+		if ( term->size() == 1 && ! item->hasId() ) // and don't have an ID yet
 		{
 		    item->setId( term->value(0) );
-		}
-		else if ( term->name() == YUISymbol_cell ) // `cell(...)
-		{
-		    parseTableCell( item, term );
 		}
 		else
 		{
 		    YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
+		}
+	    }
+	    if ( arg->isTerm() && arg->asTerm()->name() == YUISymbol_cell ) // `cell()
+	    {
+		parseTableCell( item, arg->asTerm() );
+	    }
+	    if ( arg->isTerm() && arg->asTerm()->name() == YUISymbol_opt ) // `opt()
+	    {
+		YCPTerm opts = arg->asTerm();
+
+		for ( int i = 0; i < opts->size(); i++ )
+		{
+		    YCPValue opt = opts->value(i);
+
+		    if ( opt->isSymbol() && opt->asSymbol()->symbol() == YUIOpt_boldFont )
+			item->setUseBoldFont();
+		    else
+			ycperror( "Unknown option %s in %s widget", opt->toString().c_str(), item->name().c_str() );
 		}
 	    }
 	    else if ( arg->isString() )		// label (the user-visible text)
