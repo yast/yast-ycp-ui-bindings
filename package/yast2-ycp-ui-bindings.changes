@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Aug 20 14:11:53 CEST 2018 - schubi@suse.de
+
+- Switched license in spec file from SPDX2 to SPDX3 format.
+
+-------------------------------------------------------------------
 Wed Nov 15 17:31:59 CET 2017 - shundhammer@suse.de
 
 - Fixed segfault when comparing YCPValueWidgetIDs with
