@@ -2,6 +2,7 @@
 Tue Oct  9 09:41:09 UTC 2018 - snwint@suse.com
 
 - increase version to correspond to the libyui version increase
+  (related to bsc#991090)
 - 4.1.0
 
 -------------------------------------------------------------------
