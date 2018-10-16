@@ -97,5 +97,6 @@ mkdir -p "$RPM_BUILD_ROOT"%{yast_logdir}
 %{yast_includedir}
 %{_libdir}/pkgconfig/yast2-ycp-ui-bindings.pc
 %doc %{yast_docdir}
+%license COPYING
 
 %changelog
