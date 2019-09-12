@@ -17,7 +17,7 @@
 
 
 Name:           yast2-ycp-ui-bindings
-Version:        4.1.0
+Version:        4.2.0
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
