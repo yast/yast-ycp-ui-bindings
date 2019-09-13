@@ -10,7 +10,6 @@ module Yast
 
       Pkg.SourceCreate("file:/mounts/dist/full/full-10.2-i386/", "")
 
-
       Pkg.TargetInit("/", false) if @use_installed_system
 
       UI.OpenDialog(

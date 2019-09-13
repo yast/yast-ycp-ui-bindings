@@ -48,8 +48,8 @@ module Yast
       UI.ChangeWidget(:menu, :SelectedItems, [1, 2])
       @sel = Convert.convert(
         UI.QueryWidget(:menu, :SelectedItems),
-        :from => "any",
-        :to   => "list <integer>"
+        from: "any",
+        to:   "list <integer>"
       )
       @selItems = ""
       Builtins.foreach(@sel) do |val|
@@ -67,8 +67,8 @@ module Yast
         if Ops.get(@event, "ID") == :menu
           @sel = Convert.convert(
             UI.QueryWidget(:menu, :SelectedItems),
-            :from => "any",
-            :to   => "list <integer>"
+            from: "any",
+            to:   "list <integer>"
           )
           Builtins.foreach(@sel) do |val|
             @selItems2 = Ops.add(
@@ -90,8 +90,8 @@ module Yast
           UI.ChangeWidget(:menu, :Items, @items)
           @sel = Convert.convert(
             UI.QueryWidget(:menu, :SelectedItems),
-            :from => "any",
-            :to   => "list <integer>"
+            from: "any",
+            to:   "list <integer>"
           )
           Builtins.foreach(@sel) do |val|
             @selItems2 = Ops.add(
@@ -111,8 +111,8 @@ module Yast
 
       @sel = Convert.convert(
         UI.QueryWidget(:menu, :SelectedItems),
-        :from => "any",
-        :to   => "list <integer>"
+        from: "any",
+        to:   "list <integer>"
       )
       Builtins.y2milestone("Selected: %1", @sel)
 

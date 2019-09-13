@@ -26,7 +26,6 @@ module Yast
         @button = Convert.to_symbol(UI.TimeoutUserInput(200)) # millisec
       end until @button == :cancel
 
-
       UI.CloseDialog
 
       nil

@@ -4,9 +4,9 @@
 module Yast
   class RichText7Client < Client
     def main
-      Yast.import 'UI'
+      Yast.import "UI"
 
-      text = ''
+      text = ""
       for n in 1..50 do
         text += "<p>n = #{n}, 2^n = #{2**n}</p>\n"
       end
@@ -16,18 +16,18 @@ module Yast
         VBox(
           RichText(Id(:text), text),
           HBox(
-            PushButton(Id(:reset), 'Reset'),
-            PushButton(Id(:append), 'Append')
+            PushButton(Id(:reset), "Reset"),
+            PushButton(Id(:append), "Append")
           ),
           HBox(
-            PushButton(Id(:vertical_minimum), 'Vertical Minimum'),
-            PushButton(Id(:vertical_maximum), 'Vertical Maximum')
+            PushButton(Id(:vertical_minimum), "Vertical Minimum"),
+            PushButton(Id(:vertical_maximum), "Vertical Maximum")
           ),
           HBox(
-            PushButton(Id(:horizontal_minimum), 'Horizontal Minimum'),
-            PushButton(Id(:horizontal_maximum), 'Horizontal Maximum')
+            PushButton(Id(:horizontal_minimum), "Horizontal Minimum"),
+            PushButton(Id(:horizontal_maximum), "Horizontal Maximum")
           ),
-          PushButton(Id(:close), Opt(:default), 'Close')
+          PushButton(Id(:close), Opt(:default), "Close")
         )
       )
 
@@ -38,7 +38,7 @@ module Yast
         case input
 
         when :reset
-          text = ''
+          text = ""
           for n in 1..50 do
             text += "<p>n = #{n}, 2^n = #{2**n}</p>\n"
           end
@@ -60,16 +60,16 @@ module Yast
           UI.ChangeWidget(Id(:text), :HScrollValue, horizontal_scroll_value)
 
         when :vertical_minimum
-          UI.ChangeWidget(Id(:text), :VScrollValue, 'minimum')
+          UI.ChangeWidget(Id(:text), :VScrollValue, "minimum")
 
         when :vertical_maximum
-          UI.ChangeWidget(Id(:text), :VScrollValue, 'maximum')
+          UI.ChangeWidget(Id(:text), :VScrollValue, "maximum")
 
         when :horizontal_minimum
-          UI.ChangeWidget(Id(:text), :HScrollValue, 'minimum')
+          UI.ChangeWidget(Id(:text), :HScrollValue, "minimum")
 
         when :horizontal_maximum
-          UI.ChangeWidget(Id(:text), :HScrollValue, 'maximum')
+          UI.ChangeWidget(Id(:text), :HScrollValue, "maximum")
 
         end
       end until input == :close

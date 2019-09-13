@@ -23,7 +23,6 @@ module Yast
         )
       )
 
-
       UI.OpenDialog(MarginBox(1, 0.1, VCenter(@content)))
       UI.UserInput
       UI.CloseDialog

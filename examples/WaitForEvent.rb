@@ -80,7 +80,6 @@ module Yast
         end
       end until @id == :ok || @id == :cancel
 
-
       UI.CloseDialog
 
       nil

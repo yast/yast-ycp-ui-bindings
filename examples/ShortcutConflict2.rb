@@ -16,7 +16,6 @@ module Yast
         )
       )
 
-
       @button = nil
       @count = 3
       begin
@@ -33,7 +32,6 @@ module Yast
           UI.ChangeWidget(Id(@button), :Label, @label)
         end
       end while @button != :quit
-
 
       UI.CloseDialog
 

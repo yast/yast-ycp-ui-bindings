@@ -39,7 +39,6 @@ module Yast
         UI.RecalcLayout
       end until @button == :ok
 
-
       # Retrieve the label's value.
       @name = Convert.to_string(UI.QueryWidget(Id(:beatle), :Value))
 

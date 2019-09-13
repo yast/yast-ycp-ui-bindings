@@ -17,8 +17,6 @@ module Yast
       @valueList = [100, 30, 400, 0, 0]
       @unit = 0 # exponent: powers of 2
 
-
-
       #
       # Check if required special widgets are available
       #
@@ -36,7 +34,6 @@ module Yast
 
         return
       end
-
 
       #
       # Create dialog
@@ -97,7 +94,6 @@ module Yast
       UI.ChangeWidget(Id(:unit), :Value, term(:unit, @unit))
       updateProgress
 
-
       #
       # Event loop
       #
@@ -142,7 +138,6 @@ module Yast
         break if @id == :cancel
       end
 
-
       #
       # Clean up
       #
@@ -178,7 +173,6 @@ module Yast
       deep_copy(vbox)
     end
 
-
     # Apply unit to a list of values. Return the scaled list.
     #
     def scaleList(unit, values)
@@ -192,7 +186,6 @@ module Yast
       # y2debug( "Values: %1	  unit: %2   scaled: %3", values, unit, scaledValues );
       deep_copy(scaledValues)
     end
-
 
     # Get the current values from all sliders and return them as a list.
     #
@@ -216,7 +209,6 @@ module Yast
       # y2debug( "Values: %1", values );
       deep_copy(values)
     end
-
 
     # Update progress meters with values from sliders.
     #

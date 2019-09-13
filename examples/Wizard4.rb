@@ -34,7 +34,6 @@ module Yast
 
       # UI::DumpWidgetTree();
 
-
       UI.WizardCommand(
         term(
           :SetDialogIcon,
@@ -45,7 +44,6 @@ module Yast
         term(:SetDialogHeading, "Welcome to the YaST2 installation")
       )
       UI.WizardCommand(term(:SetHelpText, @help_text))
-
 
       UI.WizardCommand(term(:AddTreeItem, "", "First Toplevel Item", "tl1"))
       UI.WizardCommand(term(:AddTreeItem, "", "Second Toplevel Item", "tl2"))
@@ -64,8 +62,6 @@ module Yast
       UI.WizardCommand(term(:AddTreeItem, "1-2", "Item without ID", ""))
 
       UI.WizardCommand(term(:SelectTreeItem, "3rd 1"))
-
-
 
       UI.WizardCommand(term(:AddMenu, "&File", "file-menu"))
       UI.WizardCommand(term(:AddMenu, "&Edit", "edit-menu"))
@@ -104,8 +100,6 @@ module Yast
           "frank-n-furter"
         )
       )
-
-
 
       while true
         @event = UI.WaitForEvent

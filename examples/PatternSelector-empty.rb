@@ -18,7 +18,6 @@ module Yast
         return
       end
 
-
       UI.OpenDialog(Opt(:defaultsize), PatternSelector(Id(:selector)))
       @input = UI.RunPkgSelection(Id(:selector))
       UI.CloseDialog

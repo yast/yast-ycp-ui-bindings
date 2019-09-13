@@ -7,7 +7,6 @@ module Yast
       # Build a dialog with a "special" widget - one that may not be supported
       # by all UIs.
 
-
       # Ask the UI whether or not it supports this widget.
 
       if UI.HasSpecialWidget(:DummySpecialWidget)

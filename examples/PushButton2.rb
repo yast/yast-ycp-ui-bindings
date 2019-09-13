@@ -23,7 +23,6 @@ module Yast
       # Close the dialog.
       UI.CloseDialog
 
-
       # Process the input.
       @button_name = ""
       if @button_id == :ok

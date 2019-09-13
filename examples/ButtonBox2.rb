@@ -6,9 +6,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
-
-
       @buttons = VBox(
         PushButton(Id(:okCancel), Opt(:hstretch), "&OK / Cancel"),
         PushButton(Id(:yesNo), Opt(:hstretch), "&Yes / No"),
@@ -81,7 +78,6 @@ module Yast
       nil
     end
 
-
     def okCancelDialog
       showDialog(
         ButtonBox(
@@ -93,7 +89,6 @@ module Yast
       nil
     end
 
-
     def yesNoDialog
       showDialog(
         ButtonBox(PushButton(Id(:yes), "&Yes"), PushButton(Id(:no), "&No"))
@@ -101,7 +96,6 @@ module Yast
 
       nil
     end
-
 
     def continueCancelDialog
       showDialog(
@@ -113,7 +107,6 @@ module Yast
 
       nil
     end
-
 
     def okApplyCancelDialog
       showDialog(
@@ -127,7 +120,6 @@ module Yast
       nil
     end
 
-
     def okApplyCancelHelpDialog
       showDialog(
         ButtonBox(
@@ -140,7 +132,6 @@ module Yast
 
       nil
     end
-
 
     def okApplyCancelCustomHelpDialog
       showDialog(
@@ -157,13 +148,11 @@ module Yast
       nil
     end
 
-
     def okDialog
       showDialog(ButtonBox(PushButton(Id(:ok), "&OK")))
 
       nil
     end
-
 
     def okRetryDialog
       # This will throw an error:
@@ -176,7 +165,6 @@ module Yast
 
       nil
     end
-
 
     def retryCancelDialog
       # Explicitly assigning the [OK] role to the [Retry] button

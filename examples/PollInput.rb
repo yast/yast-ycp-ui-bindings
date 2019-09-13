@@ -24,7 +24,6 @@ module Yast
       begin
         @widget_id = UI.PollInput
 
-
         # Simulate heavy calculation
 
         Builtins.sleep(200) # milliseconds

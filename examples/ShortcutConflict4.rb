@@ -10,7 +10,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
       UI.OpenDialog(
         VBox(
           PushButton(Id(1), "&A"),
@@ -20,12 +19,10 @@ module Yast
         )
       )
 
-
       @button = nil
       begin
         @button = UI.UserInput
       end while @button != :quit
-
 
       UI.CloseDialog
 

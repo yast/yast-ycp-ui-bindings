@@ -19,7 +19,6 @@ module Yast
         )
       )
 
-
       # Input loop. Will be left only after 'OK' is clicked.
 
       @button = nil
@@ -34,7 +33,6 @@ module Yast
           UI.ChangeWidget(Id(:cb), :Value, nil)
         end
       end until @button == :ok
-
 
       # Get the check box's value.
       #

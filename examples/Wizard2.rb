@@ -79,7 +79,6 @@ module Yast
         @type = Ops.get_string(@event, "EventType", "")
         @id = Ops.get_symbol(@event, "ID", :nil)
 
-
         UI.ReplaceWidget(
           Id(:contents),
           VBox(

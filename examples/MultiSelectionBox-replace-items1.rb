@@ -54,16 +54,14 @@ module Yast
 
       @order = Convert.convert(
         UI.QueryWidget(:toppings, :SelectedItems),
-        :from => "any",
-        :to   => "list <string>"
+        from: "any",
+        to:   "list <string>"
       )
       UI.CloseDialog
-
 
       #
       # Show the result
       #
-
 
       UI.OpenDialog(
         VBox(

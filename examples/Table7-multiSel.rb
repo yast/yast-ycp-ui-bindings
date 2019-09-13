@@ -39,7 +39,6 @@ module Yast
 
       UI.ChangeWidget(:menu, :SelectedItems, [1, 2])
 
-
       while UI.UserInput != :cancel
         # Change table contents
         UI.ChangeWidget(:menu, :Items, @new_items)

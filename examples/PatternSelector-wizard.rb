@@ -12,19 +12,15 @@ module Yast
       # Pkg::SourceCreate( "http://dist.suse.de/install/SLP/SUSE-10.1-Beta3/i386/CD1/", "" );
       Pkg.SourceCreate("file:/srv/sles-10-i386/CD1/", "")
 
-
-
       if !UI.HasSpecialWidget(:PatternSelector)
         detailedSelection # Fallback: Do detailed selection right away
         return
       end
 
-
       UI.OpenDialog(
         Opt(:defaultsize),
         Wizard(:back, "", :cancel, "&Cancel", :ok, "&OK")
       )
-
 
       @help_text = _(
         "<p>The available software for this system is shown by category in the left column.  To view a description for an item, select it in the list.</p>"
@@ -54,7 +50,6 @@ module Yast
       ) # don't create a new RPM database
 
       UI.ReplaceWidget(Id(:contents), PatternSelector(Id(:patterns)))
-
 
       @button = nil
       begin

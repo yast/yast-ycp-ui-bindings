@@ -13,31 +13,29 @@ module Yast
       # define void UI::SetFunctionKeys( map fkeys ) ``{};
 
       UI.SetFunctionKeys(
-        {
-          "Help"             => 1,
-          "Info"             => 2,
-          "Show Details"     => 2,
-          "Add"              => 3,
-          "Edit"             => 4,
-          "Delete"           => 5,
-          "Test"             => 6,
-          "Expert..."        => 7,
-          "Advanced..."      => 7,
-          "Back"             => 8,
-          "Abort"            => 9,
-          "Cancel"           => 9,
-          "No"               => 9,
-          "Next"             => 10,
-          "OK"               => 10,
-          "Accept"           => 10,
-          "Finish"           => 10,
-          "Yes"              => 10,
-          "Apply"            => 10,
-          "Undo"             => 11,
-          "Reset"            => 11,
-          "Defaults"         => 12,
-          "Restore Defaults" => 12
-        }
+        "Help"             => 1,
+        "Info"             => 2,
+        "Show Details"     => 2,
+        "Add"              => 3,
+        "Edit"             => 4,
+        "Delete"           => 5,
+        "Test"             => 6,
+        "Expert..."        => 7,
+        "Advanced..."      => 7,
+        "Back"             => 8,
+        "Abort"            => 9,
+        "Cancel"           => 9,
+        "No"               => 9,
+        "Next"             => 10,
+        "OK"               => 10,
+        "Accept"           => 10,
+        "Finish"           => 10,
+        "Yes"              => 10,
+        "Apply"            => 10,
+        "Undo"             => 11,
+        "Reset"            => 11,
+        "Defaults"         => 12,
+        "Restore Defaults" => 12
       )
 
       @help = "Use this with the NCurses UI.\n" +

@@ -61,7 +61,6 @@ module Yast
 
       UI.WizardCommand(term(:SetCurrentStep, "step1"))
 
-
       while true
         @event = UI.WaitForEvent
 

@@ -40,12 +40,9 @@ module Yast
       @currentCd = 1
       @megaBytesPerSecond = 2
 
-
-
       #
       # ----------------------------- main() ----------------------------------
       #
-
 
       if !UI.HasSpecialWidget(:Wizard) || !UI.HasSpecialWidget(:DumbTab)
         Builtins.y2error(
@@ -56,7 +53,6 @@ module Yast
 
       @help_text = "<p>Please wait while packages are being installed.</p>"
       @slide_text = "\t\t\t\t\t\t\t\t<table cellspacing=\"10\" cellpadding=\"5\">\t\t\t\t\t\t<tr>\t\t\t\t\t\t\t\t\t\t\t<td width =\"*\">\t\t\t\t\t\t\t\t\t<img src=\"/usr/share/YaST2/theme/current/icons/48x48/apps/yast-sound.png\"\t\talign=\"left\">\t\t\t\t\t\t\t\t\t\t</td>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<td width=\"*\">\t\t\t\t\t\t\t\t\t<p><font color=\"#00007f\"><b>XMMS and JuK - Powerful Jukeboxes</b></font></p>\t\t<p>XMMS is an excellent sound player for Linux. It is easy to use and supports\t\tvarious formats, including audio CDs. Test the many visualization plug-ins or\t\tdownload your favorite XMMS skins from the web.</p>\t\t\t\t\t<p>New in KDE: JuK, which classifies your MP3s and organizes your music\t\t\tcollection.</p>\t\t\t\t\t\t\t\t\t\t<p><b>Want More?</b></p>\t\t\t\t\t\t\t\t<p>The SUSE distribution features a wide range of applications for playing\t\tyour CDs and MP3 songs. For example, KsCD is a user-friendly CD player. The\t\ttrack information for most CDs is available on the Internet. Simply activate\t\tthe respective function to display the list.</p>\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t</td>\t\t\t\t\t\t\t\t\t\t\t</tr>\t\t\t\t\t\t\t\t\t\t\t</table>"
-
 
       UI.OpenDialog(
         Opt(:defaultsize),
@@ -94,7 +90,6 @@ module Yast
         )
       end
 
-
       UI.WizardCommand(term(:AddStepHeading, "Configuration"))
 
       Builtins.foreach(@config_steps) do |step|
@@ -114,7 +109,6 @@ module Yast
       UI.WizardCommand(term(:SetBackButtonLabel, "S&tep"))
 
       @slideShowPage = RichText(Id(:slideText), @slide_text)
-
 
       @cdTable = Table(
         Id(:cdTable),
@@ -147,7 +141,6 @@ module Yast
           )
         )
       )
-
 
       UI.ReplaceWidget(
         Id(:contents),
@@ -211,7 +204,6 @@ module Yast
           Builtins.y2milestone("detailsPage:\n%1", @detailsPage)
           UI.ReplaceWidget(:tabContents, @detailsPage)
 
-
           UI.ChangeWidget(
             :pkgLog,
             :LastLine,
@@ -254,7 +246,6 @@ module Yast
       Builtins.sformat("SuSE Linux Professional CD %1", mediaNo)
     end
 
-
     def mediaChange(cdNo)
       UI.ChangeWidget(:nextMedia, :Value, "")
       UI.OpenDialog(
@@ -270,7 +261,6 @@ module Yast
 
       nil
     end
-
 
     def subtract(valueList, delta)
       valueList = deep_copy(valueList)
@@ -313,13 +303,11 @@ module Yast
       deep_copy(newList)
     end
 
-
     def twoDigits(n)
       Ops.less_than(n, 10) ?
         Builtins.sformat("0%1", n) :
         Builtins.sformat("%1", n)
     end
-
 
     def formatTime(seconds)
       hours = Ops.divide(seconds, 3600)
@@ -333,7 +321,6 @@ module Yast
       )
     end
 
-
     def totalRemainingTime
       left = 0
 
@@ -343,7 +330,6 @@ module Yast
 
       Builtins.sformat("Remaining:\n%1", formatTime(totalSeconds))
     end
-
 
     def nextMedia
       remaining = ""
@@ -365,7 +351,6 @@ module Yast
 
       remaining
     end
-
 
     def pkgInfo(pkgName, pkgVersion, pkgSizeMB, pkgSummary)
       pkgSizeMB = deep_copy(pkgSizeMB)

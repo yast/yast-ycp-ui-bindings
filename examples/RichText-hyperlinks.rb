@@ -30,7 +30,6 @@ module Yast
         )
       )
 
-
       @ret = nil
       begin
         @ret = UI.UserInput

@@ -5,7 +5,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
       # main
       #
 

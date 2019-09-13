@@ -51,8 +51,6 @@ module Yast
         )
       )
 
-
-
       UI.OpenDialog(
         Opt(:defaultsize),
         VBox(
@@ -79,7 +77,6 @@ module Yast
           Right(PushButton(Id(:close), "Cl&ose"))
         )
       )
-
 
       while true
         @widget = Convert.to_symbol(UI.UserInput)

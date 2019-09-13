@@ -1,17 +1,17 @@
 # encoding: utf-8
 
-# Trivial example for Release Notes button 
+# Trivial example for Release Notes button
 module Yast
   class RelNotesButtonClient < Client
     def main
       Yast.import "UI"
-      
-      rel_notes_file =  UI.TextMode ? "./RELEASE-NOTES.en.txt" : "./RELEASE-NOTES.en.rtf"       
+
+      rel_notes_file = UI.TextMode ? "./RELEASE-NOTES.en.txt" : "./RELEASE-NOTES.en.rtf"
       rel_notes_text = SCR.Read(path(".target.string"), rel_notes_file)
-      rel_notes = {"SLES12" => rel_notes_text, "Some-Add-On" => "some text" }
+      rel_notes = { "SLES12" => rel_notes_text, "Some-Add-On" => "some text" }
 
       UI.SetReleaseNotes(rel_notes)
-    
+
       UI.OpenDialog(
         VBox(
           Right(PushButton(Id(:relNotes), Opt(:relNotesButton), "&Release Notes")),
@@ -36,7 +36,7 @@ module Yast
                   InputField("&Connections")
                 )
               )
-           )
+            )
           ),
           PushButton(Id(:ok), "&OK")
         )

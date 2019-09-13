@@ -37,7 +37,6 @@ module Yast
       @order = Convert.to_string(UI.QueryWidget(:menu, :Value))
       UI.CloseDialog
 
-
       #
       # Show the result
       #

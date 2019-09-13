@@ -46,7 +46,6 @@ module Yast
 
       @thats_it = "\n\n*** Press [OK] once more to exit. ***"
 
-
       UI.OpenDialog(
         VBox(
           LogView(

@@ -36,7 +36,6 @@ module Yast
 
           Builtins.y2milestone("OK button activated")
 
-
           # Retrieve widget contents
 
           @name = Convert.to_string(UI.QueryWidget(Id(:name), :Value))
@@ -50,20 +49,17 @@ module Yast
           # process "Help" button
 
           Builtins.y2milestone("Help button activated")
-        end 
+        end
 
         # No other "else" branch necessary: None of the InputField widget has
         # the `notify option set, so none of them can make UI::UserInput() return.
       end until @widget_id == :ok || @widget_id == :cancel
-
-
 
       # Close the dialog - but only after retrieving all information that may
       # still be stored only in its widgets: UI::QueryWidget() works only for
       # widgets that are still on the screen!
 
       UI.CloseDialog
-
 
       # Dump the values entered into the log file
 

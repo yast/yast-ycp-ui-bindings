@@ -6,8 +6,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
-
       @iconBasePath = "/usr/share/YaST2/theme/current/icons"
 
       UI.OpenDialog(
@@ -27,23 +25,22 @@ module Yast
 
       UI.OpenDialog(Label("Reading icon directories..."))
 
-
       @iconList = readIconDir(Ops.add(@iconBasePath, "/22x22/apps"))
       @iconList = Convert.convert(
         Builtins.union(
           @iconList,
           readIconDir(Ops.add(@iconBasePath, "/32x32/apps"))
         ),
-        :from => "list",
-        :to   => "list <string>"
+        from: "list",
+        to:   "list <string>"
       )
       @iconList = Convert.convert(
         Builtins.union(
           @iconList,
           readIconDir(Ops.add(@iconBasePath, "/48x48/apps"))
         ),
-        :from => "list",
-        :to   => "list <string>"
+        from: "list",
+        to:   "list <string>"
       )
 
       @itemList = []
@@ -80,8 +77,8 @@ module Yast
     def readIconDir(dir)
       iconList = Convert.convert(
         SCR.Read(path(".target.dir"), dir),
-        :from => "any",
-        :to   => "list <string>"
+        from: "any",
+        to:   "list <string>"
       )
       Builtins.y2debug("Dir %1: %2  entries", dir, Builtins.size(iconList))
       iconList = Builtins.sort(Builtins.filter(iconList) do |entry|

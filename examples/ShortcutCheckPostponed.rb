@@ -10,7 +10,6 @@ module Yast
       @b_was = PushButton(Opt(:hstretch), "&was")
       @b_here = PushButton(Opt(:hstretch), "&here")
 
-
       UI.OpenDialog(
         VBox(
           VSpacing(0.3),
@@ -27,7 +26,6 @@ module Yast
           Right(PushButton(Id(:cancel), "&Quit"))
         )
       )
-
 
       @button = nil
 
@@ -66,7 +64,6 @@ module Yast
       @button = UI.UserInput
       return if @button == :cancel
 
-
       Builtins.y2milestone("Expect shortcut conflict: '&was' vs. '&was'")
       UI.ReplaceWidget(Id(1), @b_was) # "&was" "&was" "&here"
       UI.ReplaceWidget(Id(2), @b_kilroy) # "&was" "&Kilroy" "&here"
@@ -76,7 +73,6 @@ module Yast
       Builtins.y2milestone("After change: 'was Kilroy here'")
       @button = UI.UserInput
       return if @button == :cancel
-
 
       UI.CloseDialog
 

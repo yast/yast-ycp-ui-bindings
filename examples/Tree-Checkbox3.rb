@@ -21,9 +21,9 @@ module Yast
         VBox(
           HSpacing(70),
           VSpacing(0.2),
-          #`Tree (`id(`tree), `opt(`notify, `immediate, `multiSelection),  "tree", items),
+          # `Tree (`id(`tree), `opt(`notify, `immediate, `multiSelection),  "tree", items),
           Tree(Id(:tree), Opt(:notify, :multiSelection), "tree", @items),
-          #`Tree (`id(`tree), `opt(`notify),  "tree", items),
+          # `Tree (`id(`tree), `opt(`notify),  "tree", items),
           HBox(
             PushButton(Id(:ok), Opt(:default), Label.OKButton),
             PushButton(Id(:cancel), Opt(:key_F9), Label.CancelButton)

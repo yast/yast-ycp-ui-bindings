@@ -25,7 +25,6 @@ module Yast
         return
       end
 
-
       # Initialize values
 
       @unit = "MB"
@@ -36,7 +35,6 @@ module Yast
       @suggested_linux_size = 800
       @linux_size = @suggested_linux_size
       @win_free = Ops.subtract(@total_free, @linux_size)
-
 
       # Create the dialog
 

@@ -94,8 +94,8 @@ module Yast
 
           @current_branch = Convert.convert(
             UI.QueryWidget(:dest_dir, :CurrentBranch),
-            :from => "any",
-            :to   => "list <string>"
+            from: "any",
+            to:   "list <string>"
           )
 
           if @current_branch != nil
@@ -123,7 +123,6 @@ module Yast
           end
         end
       end until @id == :ok
-
 
       # Close the dialog.
       # Remember to read values from the dialog's widgets BEFORE closing it!

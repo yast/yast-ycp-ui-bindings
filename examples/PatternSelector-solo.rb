@@ -19,7 +19,6 @@ module Yast
         return
       end
 
-
       Pkg.TargetInit(
         "/", # installed system
         false

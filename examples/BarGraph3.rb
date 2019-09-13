@@ -26,8 +26,6 @@ module Yast
         return
       end
 
-
-
       # list	values = [ 100, 200, 300, 150, 250, 120, 200, 120 ];
       @values = [100, 100, 100, 100, 100, 100, 100, 100]
       @inc = 10 # increment / decrement for each button press
@@ -45,7 +43,7 @@ module Yast
       @minus_buttons = HBox()
       @i = 1
 
-      Builtins.foreach(@values) do |val|
+      Builtins.foreach(@values) do |_val|
         @plus_buttons = Builtins.add(
           @plus_buttons,
           HWeight(1, PushButton(Id(@i), "+"))
@@ -65,7 +63,6 @@ module Yast
           PushButton(Id(:close), Opt(:default), "&Close")
         )
       )
-
 
       # Event processing loop - left only via the "close" button
       # or the window manager close button / function.

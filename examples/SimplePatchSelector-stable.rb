@@ -16,13 +16,10 @@ module Yast
       # Pkg::SourceCreate( "file:/mounts/dist/install/stable-x86/", "" );
       Pkg.SourceCreate("ftp://ftp.gwdg.de/pub/suse/update/10.2", "")
 
-
-
       if !UI.HasSpecialWidget(:SimplePatchSelector)
         detailedSelection # Fallback: Do detailed selection right away
         return
       end
-
 
       UI.OpenDialog(
         Opt(:defaultsize),

@@ -6,8 +6,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
-
       UI.OpenDialog(
         VBox(
           Heading("YaST2 Mini Control Center"),
@@ -48,7 +46,6 @@ module Yast
         UI.QueryWidget(Id(:mod), :SelectedItems)
       )
       Builtins.y2warning("Selected items: %1", @selected_items)
-
 
       @id = nil
 

@@ -39,7 +39,6 @@ module Yast
         UI.ChangeWidget(:pizza, :Value, "") if @button == :empty
       end until @button == :ok
 
-
       # Get the input from the selection box.
       #
       # Notice: The return value of UI::UserInput() does NOT return this value!

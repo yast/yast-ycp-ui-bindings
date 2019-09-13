@@ -15,7 +15,6 @@ module Yast
         )
       )
 
-
       while true
         @button = Convert.to_symbol(UI.TimeoutUserInput(100))
 

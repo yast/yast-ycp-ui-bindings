@@ -98,7 +98,6 @@ module Yast
         )
       end until @id == :ok
 
-
       # Close the dialog.
       # Remember to read values from the dialog's widgets BEFORE closing it!
       UI.CloseDialog

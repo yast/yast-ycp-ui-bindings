@@ -59,7 +59,6 @@ module Yast
         "Australia/Perth"     => "Western Australia--Perth"
       }
 
-
       # Ask the UI whether or not it supports this widget.
 
       if UI.HasSpecialWidget(:TimezoneSelector)

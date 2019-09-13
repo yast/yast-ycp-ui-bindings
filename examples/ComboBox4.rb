@@ -19,10 +19,8 @@ module Yast
       # Set the valid input characters.
       UI.ChangeWidget(Id(:addr), :ValidChars, "0123456789abcdefABCDEF")
 
-
       # Wait for user input.
       UI.UserInput
-
 
       # Get the input from the selection box.
       #
@@ -35,7 +33,6 @@ module Yast
       # Close the dialog.
       # Remember to read values from the dialog's widgets BEFORE closing it!
       UI.CloseDialog
-
 
       # Pop up a new dialog to echo the input.
       UI.OpenDialog(VBox(Label("You entered:"), Label(@val), PushButton("&OK")))

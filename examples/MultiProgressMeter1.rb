@@ -20,7 +20,6 @@ module Yast
         return
       end
 
-
       UI.OpenDialog(
         VBox(
           VMultiProgressMeter(Id(:prog), [1000, 200, 500, 20, 100]),

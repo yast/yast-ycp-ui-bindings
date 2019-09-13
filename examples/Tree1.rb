@@ -78,13 +78,11 @@ module Yast
       @dest_dir = UI.QueryWidget(:dest_dir, :CurrentItem)
       Builtins.y2debug("Selected: %1", @dest_dir)
 
-
       @dest_dir = "" if @dest_dir == nil
 
       # Close the dialog.
       # Remember to read values from the dialog's widgets BEFORE closing it!
       UI.CloseDialog
-
 
       # Pop up a new dialog to echo the selection.
       UI.OpenDialog(

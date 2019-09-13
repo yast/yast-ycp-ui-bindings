@@ -8,7 +8,6 @@ module Yast
       Yast.import "UI"
       @line_len = 4
 
-
       # ==== main
 
       # define this global variable to provide nxn puzzle table
@@ -33,7 +32,6 @@ module Yast
       nil
     end
 
-
     def buttons_table(buttons)
       buttons = deep_copy(buttons)
       tabl = VBox()
@@ -44,9 +42,9 @@ module Yast
       label = ""
 
       while Ops.less_than(
-          Ops.subtract(Ops.add(i, @line_len), 1),
-          Builtins.size(buttons)
-        )
+        Ops.subtract(Ops.add(i, @line_len), 1),
+        Builtins.size(buttons)
+      )
         j = 0
         line = HBox()
 
@@ -82,7 +80,6 @@ module Yast
       deep_copy(tabl)
     end
 
-
     def isRight(buttons, pos)
       buttons = deep_copy(buttons)
       if Ops.less_than(Ops.add(pos, 1), Builtins.size(buttons))
@@ -90,7 +87,6 @@ module Yast
       end
       false
     end
-
 
     def isLeft(buttons, pos)
       buttons = deep_copy(buttons)
@@ -100,7 +96,6 @@ module Yast
       false
     end
 
-
     def isDown(buttons, pos)
       buttons = deep_copy(buttons)
       if Ops.less_than(Ops.add(pos, @line_len), Builtins.size(buttons))
@@ -109,7 +104,6 @@ module Yast
       false
     end
 
-
     def isUp(buttons, pos)
       buttons = deep_copy(buttons)
       if Ops.greater_or_equal(Ops.subtract(pos, @line_len), 0)
@@ -117,7 +111,6 @@ module Yast
       end
       false
     end
-
 
     # do the move
     def move(buttons, pos, m)
@@ -143,10 +136,8 @@ module Yast
         PushButton(Id(Ops.add(pos, m)), Ops.get(buttons, pos))
       )
 
-
       deep_copy(ret)
     end
-
 
     # generate list of buttons
     # TODO: needs to be randomized
@@ -174,7 +165,6 @@ module Yast
 
       deep_copy(buttons)
     end
-
 
     def PuzzleWindow(buttons)
       buttons = deep_copy(buttons)

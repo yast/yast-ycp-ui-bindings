@@ -7,7 +7,6 @@ module Yast
 
       @button = nil
 
-
       UI.OpenDialog(
         VBox(
           LogView(

@@ -34,12 +34,12 @@ module Yast
         @widget = Convert.to_symbol(UI.UserInput)
 
         case @widget
-          when :load1
-            UI.ChangeWidget(Id(:graph), :Filename, "graph1.gv")
-          when :load2
-            UI.ChangeWidget(Id(:graph), :Filename, "graph2.gv")
-          when :load3
-            UI.ChangeWidget(Id(:graph), :Filename, "graph3.gv")
+        when :load1
+          UI.ChangeWidget(Id(:graph), :Filename, "graph1.gv")
+        when :load2
+          UI.ChangeWidget(Id(:graph), :Filename, "graph2.gv")
+        when :load3
+          UI.ChangeWidget(Id(:graph), :Filename, "graph3.gv")
         end
 
         break if @widget == :close || @widget == :cancel

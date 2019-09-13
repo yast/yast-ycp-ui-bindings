@@ -11,7 +11,6 @@ module Yast
       #
       # There shouldn't be any complaints about shortcuts in the log file when this is started.
 
-
       @sw_selections = [
         "Minimum System",
         "Minimum X11 System",

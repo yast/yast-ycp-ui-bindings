@@ -14,7 +14,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
       @timeout = 7 # seconds
       @howto = Builtins.sformat(
         "Use the \"Close\" button to quit. " +
@@ -28,7 +27,6 @@ module Yast
       @help_text = "<p>Please also have a look at our <a href=\"daily special\">daily special</a>.</p>" +
         "<p>If you have any comments about our pizza, please contact our " +
         "chef de cuisine <a href=\"mailto:giuseppe@mafia.it\">Giuseppe</a>.</p>"
-
 
       @delivery = Tree(
         Id(:delivery_service),
@@ -161,7 +159,6 @@ module Yast
         )
       )
 
-
       @payment_radio_box = VBox(
         Left(RadioButton(Id(:cash), Opt(:notify), "Cas&h on Delivery", true)),
         Left(RadioButton(Id(:plastic), Opt(:notify), "C&redit Card")),
@@ -180,7 +177,6 @@ module Yast
           )
         )
       )
-
 
       UI.OpenDialog(
         Opt(:defaultsize),
@@ -273,7 +269,6 @@ module Yast
           UI.ChangeWidget(:drink, :Value, nil)
         end
       end until Ops.get(@event, "ID") == :close
-
 
       #
       # Clean up

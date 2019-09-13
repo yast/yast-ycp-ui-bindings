@@ -95,7 +95,6 @@ module Yast
         )
       end
 
-
       UI.WizardCommand(term(:AddStepHeading, "Configuration"))
 
       Builtins.foreach(@config_steps) do |step|
@@ -107,7 +106,6 @@ module Yast
           )
         )
       end
-
 
       @current_step = 0
       show_step(0)

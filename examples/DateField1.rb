@@ -11,13 +11,13 @@ module Yast
 
       UI.OpenDialog(
         MinSize(
-        25,
-        7,
+          25,
+          7,
           VBox(
             Left(DateField(Id(:date), Opt(:hstretch, :notify), "Date:", @ini_date)),
             Left(TimeField(Id(:time), Opt(:hstretch, :notify), "Time:", @ini_time)),
             HBox(InputField(Id(:date_set), Opt(:hstretch), "Date: ", @ini_date),
-                  InputField(Id(:time_set), Opt(:hstretch), "Time: ", @ini_time)),
+              InputField(Id(:time_set), Opt(:hstretch), "Time: ", @ini_time)),
             PushButton(Id(:ok), "&OK")
           )
         )

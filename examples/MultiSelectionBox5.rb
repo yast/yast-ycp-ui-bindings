@@ -77,8 +77,6 @@ module Yast
 
       UI.CloseDialog
 
-
-
       # Concatenate the list of selected toppings to one multi-line string.
 
       @pizza_description = ""
@@ -90,7 +88,6 @@ module Yast
           topping
         )
       end
-
 
       # Open a new dialog to echo the selection.
 

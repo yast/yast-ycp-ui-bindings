@@ -18,7 +18,6 @@ module Yast
         return
       end
 
-
       UI.OpenDialog(
         VBox(
           DumbTab(
@@ -39,7 +38,6 @@ module Yast
           UI.ChangeWidget(:contents, :Value, Convert.to_string(@input))
         end
       end until @input == :close
-
 
       UI.CloseDialog
 

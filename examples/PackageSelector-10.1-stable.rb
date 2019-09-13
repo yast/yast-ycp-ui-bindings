@@ -11,7 +11,6 @@ module Yast
         ""
       )
 
-
       if false
         Pkg.TargetInit(
           "/", # installed system

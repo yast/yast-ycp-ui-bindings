@@ -18,7 +18,6 @@ module Yast
         return
       end
 
-
       UI.OpenDialog(
         VBox(
           DumbTab(
@@ -60,7 +59,6 @@ module Yast
           UI.QueryWidget(:tab, :CurrentItem)
         )
       end until @input == :close
-
 
       UI.CloseDialog
 

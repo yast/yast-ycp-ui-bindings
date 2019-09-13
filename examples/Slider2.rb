@@ -30,13 +30,11 @@ module Yast
         return
       end
 
-
       # Initialize RGB values
 
       @red = 128
       @blue = 128
       @green = 128
-
 
       # Create the dialog
 
@@ -55,7 +53,6 @@ module Yast
         )
       )
 
-
       # Event processing loop - left only via the "close" button
       # or the window manager close button / function.
       @widget = nil
@@ -69,7 +66,6 @@ module Yast
           @red = Convert.to_integer(UI.QueryWidget(Id(:red), :Value))
           @green = Convert.to_integer(UI.QueryWidget(Id(:green), :Value))
           @blue = Convert.to_integer(UI.QueryWidget(Id(:blue), :Value))
-
 
           # Update bar graph
 

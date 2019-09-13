@@ -35,7 +35,6 @@ module Yast
         Item(Id(:veggie_branch), "Veggie", true, @veggie_toppings)
       ]
 
-
       UI.OpenDialog(
         VBox(
           Tree(Id(:listing), "Daily &Specials:", @menu),
@@ -59,7 +58,6 @@ module Yast
 
       @order = Convert.to_string(UI.QueryWidget(:listing, :CurrentItem))
       UI.CloseDialog
-
 
       #
       # Show the result

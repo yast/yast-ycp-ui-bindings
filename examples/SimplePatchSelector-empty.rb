@@ -20,7 +20,6 @@ module Yast
         return
       end
 
-
       UI.OpenDialog(
         Opt(:defaultsize),
         term(:SimplePatchSelector, Id(:selector))

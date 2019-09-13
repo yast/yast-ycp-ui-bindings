@@ -9,8 +9,8 @@ module Yast
 
       @image = Convert.convert(
         SCR.Read(path(".target.byte"), "empty.gif"),
-        :from => "any",
-        :to   => "byteblock"
+        from: "any",
+        to:   "byteblock"
       )
 
       Wizard.CreateDialog

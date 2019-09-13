@@ -19,13 +19,11 @@ module Yast
         return
       end
 
-
       # Initialize some (pretty random) demo values
 
       @logfile_name = "/suse/sh/.y2log"
       # string  logfile_name = "/var/log/y2log";
       @logfile_expected_size = 20 * 1024
-
 
       # Build a dialog with a download progress bar
       # and a row of some buttons below.
@@ -79,7 +77,6 @@ module Yast
           end
         end
       end while @button != :close
-
 
       # Clean up
 

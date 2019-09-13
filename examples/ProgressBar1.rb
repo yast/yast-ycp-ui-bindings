@@ -16,7 +16,6 @@ module Yast
         )
       )
 
-
       while Ops.less_than(@progress, @max_progress)
         @button = Convert.to_symbol(UI.UserInput)
 
