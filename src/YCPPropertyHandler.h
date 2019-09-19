@@ -1,6 +1,7 @@
 /****************************************************************************
 
 Copyright (c) 2000 - 2010 Novell, Inc.
+Copyright (c) 2019 SUSE LLC
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -24,7 +25,7 @@ you may find current contact information at www.novell.com
 
 		Widget property handlers for not-so-trivial properties.
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
@@ -104,6 +105,7 @@ protected:
      **/
     static bool trySetCheckBoxValue			( YWidget * widget, const YCPValue & val );
     static bool trySetSelectionBoxValue			( YWidget * widget, const YCPValue & val );
+    static bool trySetItemSelectorValue			( YWidget * widget, const YCPValue & val );
     static bool trySetTreeValue				( YWidget * widget, const YCPValue & val );
     static bool trySetTableValue			( YWidget * widget, const YCPValue & val );
     static bool trySetDumbTabValue			( YWidget * widget, const YCPValue & val );
@@ -112,9 +114,11 @@ protected:
     static bool trySetTreeItems				( YWidget * widget, const YCPValue & val );
     static bool trySetTableItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTableCell				( YWidget * widget, const YCPTerm  & propTerm, const YCPValue & val );
+    static bool trySetItemSelectorItems                 ( YWidget * widget, const YCPValue & val );
     static bool trySetSelectionWidgetItems		( YWidget * widget, const YCPValue & val );
     static bool trySetRadioButtonGroupCurrentButton	( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxSelectedItems	( YWidget * widget, const YCPValue & val );
+    static bool trySetItemSelectorSelectedItems         ( YWidget * widget, const YCPValue & val );
     static bool trySetTableSelectedItems		( YWidget * widget, const YCPValue & val );
     static bool trySetTreeSelectedItems			( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxCurrentItem	( YWidget * widget, const YCPValue & val );
@@ -123,19 +127,21 @@ protected:
     static bool trySetBarGraphLabels			( YWidget * widget, const YCPValue & val );
 
     /**
-     * All trySet..() functions try to dynamic_cast 'widget' to the expected
+     * All tryGet..() functions try to dynamic_cast 'widget' to the expected
      * widget type and then retrieve a property.
      *
      * They all return YCPNull upon failure and a non-null YCPValue upon success.
      **/
     static YCPValue tryGetCheckBoxValue			( YWidget * widget );
     static YCPValue tryGetSelectionBoxValue		( YWidget * widget );
+    static YCPValue tryGetItemSelectorValue		( YWidget * widget );
     static YCPValue tryGetTreeValue			( YWidget * widget );
     static YCPValue tryGetTableValue			( YWidget * widget );
     static YCPValue tryGetDumbTabValue			( YWidget * widget );
     static YCPValue tryGetComboBoxValue			( YWidget * widget );
     static YCPValue tryGetRadioButtonGroupCurrentButton	( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxSelectedItems( YWidget * widget );
+    static YCPValue tryGetItemSelectorSelectedItems     ( YWidget * widget );
     static YCPValue tryGetTableSelectedItems		( YWidget * widget );
     static YCPValue tryGetTreeSelectedItems		( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxCurrentItem	( YWidget * widget );
@@ -146,6 +152,7 @@ protected:
     static YCPValue tryGetTableItem			( YWidget * widget, const YCPTerm & propertyTerm );
     static YCPValue tryGetTableItems			( YWidget * widget );
     static YCPValue tryGetTreeItems			( YWidget * widget );
+    static YCPValue tryGetItemSelectorItems             ( YWidget * widget );
     static YCPValue tryGetMenuButtonItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItems		( YWidget * widget );
     static YCPValue tryGetBarGraphValues		( YWidget * widget );
