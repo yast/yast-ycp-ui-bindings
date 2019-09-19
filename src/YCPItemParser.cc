@@ -39,6 +39,22 @@ you may find current contact information at www.novell.com
 YItemCollection
 YCPItemParser::parseItemList( const YCPList & itemList )
 {
+    return parseItemListInternal( itemList,
+                                  false ); // allowDescription
+}
+
+
+YItemCollection
+YCPItemParser::parseDescribedItemList( const YCPList & itemList )
+{
+    return parseItemListInternal( itemList,
+                                  true); // allowDescription
+}
+
+
+YItemCollection
+YCPItemParser::parseItemListInternal( const YCPList & itemList, bool allowDescription )
+{
     YItemCollection itemCollection;
     itemCollection.reserve( itemList.size() );
 
@@ -46,14 +62,14 @@ YCPItemParser::parseItemList( const YCPList & itemList )
     {
 	for ( int i=0; i < itemList->size(); i++ )
 	{
-	    YCPItem * item = parseItem( itemList->value(i) );
+	    YCPItem * item = parseItem( itemList->value(i), allowDescription );
 	    itemCollection.push_back( item );
 	}
     }
     catch ( YUIException & exception )
     {
 	// Delete all items created so far
-	
+
 	YItemIterator it = itemCollection.begin();
 
 	while ( it != itemCollection.end() )
@@ -72,24 +88,21 @@ YCPItemParser::parseItemList( const YCPList & itemList )
 
 
 YCPItem *
-YCPItemParser::parseItem( const YCPValue & rawItem )
+YCPItemParser::parseItem( const YCPValue & rawItem, bool allowDescription )
 {
     YCPItem * item = 0;
 
     if ( rawItem->isString() )		// Simple case: just a string
     {
 	YCPString label = rawItem->asString();
-	item = new YCPItem( label,	// The real label
-			    label,	// Use the label as ID, too
-			    false );	// Not initially selected
+	item = new YCPItem( label );
     }
     else				// `item(...)
     {
 	if ( rawItem->isTerm() &&
 	     rawItem->asTerm()->name() == YUISymbol_item )	// `item(...)
 	{
-	    item = parseItem( rawItem->asTerm() );
-
+	    item = parseItem( rawItem->asTerm(), allowDescription );
 	}
 	else	// not `item(...)
 	{
@@ -102,16 +115,17 @@ YCPItemParser::parseItem( const YCPValue & rawItem )
 
 
 YCPItem *
-YCPItemParser::parseItem( const YCPTerm & itemTerm )
+YCPItemParser::parseItem( const YCPTerm & itemTerm, bool allowDescription )
 {
-    YCPValue	id	 = YCPNull();
-    YCPString	iconName = YCPNull();
-    YCPString	label	 = YCPNull();
-    YCPBoolean  selected = YCPNull();
-    
+    YCPValue	id	        = YCPNull();
+    YCPString	iconName        = YCPNull();
+    YCPString	label	        = YCPNull();
+    YCPString   description     = YCPNull();
+    YCPBoolean  selected        = YCPNull();
+
     const char * usage =
-	"Expected: `item(`id(`myID), `icon(\"MyIcon.png\"), \"MyItemText\", boolean selected )";
-    
+	"Expected: `item(`id(`myID), `icon(\"MyIcon.png\"), \"MyItemText\", \"Description\", boolean selected )";
+
 
     for ( int i=0; i < itemTerm->size(); i++ )
     {
@@ -140,11 +154,21 @@ YCPItemParser::parseItem( const YCPTerm & itemTerm )
 		YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
 	    }
 	}
-	else if ( arg->isString()		// label (the user-visible text)
-		  && label.isNull() )		// and don't have a label yet
-	{
-	    label = arg->asString();
-	}
+	else if ( arg->isString() )             // label or description
+        {
+            if ( label.isNull() )		// No label yet?
+            {
+                label = arg->asString();
+            }
+            else if ( description.isNull() && allowDescription )
+            {
+                description = arg->asString();
+            }
+            else                                // One string too many
+            {
+                YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
+            }
+        }
 	else if ( arg->isBoolean() 		// "selected" flag
 		  && selected.isNull() )	// and don't have a "selected" flag yet
 	{
@@ -162,13 +186,16 @@ YCPItemParser::parseItem( const YCPTerm & itemTerm )
     if ( iconName.isNull() )
 	iconName = YCPString( "" );
 
+    if ( description.isNull() )
+        description = YCPString( "" );
+
     if ( id.isNull() )			// no `id() ?
 	id = label;			// use the label instead
 
     if ( selected.isNull() )		// "selected" not specified?
 	selected = YCPBoolean( false );	// use "not selected" (false) as default
 
-    YCPItem * item = new YCPItem( label, id, iconName, selected->value() );
+    YCPItem * item = new YCPItem( id, label, description, iconName, selected->value() );
     YUI_CHECK_NEW( item );
 
     return item;

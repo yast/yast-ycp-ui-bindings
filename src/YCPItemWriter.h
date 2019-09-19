@@ -37,7 +37,8 @@ you may find current contact information at www.novell.com
 
 
 /**
- * Writer for SelectionBox, ComboBox, MultiSelectionBox item lists
+ * Writer for SelectionBox, ComboBox, MultiSelectionBox, SingleItemSelector,
+ * MultiItemSelector item lists
  **/
 class YCPItemWriter
 {
@@ -52,12 +53,32 @@ public:
      *         `item(`id( `myID3 ), `icon( "icon3.png"), "Label3", true )
      *     ]
      *
+     *
      * Note that the simple version "Label4" (without `item() and `id()) is
      * never returned here since if no ID is explicitly specified, the label
      * itself is used as the ID, so every item always has an ID, so the `id()
      * term and thus the `item() term have to be used.
      **/
-    static YCPList itemList( YItemConstIterator begin, YItemConstIterator end );
+    static YCPList itemList( YItemConstIterator begin,
+                             YItemConstIterator end );
+
+    /**
+     * Create a YCPList from an item collection:
+     *
+     *     [
+     *         `item(`id( `myID1 ), "Label1", "Description1" ),
+     *         `item(`id( `myID2 ), "Label2", "Description2", true ),
+     *         `item(`id( `myID3 ), `icon( "icon3.png"), "Label3", "Description3", true )
+     *     ]
+     *
+     *
+     * Note that the simple version "Label4" (without `item() and `id()) is
+     * never returned here since if no ID is explicitly specified, the label
+     * itself is used as the ID, so every item always has an ID, so the `id()
+     * term and thus the `item() term have to be used.
+     **/
+    static YCPList describedItemList( YItemConstIterator begin,
+                                      YItemConstIterator end );
 
 
     /**
@@ -67,8 +88,16 @@ public:
      *         `item(`id( `myID2 ), "Label2", true )
      *         `item(`id( `myID3 ), `icon( "icon3.png"), "Label3", true )
      **/
-    static YCPValue itemTerm( const YItem * item );
+    static YCPValue itemTerm( const YItem * item, bool withDescription );
 
+protected:
+
+    /**
+     * Create a YCPList from an item collection, either with or without description.
+     **/
+    static YCPList itemListInternal( YItemConstIterator begin,
+                                     YItemConstIterator end,
+                                     bool               allowDescription );
 };
 
 

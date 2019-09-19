@@ -2090,7 +2090,7 @@ YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
     if ( numargs == 1 )
     {
 	YCPList itemList = term->value( argnr )->asList();
-	itemSelector->addItems( YCPItemParser::parseItemList( itemList ) );
+	itemSelector->addItems( YCPItemParser::parseDescribedItemList( itemList ) );
     }
 
     return itemSelector;
