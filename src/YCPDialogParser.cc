@@ -137,9 +137,9 @@ using std::string;
  *				( if Opt( :notify ) is set for that SelectionBox ).
  *				Only widgets with this option set are affected.
  *
- * @option	notifyContextMenu Make this widget to send an event when the context menu is requested,
+ * @option	notifyContextMenu Make this widget send an event when the context menu is requested,
  *				e.g. when the user clicks the right mouse button.
- *				( if Opt( :notifyContextMenu ) is set for that SelectionBox ).
+ *				(if Opt( :notifyContextMenu ) is set for that widget).
  *				Only widgets with this option set are affected.
  *
  * @option	disabled	Set this widget insensitive, i.e. disable any user interaction.
@@ -285,6 +285,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_MinHeight		)	w = parseMinSize		( p, opt, term, ol, n, false, true  );
     else if ( s == YUIWidget_MinSize		)	w = parseMinSize		( p, opt, term, ol, n, true,  true  );
     else if ( s == YUIWidget_MinWidth		)	w = parseMinSize		( p, opt, term, ol, n, true,  false );
+    else if ( s == YUIWidget_MultiItemSelector  )	w = parseItemSelector           ( p, opt, term, ol, n, false );
     else if ( s == YUIWidget_MultiLineEdit	)	w = parseMultiLineEdit		( p, opt, term, ol, n );
     else if ( s == YUIWidget_MultiSelectionBox	)	w = parseMultiSelectionBox	( p, opt, term, ol, n );
     else if ( s == YUIWidget_PackageSelector	)	w = parsePackageSelector	( p, opt, term, ol, n );
@@ -298,6 +299,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_RichText		)	w = parseRichText		( p, opt, term, ol, n );
     else if ( s == YUIWidget_Right		)	w = parseAlignment		( p, opt, term, ol, n, YAlignEnd,	YAlignUnchanged );
     else if ( s == YUIWidget_SelectionBox	)	w = parseSelectionBox		( p, opt, term, ol, n );
+    else if ( s == YUIWidget_SingleItemSelector )	w = parseItemSelector           ( p, opt, term, ol, n, true );
     else if ( s == YUIWidget_Table		)	w = parseTable			( p, opt, term, ol, n );
     else if ( s == YUIWidget_TextEntry		)	w = parseInputField		( p, opt, term, ol, n, false, true ); // bugCompatibilityMode
     else if ( s == YUIWidget_Top		)	w = parseAlignment		( p, opt, term, ol, n, YAlignUnchanged,	YAlignBegin	);
@@ -439,7 +441,7 @@ YCPDialogParser::parseReplacePoint( YWidget * parent, YWidgetOpt & opt, const YC
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YReplacePoint * replacePoint = YUI::widgetFactory()->createReplacePoint( parent );
     parseWidgetTreeTerm( replacePoint, term->value( argnr )->asTerm() );
@@ -468,7 +470,7 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::widgetFactory()->createEmpty( parent );
 }
@@ -542,7 +544,7 @@ YCPDialogParser::parseSpacing( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::widgetFactory()->createSpacing( parent, dim, stretchable, size );
 }
@@ -880,7 +882,7 @@ YCPDialogParser::parseSquash( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
     YSquash * squash = YUI::widgetFactory()->createSquash( parent, horSquash, vertSquash );
     parseWidgetTreeTerm( squash, term->value( argnr )->asTerm() );
 
@@ -931,7 +933,8 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
     {
 	THROW_BAD_ARGS( term );
     }
-    rejectAllOptions( term,optList );
+
+    rejectAllOptions( term, optList );
 
     // Create child widget tree
     YWidget * child = parseWidgetTreeTerm( parent, term->value( argnr+1 )->asTerm() );
@@ -1344,7 +1347,7 @@ YCPDialogParser::parseLogView( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
     int		visibleLines	= term->value( argnr+1 )->asInteger()->value();
@@ -1529,7 +1532,7 @@ YCPDialogParser::parseMenuButton( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label   = term->value( argnr )->asString()->value();
 
@@ -1576,7 +1579,8 @@ YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
     {
 	THROW_BAD_ARGS( term );
     }
-    rejectAllOptions( term,optList );
+
+    rejectAllOptions( term, optList );
 
     string label   = term->value( argnr )->asString()->value();
     bool   checked = false;
@@ -1692,8 +1696,7 @@ YCPDialogParser::parseCheckBoxFrame( YWidget * parent, YWidgetOpt & opt,
  * @example	ShortcutConflict3.rb
  *
  *
- *
- * A radio button is not usefull alone. Radio buttons are group such that the
+ * A radio button is not useful alone. Radio buttons are group such that the
  * user can select one radio button of a group. It is much like a selection
  * box, but radio buttons can be dispersed over the dialog.  Radio buttons must
  * be contained in a <tt>RadioButtonGroup</tt>.
@@ -1712,7 +1715,7 @@ YCPDialogParser::parseRadioButton( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label     = term->value( argnr )->asString()->value();
     bool   isChecked = false;
@@ -1761,7 +1764,7 @@ YCPDialogParser::parseRadioButtonGroup( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YRadioButtonGroup * radioButtonGroup = YUI::widgetFactory()->createRadioButtonGroup( parent );
     parseWidgetTreeTerm( radioButtonGroup, term->value( argnr )->asTerm() );
@@ -1991,12 +1994,12 @@ YCPDialogParser::parseSelectionBox( YWidget * parent, YWidgetOpt & opt,
  *
  *
  *
- * The MultiSelectionBox displays a ( scrollable ) list of items from which any
+ * The MultiSelectionBox displays a (scrollable) list of items from which any
  * number (even nothing!) can be selected. Use the MultiSelectionBox's
  * <tt>SelectedItems</tt> property to find out which.
  *
  * Each item can be specified either as a simple string or as
- * <tt>Item( ... )</tt> which includes an ( optional ) ID and an (optional)
+ * <tt>Item( ... )</tt> which includes an (optional) ID and an (optional)
  * 'selected' flag that specifies the initial selected state ('not selected',
  * i.e. 'false', is default).
  *
@@ -2009,7 +2012,7 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
     int numargs = term->size() - argnr;
 
     if ( numargs < 1 || numargs > 2
-	 || ! term->value( argnr   )->isString()
+	 || ! term->value( argnr )->isString()
 	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
@@ -2038,6 +2041,55 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
     return multiSelectionBox;
 }
 
+
+/**
+ * @widget	SingleItemSelector MultiItemSelector
+ * @short	Scrollable list of radio buttons or check boxes with a description text
+ * @class	YItemSelector
+ * @optarg	list	items	the initial items
+ * @example	SingleItemselector1.rb
+ * @example	MultiItemselector1.rb
+ *
+ *
+ * This is a scrollable list of radio buttons (SingleItemSelector) or check
+ * boxes (MultiItemSelector) with not only a one-line label for each, but an
+ * additional text block (the description) below each one and an optional icon.
+ *
+ * The desired initial number of visible items (by default 3) can be configured with
+ * the <tt>VisibleItems<tt> property. When changing that, remember to
+ * recalculate the layout with <<RecalcLayout</tt>.
+ *
+ * The <tt>Value</tt> property returns the first selected item in both modes
+ * (single or multi selection), <tt>SelectedItems</tt> returns them all.
+ *
+ * Notice that in a SingleItemSelector always has one selected item, while a
+ * MultiItemSelector may also have none.
+ **/
+YWidget *
+YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
+                                    const YCPTerm & term, const YCPList & optList, int argnr,
+                                    bool singleSelection )
+{
+    int numargs = term->size() - argnr;
+
+    if ( numargs > 1 ||
+         ( numargs == 1 && ! term->value( argnr )->isList() ) )
+    {
+	THROW_BAD_ARGS( term );
+    }
+
+    rejectAllOptions( term, optList );
+
+    YItemSelector * itemSelector = YUI::widgetFactory()->createItemSelector( parent, singleSelection );
+
+    if ( numargs == 1 )
+    {
+	YCPList itemList = term->value( argnr )->asList();
+	itemSelector->addItems( YCPItemParser::parseItemList( itemList ) );
+    }
+
+    return itemSelector;
+}
 
 
 
@@ -2079,6 +2131,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
 				const YCPTerm & term, const YCPList & optList, int argnr )
 {
     int numargs = term->size() - argnr;
+
     if ( numargs < 1 || numargs > 2
 	 || ! term->value(argnr)->isString()
 	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
@@ -2307,6 +2360,7 @@ YCPDialogParser::parseTable( YWidget * parent, YWidgetOpt & opt,
 			     const YCPTerm & term, const YCPList & optList, int argnr )
 {
     int numArgs = term->size() - argnr;
+
     if ( numArgs < 1 || numArgs > 2
 	 || ! term->value(argnr)->isTerm()
 	 || term->value(argnr)->asTerm()->name() != YUISymbol_header
@@ -2451,7 +2505,7 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string  label	 = term->value( argnr )->asString()->value();
     int	    maxValue	 = 100;
@@ -2603,7 +2657,7 @@ YCPDialogParser::parseIntField( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
     int		minValue	= term->value( argnr+1 )->asInteger()->value();
@@ -2712,7 +2766,7 @@ YCPDialogParser::parsePkgSpecial( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
     string subwidgetName = term->value( argnr )->asString()->value();
 
     return YUI::widgetFactory()->createPkgSpecial( parent, subwidgetName );
@@ -2782,7 +2836,7 @@ YCPDialogParser::parseBarGraph( YWidget *parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YBarGraph * barGraph = YUI::optionalWidgetFactory()->createBarGraph( parent );
     YBarGraphMultiUpdate multiUpdate( barGraph ); // Hold back display updates
@@ -2873,7 +2927,7 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
     string	filename	= term->value( argnr+1 )->asString()->value();
@@ -2965,7 +3019,7 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
     YCPList itemList  = term->value( argnr   )->asList();
     YCPTerm childTerm = term->value( argnr+1 )->asTerm();
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YDumbTab * dumbTab = YUI::optionalWidgetFactory()->createDumbTab( parent );
     dumbTab->addItems( YCPItemParser::parseItemList( itemList ) ); // Add tab pages
@@ -3039,7 +3093,7 @@ YCPDialogParser::parseMultiProgressMeter( YWidget *parent, YWidgetOpt & opt,
 						  term->value( argnr ) ) );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::optionalWidgetFactory()->createMultiProgressMeter( parent, dim, maxValues );
 }
@@ -3115,7 +3169,7 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
     int		minValue	= term->value( argnr+1 )->asInteger()->value();
@@ -3329,7 +3383,7 @@ YCPDialogParser::parseDateField( YWidget * parent, YWidgetOpt & opt,
     }
 
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label = term->value( argnr )->asString()->value();
 
@@ -3372,7 +3426,7 @@ YCPDialogParser::parseTimeField( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label = term->value( argnr )->asString()->value();
 
@@ -3591,7 +3645,7 @@ YCPDialogParser::parseBusyIndicator( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string  label	 = term->value( argnr )->asString()->value();
     int	    timeout	 = 1000;

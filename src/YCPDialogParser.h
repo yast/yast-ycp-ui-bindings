@@ -222,6 +222,10 @@ protected:
     static YWidget * parseMultiSelectionBox( YWidget *parent, YWidgetOpt & opt,
 					     const YCPTerm & term, const YCPList & optList, int argnr );
 
+    static YWidget * parseItemSelector( YWidget *parent, YWidgetOpt & opt,
+                                        const YCPTerm & term, const YCPList & optList, int argnr,
+                                        bool singleSelection );
+
     static YWidget * parseComboBox( YWidget *parent, YWidgetOpt & opt,
 				    const YCPTerm & term, const YCPList & optList, int argnr );
 
@@ -279,14 +283,14 @@ protected:
     static YWidget * parseSimplePatchSelector( YWidget *parent, YWidgetOpt & opt, const YCPTerm & term,
 					       const YCPList & optList, int argnr );
 
-    static YWidget * parseTimezoneSelector ( YWidget *parent, YWidgetOpt & opt, const YCPTerm & term,
-					     const YCPList & optList, int argnr );
+    static YWidget * parseTimezoneSelector( YWidget *parent, YWidgetOpt & opt, const YCPTerm & term,
+                                            const YCPList & optList, int argnr );
 
-    static YWidget * parseGraph ( YWidget *parent, YWidgetOpt & opt, const YCPTerm & term,
-				  const YCPList & optList, int argnr );
+    static YWidget * parseGraph( YWidget *parent, YWidgetOpt & opt, const YCPTerm & term,
+                                 const YCPList & optList, int argnr );
 
     static YWidget * parseBusyIndicator( YWidget *parent, YWidgetOpt & opt,
-				       const YCPTerm & term, const YCPList & optList, int argnr );
+                                         const YCPTerm & term, const YCPList & optList, int argnr );
     /**
      * Look for a widget id in a widget term. If it finds one, returns
      * it and sets argnr to point after `id(), whether it turned out valid
