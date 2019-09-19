@@ -46,22 +46,21 @@ you may find current contact information at www.novell.com
 
 #include "YCPDialogParser.h"
 
-#include <yui/YUI.h>
-#include <yui/YApplication.h>
-#include "YCP_util.h"
-#include <yui/YUISymbols.h>
-#include <yui/YWidget.h>
-#include "YCPValueWidgetID.h"
 #include "YCPItemParser.h"
 #include "YCPMenuItemParser.h"
-#include "YCPTreeItemParser.h"
 #include "YCPTableItemParser.h"
+#include "YCPTreeItemParser.h"
+#include "YCPValueWidgetID.h"
 #include "YCP_UI_Exception.h"
-#include <yui/YDialog.h>
+#include "YCP_util.h"
+#include "YWidgetOpt.h"
+
+#include <yui/YUI.h>
+#include <yui/YUISymbols.h>
+#include <yui/YApplication.h>
 #include <yui/YWidgetFactory.h>
 #include <yui/YOptionalWidgetFactory.h>
-#include <yui/YBothDim.h>
-#include "YWidgetOpt.h"
+#include <yui/YDialog.h>
 
 #include <yui/YAlignment.h>
 #include <yui/YBarGraph.h>
@@ -79,6 +78,7 @@ you may find current contact information at www.novell.com
 #include <yui/YImage.h>
 #include <yui/YInputField.h>
 #include <yui/YIntField.h>
+#include <yui/YItemSelector.h>
 #include <yui/YLabel.h>
 #include <yui/YLayoutBox.h>
 #include <yui/YLogView.h>
@@ -137,8 +137,8 @@ using std::string;
  *				( if Opt( :notify ) is set for that SelectionBox ).
  *				Only widgets with this option set are affected.
  *
- * @option	notifyContextMenu Make this widget to send an event when the context menu is requested
- *				e.g. when the user clicks right mouse button
+ * @option	notifyContextMenu Make this widget to send an event when the context menu is requested,
+ *				e.g. when the user clicks the right mouse button.
  *				( if Opt( :notifyContextMenu ) is set for that SelectionBox ).
  *				Only widgets with this option set are affected.
  *
