@@ -256,6 +256,11 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     YWidget * w	= 0;
     string    s	= term->name();
 
+    // If you add a new widget here, make sure to also adapt ui_shortcuts.rb
+    // in the yast-ruby-bindings package!
+    //
+    // https://github.com/yast/yast-ruby-bindings/blob/master/src/ruby/yast/ui_shortcuts.rb
+
     if	    ( s == YUIWidget_Bottom		)	w = parseAlignment		( p, opt, term, ol, n, YAlignUnchanged,	YAlignEnd	);
     else if ( s == YUIWidget_BusyIndicator	)	w = parseBusyIndicator		( p, opt, term, ol, n );
     else if ( s == YUIWidget_ButtonBox		)	w = parseButtonBox		( p, opt, term, ol, n );
