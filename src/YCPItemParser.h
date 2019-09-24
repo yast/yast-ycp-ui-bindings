@@ -43,11 +43,18 @@ public:
     /**
      * Parse an item list:
      *
-     *     [
-     *         `item(`id( `myID1 ), "Label1" ),
-     *         `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", true ),
-     *         "Label3"
-     *     ]
+     *	   [
+     *	       `item(`id( `myID1 ), "Label1" ),
+     *	       `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", true ),
+     *	       "Label3"
+     *	   ]
+     *
+     * If 'allowDescription' is true, also accept (in addition to above):
+     *
+     *	   [
+     *	       `item(`id( `myID1 ), "Label1", "Description1" ),
+     *	       `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", "Description2", true ),
+     *	   ]
      *
      * Return a list of newly created YItem-derived objects.
      *
@@ -55,29 +62,53 @@ public:
      **/
     static YItemCollection parseItemList( const YCPList & ycpItemList );
 
+    /**
+     * Parse an item list with (optional) descriptions for each item:
+     *
+     *	   [
+     *	       `item(`id( `myID1 ), "Label1", "Description1" ),
+     *	       `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", "Description2", true ),
+     *	       `item(`id( `myID3 ), `icon( "icon3.png"), "Label3" ),
+     *	       "Label4"
+     *	   ]
+     *
+     * Return a list of newly created YItem-derived objects.
+     *
+     * This function throws exceptions if there are syntax errors.
+     **/
+    static YItemCollection parseDescribedItemList( const YCPList & ycpItemList );
+
+
+protected:
+
+
+    /**
+     * Internal version of the item parser that supports plain YItems and YDescribedItems.
+     **/
+    static YItemCollection parseItemListInternal( const YCPList & ycpItemList,
+                                                  bool		  allowDescription = false );
+
+    /**
+     * Parse an item term:
+     *
+     *	       `item(`id( `myID1 ), "Label1" )
+     *	       `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", true )
+     *
+     * Everything except the label is optional.
+     *
+     * This function throws exceptions if there are syntax errors.
+     **/
+    static YCPItem *    parseItem( const YCPTerm &      itemTerm,
+                                   bool                 allowDescription );
 
     /**
      * Parse one item and create a YCPItem from it.
      *
      * This function throws exceptions if there are syntax errors.
      **/
-    static YCPItem   * parseItem( const YCPValue & item );
+    static YCPItem *    parseItem( const YCPValue &	item,
+                                   bool			allowDescription );
 
-protected:
-
-    /**
-     * Parse an item term:
-     *
-     *         `item(`id( `myID1 ), "Label1" )
-     *         `item(`id( `myID2 ), `icon( "icon2.png"), "Label2", true )
-     *
-     * Everything except the label is optional.
-     *
-     * This function throws exceptions if there are syntax errors.
-     **/
-    static YCPItem * parseItem( const YCPTerm & itemTerm );
-
-    
 };
 
 

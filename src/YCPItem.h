@@ -31,31 +31,33 @@ you may find current contact information at www.novell.com
 
 #include <ycp/YCPValue.h>
 #include <ycp/YCPString.h>
-#include <yui/YItem.h>
+#include <yui/YDescribedItem.h>
 
 
 /**
  * Item class with YCPValue IDs
  **/
-class YCPItem: public YItem
+class YCPItem: public YDescribedItem
 {
 public:
 
     /**
      * Constructors
      **/
-    YCPItem( const YCPString & 	label,
-	     const YCPValue  & 	id,
-	     bool  		selected = false )
-	: YItem( label->value(), selected )
-	, _id( id )
+    YCPItem( const YCPString &	label )
+	: YDescribedItem( label->value() )
+	, _id( label )
 	{}
 
-    YCPItem( const YCPString &	label,
-	     const YCPValue  & 	id,
+    YCPItem( const YCPValue  & 	id,
+             const YCPString &	label,
+             const YCPString &  description,
 	     const YCPString & 	iconName,
 	     bool  		selected = false )
-	: YItem( label->value(), iconName->value(), selected )
+	: YDescribedItem( label->value(),
+                          description->value(),
+                          iconName->value(),
+                          selected )
 	, _id( id )
 	{}
 
@@ -83,7 +85,7 @@ public:
     /**
      * Return this item's label as a YCPString.
      **/
-    YCPString label() const { return YCPString( YItem::label() ); }
+    YCPString label() const { return YCPString( YDescribedItem::label() ); }
 
     /**
      * Set this item's label with a YCPString.
@@ -92,15 +94,26 @@ public:
 	{ YItem::setLabel( newLabel->value() ); }
 
     /**
+     * Return this item's description as a YCPString.
+     **/
+    YCPString description() const { return YCPString( YDescribedItem::description() ); }
+
+    /**
+     * Set this item's description with a YCPString.
+     **/
+    void setDescription( const YCPString & newDescription )
+        { YDescribedItem::setDescription( newDescription->value() ); }
+
+    /**
      * Return this item's icon name as a YCPString.
      **/
-    YCPString iconName() const { return YCPString( YItem::iconName() ); }
+    YCPString iconName() const { return YCPString( YDescribedItem::iconName() ); }
 
     /**
      * Set this item's icon name with a YCPString.
      **/
     void setIconName( const YCPString & newIconName )
-	{ YItem::setIconName( newIconName->value() ); }
+	{ YDescribedItem::setIconName( newIconName->value() ); }
 
 
 private:

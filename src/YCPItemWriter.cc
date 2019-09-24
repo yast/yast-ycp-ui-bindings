@@ -33,7 +33,27 @@ you may find current contact information at www.novell.com
 
 
 YCPList
-YCPItemWriter::itemList( YItemConstIterator begin, YItemConstIterator end )
+YCPItemWriter::itemList( YItemConstIterator	begin,
+                         YItemConstIterator	end )
+{
+    return itemListInternal( begin, end,
+                             false ); // withDescription
+}
+
+
+YCPList
+YCPItemWriter::describedItemList( YItemConstIterator	begin,
+                                  YItemConstIterator	end )
+{
+    return itemListInternal( begin, end,
+                             true ); // withDescription
+}
+
+
+YCPList
+YCPItemWriter::itemListInternal( YItemConstIterator	begin,
+                                 YItemConstIterator	end,
+                                 bool			withDescription )
 {
     YCPList itemList;
 
@@ -43,7 +63,7 @@ YCPItemWriter::itemList( YItemConstIterator begin, YItemConstIterator end )
 
 	if ( item )
 	{
-	    itemList->add( itemTerm( item ) );
+	    itemList->add( itemTerm( item, withDescription ) );
 	}
     }
 
@@ -52,32 +72,45 @@ YCPItemWriter::itemList( YItemConstIterator begin, YItemConstIterator end )
 
 
 YCPValue
-YCPItemWriter::itemTerm( const YItem * item )
+YCPItemWriter::itemTerm( const YItem * item, bool withDescription )
 {
     if ( ! item )
 	return YCPVoid();
 
-    YCPTerm itemTerm( YUISymbol_item );	// `item()
+    YCPTerm itemTerm( YUISymbol_item );                 // `item()
 
     const YCPItem * ycpItem = dynamic_cast<const YCPItem *> (item);
 
     if ( ycpItem && ycpItem->hasId() )
     {
-	YCPTerm idTerm( YUISymbol_id );			// `id()
+	YCPTerm idTerm( YUISymbol_id );                 // `id()
 	idTerm->add( ycpItem->id() );
 	itemTerm->add( idTerm );
     }
 
     if ( item->hasIconName() )
     {
-	YCPTerm iconTerm( YUISymbol_icon );		// `icon()
+	YCPTerm iconTerm( YUISymbol_icon );             // `icon()
 	iconTerm->add( YCPString( item->iconName() ) );
 	itemTerm->add( iconTerm );
     }
 
-    itemTerm->add( YCPString( item->label() ) );	// label
+    itemTerm->add( YCPString( item->label() ) );        // label
 
-    if ( item->selected() )				// isSelected
+    if ( withDescription )
+    {
+        string description;
+
+        const YDescribedItem * describedItem = dynamic_cast<const YDescribedItem *>( item );
+
+        if ( describedItem )
+            description = describedItem->description();
+
+        itemTerm->add( YCPString( description ) );      // description
+
+    }
+
+    if ( item->selected() )                             // isSelected
 	itemTerm->add( YCPBoolean( item->selected() ) );
 
     return itemTerm;

@@ -24,7 +24,7 @@ module Yast
               Item(Id(:napoli), "Napoli"),
               Item(Id(:funghi), "Funghi"),
               Item(Id(:salami), "Salami"),
-              Item(Id(:prociutto), "Prosciutto"),
+              Item(Id(:prosciutto), "Prosciutto"),
               Item(Id(:stagioni), "Quattro Stagioni"),
               Item(Id(:chef), "A la Chef", true)
             ]

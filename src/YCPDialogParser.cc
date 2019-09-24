@@ -2,6 +2,7 @@
 /****************************************************************************
 
 Copyright (c) 2000 - 2010 Novell, Inc.
+Copyright (c) 2019 SUSE LLC
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -21,9 +22,9 @@ you may find current contact information at www.novell.com
 
 ****************************************************************************
 
-  File:		YUI_widgets.cc
+  File:		YCPDialogParser.cc
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
@@ -45,25 +46,25 @@ you may find current contact information at www.novell.com
 
 #include "YCPDialogParser.h"
 
-#include <yui/YUI.h>
-#include <yui/YApplication.h>
-#include "YCP_util.h"
-#include <yui/YUISymbols.h>
-#include <yui/YWidget.h>
-#include "YCPValueWidgetID.h"
 #include "YCPItemParser.h"
 #include "YCPMenuItemParser.h"
-#include "YCPTreeItemParser.h"
 #include "YCPTableItemParser.h"
+#include "YCPTreeItemParser.h"
+#include "YCPValueWidgetID.h"
 #include "YCP_UI_Exception.h"
-#include <yui/YDialog.h>
+#include "YCP_util.h"
+#include "YWidgetOpt.h"
+
+#include <yui/YUI.h>
+#include <yui/YUISymbols.h>
+#include <yui/YApplication.h>
 #include <yui/YWidgetFactory.h>
 #include <yui/YOptionalWidgetFactory.h>
-#include <yui/YBothDim.h>
-#include "YWidgetOpt.h"
+#include <yui/YDialog.h>
 
 #include <yui/YAlignment.h>
 #include <yui/YBarGraph.h>
+#include <yui/YBusyIndicator.h>
 #include <yui/YButtonBox.h>
 #include <yui/YCheckBox.h>
 #include <yui/YCheckBoxFrame.h>
@@ -73,9 +74,11 @@ you may find current contact information at www.novell.com
 #include <yui/YDumbTab.h>
 #include <yui/YEmpty.h>
 #include <yui/YFrame.h>
+#include <yui/YGraph.h>
 #include <yui/YImage.h>
 #include <yui/YInputField.h>
 #include <yui/YIntField.h>
+#include <yui/YItemSelector.h>
 #include <yui/YLabel.h>
 #include <yui/YLayoutBox.h>
 #include <yui/YLogView.h>
@@ -97,11 +100,9 @@ you may find current contact information at www.novell.com
 #include <yui/YSquash.h>
 #include <yui/YTable.h>
 #include <yui/YTimeField.h>
+#include <yui/YTimezoneSelector.h>
 #include <yui/YTree.h>
 #include <yui/YWizard.h>
-#include <yui/YTimezoneSelector.h>
-#include <yui/YGraph.h>
-#include <yui/YBusyIndicator.h>
 
 using std::string;
 
@@ -136,9 +137,9 @@ using std::string;
  *				( if Opt( :notify ) is set for that SelectionBox ).
  *				Only widgets with this option set are affected.
  *
- * @option	notifyContextMenu Make this widget to send an event when the context menu is requested
- *				e.g. when the user clicks right mouse button
- *				( if Opt( :notifyContextMenu ) is set for that SelectionBox ).
+ * @option	notifyContextMenu Make this widget send an event when the context menu is requested,
+ *				e.g. when the user clicks the right mouse button.
+ *				(if Opt( :notifyContextMenu ) is set for that widget).
  *				Only widgets with this option set are affected.
  *
  * @option	disabled	Set this widget insensitive, i.e. disable any user interaction.
@@ -203,40 +204,40 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 	if ( rawopt->value(o)->isSymbol() )
 	{
 	    string sym = rawopt->value(o)->asSymbol()->symbol();
-	    if	    ( sym == YUIOpt_notify	) opt.notifyMode.setValue( true );
-	    else if ( sym == YUIOpt_notifyContextMenu) opt.notifyContextMenu.setValue( true );
-	    else if ( sym == YUIOpt_disabled	) opt.isDisabled.setValue( true );
-	    else if ( sym == YUIOpt_hstretch	) opt.isHStretchable.setValue( true );
-	    else if ( sym == YUIOpt_vstretch	) opt.isVStretchable.setValue( true );
-	    else if ( sym == YUIOpt_hvstretch	) { opt.isHStretchable.setValue( true ); opt.isVStretchable.setValue( true ); }
-	    else if ( sym == YUIOpt_autoShortcut ) opt.autoShortcut.setValue( true );
-	    else if ( sym == YUIOpt_boldFont	) opt.boldFont.setValue( true );
-	    else if ( sym == YUIOpt_keyEvents	) opt.keyEvents.setValue( true );
-	    else if ( sym == YUIOpt_key_F1	) opt.key_Fxx.setValue(	 1 );
-	    else if ( sym == YUIOpt_key_F2	) opt.key_Fxx.setValue(	 2 );
-	    else if ( sym == YUIOpt_key_F3	) opt.key_Fxx.setValue(	 3 );
-	    else if ( sym == YUIOpt_key_F4	) opt.key_Fxx.setValue(	 4 );
-	    else if ( sym == YUIOpt_key_F5	) opt.key_Fxx.setValue(	 5 );
-	    else if ( sym == YUIOpt_key_F6	) opt.key_Fxx.setValue(	 6 );
-	    else if ( sym == YUIOpt_key_F7	) opt.key_Fxx.setValue(	 7 );
-	    else if ( sym == YUIOpt_key_F8	) opt.key_Fxx.setValue(	 8 );
-	    else if ( sym == YUIOpt_key_F9	) opt.key_Fxx.setValue(	 9 );
-	    else if ( sym == YUIOpt_key_F10	) opt.key_Fxx.setValue( 10 );
-	    else if ( sym == YUIOpt_key_F11	) opt.key_Fxx.setValue( 11 );
-	    else if ( sym == YUIOpt_key_F12	) opt.key_Fxx.setValue( 12 );
-	    else if ( sym == YUIOpt_key_F13	) opt.key_Fxx.setValue( 13 );
-	    else if ( sym == YUIOpt_key_F14	) opt.key_Fxx.setValue( 14 );
-	    else if ( sym == YUIOpt_key_F15	) opt.key_Fxx.setValue( 15 );
-	    else if ( sym == YUIOpt_key_F16	) opt.key_Fxx.setValue( 16 );
-	    else if ( sym == YUIOpt_key_F17	) opt.key_Fxx.setValue( 17 );
-	    else if ( sym == YUIOpt_key_F18	) opt.key_Fxx.setValue( 18 );
-	    else if ( sym == YUIOpt_key_F19	) opt.key_Fxx.setValue( 19 );
-	    else if ( sym == YUIOpt_key_F20	) opt.key_Fxx.setValue( 20 );
-	    else if ( sym == YUIOpt_key_F21	) opt.key_Fxx.setValue( 21 );
-	    else if ( sym == YUIOpt_key_F22	) opt.key_Fxx.setValue( 22 );
-	    else if ( sym == YUIOpt_key_F23	) opt.key_Fxx.setValue( 23 );
-	    else if ( sym == YUIOpt_key_F24	) opt.key_Fxx.setValue( 24 );
-	    else if ( sym == YUIOpt_key_none	) opt.key_Fxx.setValue( -1 );
+	    if	    ( sym == YUIOpt_notify              )  opt.notifyMode.setValue( true );
+	    else if ( sym == YUIOpt_notifyContextMenu   )  opt.notifyContextMenu.setValue( true );
+	    else if ( sym == YUIOpt_disabled	        )  opt.isDisabled.setValue( true );
+	    else if ( sym == YUIOpt_hstretch	        )  opt.isHStretchable.setValue( true );
+	    else if ( sym == YUIOpt_vstretch	        )  opt.isVStretchable.setValue( true );
+	    else if ( sym == YUIOpt_hvstretch	        )  { opt.isHStretchable.setValue( true ); opt.isVStretchable.setValue( true ); }
+	    else if ( sym == YUIOpt_autoShortcut        )  opt.autoShortcut.setValue( true );
+	    else if ( sym == YUIOpt_boldFont	        )  opt.boldFont.setValue( true );
+	    else if ( sym == YUIOpt_keyEvents	        )  opt.keyEvents.setValue( true );
+	    else if ( sym == YUIOpt_key_F1	        )  opt.key_Fxx.setValue(  1 );
+	    else if ( sym == YUIOpt_key_F2	        )  opt.key_Fxx.setValue(  2 );
+	    else if ( sym == YUIOpt_key_F3	        )  opt.key_Fxx.setValue(  3 );
+	    else if ( sym == YUIOpt_key_F4	        )  opt.key_Fxx.setValue(  4 );
+	    else if ( sym == YUIOpt_key_F5	        )  opt.key_Fxx.setValue(  5 );
+	    else if ( sym == YUIOpt_key_F6	        )  opt.key_Fxx.setValue(  6 );
+	    else if ( sym == YUIOpt_key_F7	        )  opt.key_Fxx.setValue(  7 );
+	    else if ( sym == YUIOpt_key_F8	        )  opt.key_Fxx.setValue(  8 );
+	    else if ( sym == YUIOpt_key_F9	        )  opt.key_Fxx.setValue(  9 );
+	    else if ( sym == YUIOpt_key_F10	        )  opt.key_Fxx.setValue( 10 );
+	    else if ( sym == YUIOpt_key_F11	        )  opt.key_Fxx.setValue( 11 );
+	    else if ( sym == YUIOpt_key_F12	        )  opt.key_Fxx.setValue( 12 );
+	    else if ( sym == YUIOpt_key_F13	        )  opt.key_Fxx.setValue( 13 );
+	    else if ( sym == YUIOpt_key_F14	        )  opt.key_Fxx.setValue( 14 );
+	    else if ( sym == YUIOpt_key_F15	        )  opt.key_Fxx.setValue( 15 );
+	    else if ( sym == YUIOpt_key_F16	        )  opt.key_Fxx.setValue( 16 );
+	    else if ( sym == YUIOpt_key_F17	        )  opt.key_Fxx.setValue( 17 );
+	    else if ( sym == YUIOpt_key_F18	        )  opt.key_Fxx.setValue( 18 );
+	    else if ( sym == YUIOpt_key_F19	        )  opt.key_Fxx.setValue( 19 );
+	    else if ( sym == YUIOpt_key_F20	        )  opt.key_Fxx.setValue( 20 );
+	    else if ( sym == YUIOpt_key_F21	        )  opt.key_Fxx.setValue( 21 );
+	    else if ( sym == YUIOpt_key_F22	        )  opt.key_Fxx.setValue( 22 );
+	    else if ( sym == YUIOpt_key_F23	        )  opt.key_Fxx.setValue( 23 );
+	    else if ( sym == YUIOpt_key_F24	        )  opt.key_Fxx.setValue( 24 );
+	    else if ( sym == YUIOpt_key_none	        )  opt.key_Fxx.setValue( -1 );
 	    else ol->add( rawopt->value(o) );
 	}
 	else if ( ! rawopt->value(o)->isTerm() )
@@ -255,7 +256,13 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     YWidget * w	= 0;
     string    s	= term->name();
 
-    if      ( s == YUIWidget_Bottom		)	w = parseAlignment		( p, opt, term, ol, n, YAlignUnchanged,	YAlignEnd	);
+    // If you add a new widget here, make sure to also adapt ui_shortcuts.rb
+    // in the yast-ruby-bindings package!
+    //
+    // https://github.com/yast/yast-ruby-bindings/blob/master/src/ruby/yast/ui_shortcuts.rb
+
+    if	    ( s == YUIWidget_Bottom		)	w = parseAlignment		( p, opt, term, ol, n, YAlignUnchanged,	YAlignEnd	);
+    else if ( s == YUIWidget_BusyIndicator	)	w = parseBusyIndicator		( p, opt, term, ol, n );
     else if ( s == YUIWidget_ButtonBox		)	w = parseButtonBox		( p, opt, term, ol, n );
     else if ( s == YUIWidget_CheckBox		)	w = parseCheckBox		( p, opt, term, ol, n );
     else if ( s == YUIWidget_CheckBoxFrame	)	w = parseCheckBoxFrame		( p, opt, term, ol, n );
@@ -263,7 +270,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_Empty		)	w = parseEmpty			( p, opt, term, ol, n );
     else if ( s == YUIWidget_Frame		)	w = parseFrame			( p, opt, term, ol, n );
     else if ( s == YUIWidget_HBox		)	w = parseLayoutBox		( p, opt, term, ol, n, YD_HORIZ );
-    else if ( s == YUIWidget_HCenter		)	w = parseAlignment		( p, opt, term, ol, n, YAlignCenter, 	YAlignUnchanged );
+    else if ( s == YUIWidget_HCenter		)	w = parseAlignment		( p, opt, term, ol, n, YAlignCenter,	YAlignUnchanged );
     else if ( s == YUIWidget_HSpacing		)	w = parseSpacing		( p, opt, term, ol, n, YD_HORIZ, false );
     else if ( s == YUIWidget_HSquash		)	w = parseSquash			( p, opt, term, ol, n, true,  false );
     else if ( s == YUIWidget_HStretch		)	w = parseSpacing		( p, opt, term, ol, n, YD_HORIZ, true );
@@ -283,6 +290,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_MinHeight		)	w = parseMinSize		( p, opt, term, ol, n, false, true  );
     else if ( s == YUIWidget_MinSize		)	w = parseMinSize		( p, opt, term, ol, n, true,  true  );
     else if ( s == YUIWidget_MinWidth		)	w = parseMinSize		( p, opt, term, ol, n, true,  false );
+    else if ( s == YUIWidget_MultiItemSelector  )	w = parseItemSelector           ( p, opt, term, ol, n, false );
     else if ( s == YUIWidget_MultiLineEdit	)	w = parseMultiLineEdit		( p, opt, term, ol, n );
     else if ( s == YUIWidget_MultiSelectionBox	)	w = parseMultiSelectionBox	( p, opt, term, ol, n );
     else if ( s == YUIWidget_PackageSelector	)	w = parsePackageSelector	( p, opt, term, ol, n );
@@ -296,6 +304,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_RichText		)	w = parseRichText		( p, opt, term, ol, n );
     else if ( s == YUIWidget_Right		)	w = parseAlignment		( p, opt, term, ol, n, YAlignEnd,	YAlignUnchanged );
     else if ( s == YUIWidget_SelectionBox	)	w = parseSelectionBox		( p, opt, term, ol, n );
+    else if ( s == YUIWidget_SingleItemSelector )	w = parseItemSelector           ( p, opt, term, ol, n, true );
     else if ( s == YUIWidget_Table		)	w = parseTable			( p, opt, term, ol, n );
     else if ( s == YUIWidget_TextEntry		)	w = parseInputField		( p, opt, term, ol, n, false, true ); // bugCompatibilityMode
     else if ( s == YUIWidget_Top		)	w = parseAlignment		( p, opt, term, ol, n, YAlignUnchanged,	YAlignBegin	);
@@ -306,26 +315,25 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_VSquash		)	w = parseSquash			( p, opt, term, ol, n, false, true );
     else if ( s == YUIWidget_VStretch		)	w = parseSpacing		( p, opt, term, ol, n, YD_VERT, true );
     else if ( s == YUIWidget_VWeight		)	w = parseWeight			( p, opt, term, ol, n, YD_VERT );
-    else if ( s == YUIWidget_BusyIndicator	)	w = parseBusyIndicator		( p, opt, term, ol, n );
 
     // Special widgets - may or may not be supported by the specific UI.
     // The YCP application should ask for presence of such a widget with Has???Widget() prior to creating one.
 
-    else if ( s == YUISpecialWidget_DateField		)	w = parseDateField		( p, opt, term, ol, n );
-    else if ( s == YUISpecialWidget_DummySpecialWidget	)	w = parseDummySpecialWidget	( p, opt, term, ol, n );
-    else if ( s == YUISpecialWidget_DownloadProgress	)	w = parseDownloadProgress	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_BarGraph		)	w = parseBarGraph		( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_DateField		)	w = parseDateField		( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_DownloadProgress	)	w = parseDownloadProgress	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_DumbTab		)	w = parseDumbTab		( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_DummySpecialWidget	)	w = parseDummySpecialWidget	( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_Graph		)	w = parseGraph			( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_HMultiProgressMeter	)	w = parseMultiProgressMeter	( p, opt, term, ol, n, YD_HORIZ );
-    else if ( s == YUISpecialWidget_VMultiProgressMeter	)	w = parseMultiProgressMeter	( p, opt, term, ol, n, YD_VERT  );
     else if ( s == YUISpecialWidget_PartitionSplitter	)	w = parsePartitionSplitter	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_PatternSelector	)	w = parsePatternSelector	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_SimplePatchSelector	)	w = parseSimplePatchSelector	( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_Slider		)	w = parseSlider			( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_TimeField		)	w = parseTimeField		( p, opt, term, ol, n );
-    else if ( s == YUISpecialWidget_Wizard		)	w = parseWizard			( p, opt, term, ol, n );
     else if ( s == YUISpecialWidget_TimezoneSelector	)	w = parseTimezoneSelector	( p, opt, term, ol, n );
-    else if ( s == YUISpecialWidget_Graph		)	w = parseGraph			( p, opt, term, ol, n );
+    else if ( s == YUISpecialWidget_VMultiProgressMeter	)	w = parseMultiProgressMeter	( p, opt, term, ol, n, YD_VERT	);
+    else if ( s == YUISpecialWidget_Wizard		)	w = parseWizard			( p, opt, term, ol, n );
     else
     {
 	YUI_THROW( YUIException( string( "Unknown widget type " ) + s.c_str() ) );
@@ -355,14 +363,14 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 	     */
 	}
 
-	if ( opt.isDisabled.value() 	)	w->setDisabled();
-	if ( opt.notifyMode.value() 	)	w->setNotify( true );
-	if ( opt.notifyContextMenu.value())	w->setNotifyContextMenu( true );
-	if ( opt.keyEvents.value()	)	w->setSendKeyEvents( true );
-	if ( opt.autoShortcut.value()	)	w->setAutoShortcut( true );
-	if ( opt.isHStretchable.value()	)	w->setStretchable( YD_HORIZ, true );
-	if ( opt.isVStretchable.value()	)	w->setStretchable( YD_VERT,  true );
-	if ( opt.key_Fxx.value() > 0	)
+	if ( opt.isDisabled.value()		)	w->setDisabled();
+	if ( opt.notifyMode.value()		)	w->setNotify( true );
+	if ( opt.notifyContextMenu.value()	)	w->setNotifyContextMenu( true );
+	if ( opt.keyEvents.value()		)	w->setSendKeyEvents( true );
+	if ( opt.autoShortcut.value()		)	w->setAutoShortcut( true );
+	if ( opt.isHStretchable.value()		)	w->setStretchable( YD_HORIZ, true );
+	if ( opt.isVStretchable.value()		)	w->setStretchable( YD_VERT,  true );
+	if ( opt.key_Fxx.value() > 0		)
 	{
 	    YPushButton * button = dynamic_cast<YPushButton *> (w);
 	    YButtonRole oldRole = button ? button->role() : YCustomButton;
@@ -371,7 +379,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
 	    if ( button && oldRole != button->role() && opt.customButton.value() )
 	    {
 		// Application requested button role override
-		
+
 		yuiMilestone() << "Overriding button role for " << button
 			       << " to YCustomButton" << endl;
 		button->setRole( YCustomButton );
@@ -438,7 +446,7 @@ YCPDialogParser::parseReplacePoint( YWidget * parent, YWidgetOpt & opt, const YC
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YReplacePoint * replacePoint = YUI::widgetFactory()->createReplacePoint( parent );
     parseWidgetTreeTerm( replacePoint, term->value( argnr )->asTerm() );
@@ -467,7 +475,7 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::widgetFactory()->createEmpty( parent );
 }
@@ -476,7 +484,7 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	HSpacing VSpacing HStretch VStretch
- * @id          Spacing
+ * @id		Spacing
  * @short	Fixed size empty space for layout
  * @class	YSpacing
  * @optarg	integer|float size
@@ -485,7 +493,7 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
  * @example	HStretch1.rb
  * @example	Layout-Buttons-Equal-Even-Spaced1.rb
  * @example	Table2.rb
- * @example     Table3.rb
+ * @example	Table3.rb
  *
  *
  *
@@ -501,9 +509,9 @@ YCPDialogParser::parseEmpty( YWidget * parent, YWidgetOpt & opt,
  *
  * If <tt>size</tt> is omitted, it defaults to 1.
  * <tt>HSpacing()</tt> will create a horizontal spacing with default width and zero height.
- * <tt>VSpacing()</tt> will create a vertical   spacing with default height and zero width.
+ * <tt>VSpacing()</tt> will create a vertical	spacing with default height and zero width.
  * <tt>HStretch()</tt> will create a horizontal stretch with zero width and height.
- * <tt>VStretch()</tt> will create a vertical   stretch with zero width and height.
+ * <tt>VStretch()</tt> will create a vertical	stretch with zero width and height.
  *
  * A HStretch or VStretch with a size specification will take at least the
  * specified amount of space, but it will take more (in that dimension) if
@@ -541,7 +549,7 @@ YCPDialogParser::parseSpacing( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::widgetFactory()->createSpacing( parent, dim, stretchable, size );
 }
@@ -550,15 +558,15 @@ YCPDialogParser::parseSpacing( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	Left Right Top Bottom HCenter VCenter HVCenter
- * @id          Alignment
+ * @id		Alignment
  * @short	Layout alignment
  * @class	YAlignment
  * @optarg	BackgroundPixmap( "dir/pixmap.png" )	background pixmap
  * @arg		term child The contained child widget
  * @example	HCenter1.rb
- * @example     HCenter2.rb
- * @example     HCenter3.rb
- * @example     Alignment1.rb
+ * @example	HCenter2.rb
+ * @example	HCenter3.rb
+ * @example	Alignment1.rb
  *
  *
  *
@@ -621,8 +629,8 @@ YCPDialogParser::parseAlignment( YWidget * parent, YWidgetOpt & opt,
 
     if ( YUI::app()->reverseLayout() )
     {
-	if 	( horAlign == YAlignBegin )	horAlign = YAlignEnd;
-	else if ( horAlign == YAlignEnd   )	horAlign = YAlignBegin;
+	if	( horAlign == YAlignBegin )	horAlign = YAlignEnd;
+	else if ( horAlign == YAlignEnd	  )	horAlign = YAlignBegin;
     }
 
     rejectAllOptions( term, optList );
@@ -640,15 +648,15 @@ YCPDialogParser::parseAlignment( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	MinWidth MinHeight MinSize
- * @id          MinSize
+ * @id		MinSize
  * @short	Layout minimum size
  * @class	YAlignment
  * @arg		float|integer size minimum width (for MinWidth or MinSize) or minimum heigh (for MinHeight)
  * @optarg	float|integer height (only for MinSize)
  * @arg		term child The contained child widget
  * @example	MinWidth1.rb
- * @example     MinHeight1.rb
- * @example     MinSize1.rb
+ * @example	MinHeight1.rb
+ * @example	MinSize1.rb
  *
  *
  *
@@ -676,7 +684,7 @@ YCPDialogParser::parseMinSize( YWidget * parent, YWidgetOpt & opt,
 	    THROW_BAD_ARGS( term );
 	}
 
-	minWidth  = toFloat( term->value( argnr   ) );
+	minWidth  = toFloat( term->value( argnr	  ) );
 	minHeight = toFloat( term->value( argnr+1 ) );
 	childTerm = term->value( argnr+2 )->asTerm();
     }
@@ -708,14 +716,14 @@ YCPDialogParser::parseMinSize( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	MarginBox
- * @id          MarginBox
+ * @id		MarginBox
  * @short	Margins around one child widget
  * @class	YAlignment
  * @arg		float horMargin	 margin left and right of the child widget
  * @arg		float vertMargin margin above and below the child widget
  * @arg		term child The contained child widget
  * @example	MarginBox1.rb
- * @example     MarginBox2.rb
+ * @example	MarginBox2.rb
  *
  *
  *
@@ -733,12 +741,12 @@ YWidget *
 YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
 				 const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    float 	leftMargin	= 0.0;
-    float 	rightMargin	= 0.0;
-    float 	topMargin 	= 0.0;
+    float	leftMargin	= 0.0;
+    float	rightMargin	= 0.0;
+    float	topMargin	= 0.0;
     float	bottomMargin	= 0.0;
 
-    bool 	paramOK		= false;
+    bool	paramOK		= false;
     int		argc		= term->size() - argnr;
     YCPTerm	childTerm	= YCPNull();
 
@@ -748,15 +756,15 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
 	 isNum( term->value( argnr+1 ) ) &&
 	 term->value( argnr+2 )->isTerm() )
     {
-	leftMargin = rightMargin  = toFloat( term->value( argnr   ) );
+	leftMargin = rightMargin  = toFloat( term->value( argnr	  ) );
 	topMargin  = bottomMargin = toFloat( term->value( argnr+1 ) );
 	childTerm  = term->value( argnr+2 )->asTerm();
-	paramOK    = true;
+	paramOK	   = true;
     }
 
     if ( ! paramOK && argc == 5 ) // MarginBox(leftMargin(99), rightMargin(99), topMargin(99), bottomMargin(99), child );
     {
- 	paramOK = term->value( argnr+4)->isTerm();
+	paramOK = term->value( argnr+4)->isTerm();
 
 	for ( int i=argnr; i < argnr+4 && paramOK; i++ )
 	{
@@ -767,9 +775,9 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
 		if ( marginTerm->size() == 1 && isNum( marginTerm->value(0) ) )
 		{
 		    float margin = toFloat( marginTerm->value(0) );
-		    if      ( marginTerm->name() == YUISymbol_leftMargin   )	leftMargin   = margin;
+		    if	    ( marginTerm->name() == YUISymbol_leftMargin   )	leftMargin   = margin;
 		    else if ( marginTerm->name() == YUISymbol_rightMargin  )	rightMargin  = margin;
-		    else if ( marginTerm->name() == YUISymbol_topMargin    )	topMargin    = margin;
+		    else if ( marginTerm->name() == YUISymbol_topMargin	   )	topMargin    = margin;
 		    else if ( marginTerm->name() == YUISymbol_bottomMargin )	bottomMargin = margin;
 		    else							paramOK = false;
 		}
@@ -809,7 +817,7 @@ YCPDialogParser::parseMarginBox( YWidget * parent, YWidgetOpt & opt,
  * @arg		term child the contained child widget
  * @example	Frame1.rb
  * @example	Frame2.rb
- * @example     InputField5.rb
+ * @example	InputField5.rb
  *
  *
  *
@@ -845,7 +853,7 @@ YCPDialogParser::parseFrame( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	HSquash VSquash HVSquash
- * @id          Squash
+ * @id		Squash
  * @short	Layout aid: Minimize widget to its preferred size
  * @class	YSquash
  * @arg		term child the child widget
@@ -879,7 +887,7 @@ YCPDialogParser::parseSquash( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
     YSquash * squash = YUI::widgetFactory()->createSquash( parent, horSquash, vertSquash );
     parseWidgetTreeTerm( squash, term->value( argnr )->asTerm() );
 
@@ -890,14 +898,14 @@ YCPDialogParser::parseSquash( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	HWeight VWeight
- * @id          Weight
+ * @id		Weight
  * @short	Control relative size of layouts
  * @class	YWeight
  * @arg		integer weight the new weight of the child widget
  * @arg		term child the child widget
  * @example	Weight1.rb
  * @example	Layout-Buttons-Equal-Even-Spaced1.rb
- * @example     Layout-Buttons-Equal-Even-Spaced2.rb
+ * @example	Layout-Buttons-Equal-Even-Spaced2.rb
  * @example	Layout-Buttons-Equal-Growing.rb
  * @example	Layout-Mixed.rb
  * @example	Layout-Weights1.rb
@@ -925,12 +933,13 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
 			      YUIDimension dim )
 {
     if ( term->size() != argnr + 2
-	 || !term->value(argnr)->isInteger()
-	 || !term->value(argnr+1)->isTerm())
+	 || ! term->value(argnr)->isInteger()
+	 || ! term->value( argnr+1 )->isTerm())
     {
 	THROW_BAD_ARGS( term );
     }
-    rejectAllOptions( term,optList );
+
+    rejectAllOptions( term, optList );
 
     // Create child widget tree
     YWidget * child = parseWidgetTreeTerm( parent, term->value( argnr+1 )->asTerm() );
@@ -951,7 +960,7 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	HBox VBox
- * @id          Box
+ * @id		Box
  * @short	Generic layout: Arrange widgets horizontally or vertically
  * @class	LayoutBox
  * @optarg	term child1 the first child widget
@@ -962,9 +971,9 @@ YCPDialogParser::parseWeight( YWidget * parent, YWidgetOpt & opt,
  *
  * @example	VBox1.rb
  * @example	HBox1.rb
- * @example     Layout-Buttons-Equal-Growing.rb
- * @example     Layout-Fixed.rb
- * @example     Layout-Mixed.rb
+ * @example	Layout-Buttons-Equal-Growing.rb
+ * @example	Layout-Fixed.rb
+ * @example	Layout-Mixed.rb
  *
  *
  *
@@ -1009,7 +1018,7 @@ YCPDialogParser::parseLayoutBox( YWidget * parent, YWidgetOpt & opt,
 
 /**
  * @widget	ButtonBox
- * @id          ButtonBox
+ * @id		ButtonBox
  * @short	Layout for push buttons that takes button order into account
  * @class	ButtonBox
  * @arg		term button1 the first button
@@ -1085,7 +1094,7 @@ YCPDialogParser::parseLayoutBox( YWidget * parent, YWidgetOpt & opt,
  * ButtonBox widgets are horizontally stretchable and vertically
  * non-stretchable. If there is more space, their layout policy (depending on
  * KDE or GNOME button order) specifies whether to center or right-align the
- * buttons. 
+ * buttons.
  **/
 
 YWidget *
@@ -1108,7 +1117,7 @@ YCPDialogParser::parseButtonBox( YWidget * parent, YWidgetOpt & opt,
     for ( int buttonNo=argnr; buttonNo < term->size(); buttonNo++ )
     {
 	YWidgetOpt opt;
-	YWidget     * child  = parseWidgetTreeTerm( buttonBox, opt, term->value( buttonNo )->asTerm() );
+	YWidget	    * child  = parseWidgetTreeTerm( buttonBox, opt, term->value( buttonNo )->asTerm() );
 	YPushButton * button = dynamic_cast<YPushButton *> (child);
 	YUI_CHECK_PTR( button );
 
@@ -1125,15 +1134,15 @@ YCPDialogParser::parseButtonBox( YWidget * parent, YWidgetOpt & opt,
 
 	    YButtonRole role = YCustomButton;
 
-	    if 		( startsWith( id, "ok"  	) )	role = YOKButton;
-	    else if 	( startsWith( id, "yes" 	) )	role = YOKButton;
-	    else if 	( startsWith( id, "continue" 	) )	role = YOKButton;
-	    else if 	( startsWith( id, "accept" 	) )	role = YOKButton;
-	    
-	    else if 	( startsWith( id, "cancel" 	) )	role = YCancelButton;
-	    else if 	( startsWith( id, "no" 		) )	role = YCancelButton;
-	    else if 	( startsWith( id, "apply" 	) )	role = YApplyButton;
-	    else if 	( startsWith( id, "help" 	) )	role = YHelpButton;
+	    if		( startsWith( id, "ok"		) )	role = YOKButton;
+	    else if	( startsWith( id, "yes"		) )	role = YOKButton;
+	    else if	( startsWith( id, "continue"	) )	role = YOKButton;
+	    else if	( startsWith( id, "accept"	) )	role = YOKButton;
+
+	    else if	( startsWith( id, "cancel"	) )	role = YCancelButton;
+	    else if	( startsWith( id, "no"		) )	role = YCancelButton;
+	    else if	( startsWith( id, "apply"	) )	role = YApplyButton;
+	    else if	( startsWith( id, "help"	) )	role = YHelpButton;
 
 	    if ( role != YCustomButton )
 	    {
@@ -1208,7 +1217,7 @@ YCPDialogParser::parseLabel( YWidget * parent, YWidgetOpt & opt,
 			     bool isHeading )
 {
     if ( term->size() - argnr != 1
-	 || !term->value(argnr)->isString())
+	 || ! term->value(argnr)->isString())
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1267,15 +1276,15 @@ YCPDialogParser::parseRichText( YWidget * parent, YWidgetOpt & opt,
 				const YCPTerm & term, const YCPList & optList, int argnr )
 {
     if ( term->size() - argnr != 1
-	 || !term->value(argnr)->isString())
+	 || ! term->value(argnr)->isString())
     {
 	THROW_BAD_ARGS( term );
     }
 
-    string 	text 		= term->value( argnr )->asString()->value();
-    bool 	plainTextMode	= false;
-    bool 	autoScrollDown	= false;
-    bool 	shrinkable	= false;
+    string	text		= term->value( argnr )->asString()->value();
+    bool	plainTextMode	= false;
+    bool	autoScrollDown	= false;
+    bool	shrinkable	= false;
 
     for ( int o=0; o < optList->size(); o++ )
     {
@@ -1283,8 +1292,8 @@ YCPDialogParser::parseRichText( YWidget * parent, YWidgetOpt & opt,
 	{
 	    string sym = optList->value(o)->asSymbol()->symbol();
 
-	    if	    ( sym  == YUIOpt_plainText	    ) 	plainTextMode  = true;
-	    else if ( sym  == YUIOpt_autoScrollDown ) 	autoScrollDown = true;
+	    if	    ( sym  == YUIOpt_plainText	    )	plainTextMode  = true;
+	    else if ( sym  == YUIOpt_autoScrollDown )	autoScrollDown = true;
 	    else if ( sym  == YUIOpt_shrinkable	    )	shrinkable     = true;
 	    else    logUnknownOption( term, optList->value(o) );
 	}
@@ -1343,11 +1352,11 @@ YCPDialogParser::parseLogView( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
-    int 	visibleLines	= term->value( argnr+1 )->asInteger()->value();
-    int 	maxLines	= term->value( argnr+2 )->asInteger()->value();
+    int		visibleLines	= term->value( argnr+1 )->asInteger()->value();
+    int		maxLines	= term->value( argnr+2 )->asInteger()->value();
 
     return YUI::widgetFactory()->createLogView( parent, label, visibleLines, maxLines );
 }
@@ -1411,16 +1420,16 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 				  const YCPTerm & term, const YCPList & optList, int argnr,
 				  bool isIconButton )
 {
-    string 	label;
-    string 	iconName;
-    bool   	isDefaultButton = false;
-    YButtonRole	role            = YCustomButton;
+    string	label;
+    string	iconName;
+    bool	isDefaultButton = false;
+    YButtonRole	role		= YCustomButton;
 
     if ( isIconButton )
     {
 	if ( term->size() - argnr != 2
 	     || ! term->value(argnr)->isString()
-	     || ! term->value(argnr+1)->isString() )
+	     || ! term->value( argnr+1 )->isString() )
 	{
 	    THROW_BAD_ARGS( term );
 	}
@@ -1431,7 +1440,7 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
     else
     {
 	if ( term->size() - argnr != 1
-	     || !term->value(argnr)->isString() )
+	     || ! term->value(argnr)->isString() )
 	{
 	    THROW_BAD_ARGS( term );
 	}
@@ -1447,12 +1456,12 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 	{
 	    string sym = optList->value(o)->asSymbol()->symbol();
 
-	    if	    ( sym == YUIOpt_default    	)	isDefaultButton = true;
+	    if	    ( sym == YUIOpt_default	)	isDefaultButton = true;
 	    else if ( sym == YUIOpt_okButton	)	role = YOKButton;
 	    else if ( sym == YUIOpt_cancelButton)	role = YCancelButton;
 	    else if ( sym == YUIOpt_applyButton)	role = YApplyButton;
-	    else if ( sym == YUIOpt_helpButton 	)	role = YHelpButton;
-            else if ( sym == YUIOpt_relNotesButton )    role = YRelNotesButton;
+	    else if ( sym == YUIOpt_helpButton	)	role = YHelpButton;
+	    else if ( sym == YUIOpt_relNotesButton )	role = YRelNotesButton;
 	    else if ( sym == YUIOpt_customButton)	opt.customButton.setValue( true );
 	    else logUnknownOption( term, optList->value(o) );
 	}
@@ -1528,7 +1537,7 @@ YCPDialogParser::parseMenuButton( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label   = term->value( argnr )->asString()->value();
 
@@ -1570,12 +1579,13 @@ YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
 {
     int size = term->size() - argnr;
     if ( size < 1 || size > 2
-	 || !term->value( argnr )->isString()
-	 || ( size == 2 && ! term->value(argnr+1)->isBoolean() ) )
+	 || ! term->value( argnr )->isString()
+	 || ( size == 2 && ! term->value( argnr+1 )->isBoolean() ) )
     {
 	THROW_BAD_ARGS( term );
     }
-    rejectAllOptions( term,optList );
+
+    rejectAllOptions( term, optList );
 
     string label   = term->value( argnr )->asString()->value();
     bool   checked = false;
@@ -1640,8 +1650,8 @@ YCPDialogParser::parseCheckBoxFrame( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    string	label		 = term->value( argnr   )->asString()->value();
-    bool	checked 	 = term->value( argnr+1 )->asBoolean()->value();
+    string	label		 = term->value( argnr	)->asString()->value();
+    bool	checked		 = term->value( argnr+1 )->asBoolean()->value();
     YCPTerm	childTerm	 = term->value( argnr+2 )->asTerm();
     bool	autoEnable	 = true;
     bool	invertAutoEnable = false;
@@ -1691,8 +1701,7 @@ YCPDialogParser::parseCheckBoxFrame( YWidget * parent, YWidgetOpt & opt,
  * @example	ShortcutConflict3.rb
  *
  *
- *
- * A radio button is not usefull alone. Radio buttons are group such that the
+ * A radio button is not useful alone. Radio buttons are group such that the
  * user can select one radio button of a group. It is much like a selection
  * box, but radio buttons can be dispersed over the dialog.  Radio buttons must
  * be contained in a <tt>RadioButtonGroup</tt>.
@@ -1711,7 +1720,7 @@ YCPDialogParser::parseRadioButton( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label     = term->value( argnr )->asString()->value();
     bool   isChecked = false;
@@ -1755,12 +1764,12 @@ YCPDialogParser::parseRadioButtonGroup( YWidget * parent, YWidgetOpt & opt,
 					const YCPTerm & term, const YCPList & optList, int argnr )
 {
     if ( term->size() != argnr+1
-	 || !term->value(argnr)->isTerm())
+	 || ! term->value(argnr)->isTerm())
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YRadioButtonGroup * radioButtonGroup = YUI::widgetFactory()->createRadioButtonGroup( parent );
     parseWidgetTreeTerm( radioButtonGroup, term->value( argnr )->asTerm() );
@@ -1786,14 +1795,14 @@ YCPDialogParser::parseRadioButtonGroup( YWidget * parent, YWidgetOpt & opt,
  * @example	InputField6.rb
  * @example	Password1.rb
  * @example	Password2.rb
- * @example     InputField-setInputMaxLength.rb
+ * @example	InputField-setInputMaxLength.rb
  *
  *
  *
  * This widget is a one line text entry field with a label above it. An initial
  * text can be provided.
  *
- * @note        You can and should set a keyboard shortcut within the
+ * @note	You can and should set a keyboard shortcut within the
  * label. When the user presses the hotkey, the corresponding text entry widget
  * will get the keyboard focus.
  *
@@ -1812,11 +1821,9 @@ YCPDialogParser::parseInputField( YWidget * parent, YWidgetOpt & opt,
 				 const YCPTerm & term, const YCPList & optList, int argnr,
 				 bool passwordMode, bool bugCompatibilityMode )
 {
-    static bool postedBugCompatibilityWarning = false;
-
     if ( term->size() - argnr < 1 || term->size() - argnr > 2
-	 || !term->value(argnr)->isString()
-	 || (term->size() == argnr+2 && !term->value(argnr+1)->isString()))
+	 || ! term->value(argnr)->isString()
+	 || (term->size() == argnr+2 && ! term->value( argnr+1 )->isString()))
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1845,23 +1852,6 @@ YCPDialogParser::parseInputField( YWidget * parent, YWidgetOpt & opt,
     else if ( bugCompatibilityMode )
     {
 	inputField->setStretchable( YD_HORIZ, true );
-
-	if ( ! postedBugCompatibilityWarning )
-	{
-	    yuiWarning() <<
-		"\n"
-		"\nUsing `TextEntry() in bug compatibiltiy mode."
-		"\nThis is equivalent to `InputField(`opt(`hstretch), ...)."
-		"\nThis makes the field grab as much space horizontally as it can get,"
-		"\ntypically making it stretch across the entire width of the dialog."
-		"\nWithout this hstretch, the field will take a reasonable default width."
-		"\n"
-		"\nIf this `hstretch is really desired, please use `InputField(`opt(`hstretch), ...)."
-		"\nIf it is not, please use `InputField() without `hstretch."
-		"\n\n" << endl;
-
-	    postedBugCompatibilityWarning = true;
-	}
     }
 
 
@@ -1898,8 +1888,8 @@ YCPDialogParser::parseMultiLineEdit( YWidget * parent, YWidgetOpt & opt,
 {
 
     if ( term->size() - argnr < 1 || term->size() - argnr > 2
-	 || !term->value(argnr)->isString()
-	 || (term->size() == argnr+2 && !term->value(argnr+1)->isString()))
+	 || ! term->value(argnr)->isString()
+	 || ( term->size() == argnr+2 && ! term->value( argnr+1 )->isString() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2009,12 +1999,12 @@ YCPDialogParser::parseSelectionBox( YWidget * parent, YWidgetOpt & opt,
  *
  *
  *
- * The MultiSelectionBox displays a ( scrollable ) list of items from which any
+ * The MultiSelectionBox displays a (scrollable) list of items from which any
  * number (even nothing!) can be selected. Use the MultiSelectionBox's
  * <tt>SelectedItems</tt> property to find out which.
  *
  * Each item can be specified either as a simple string or as
- * <tt>Item( ... )</tt> which includes an ( optional ) ID and an (optional)
+ * <tt>Item( ... )</tt> which includes an (optional) ID and an (optional)
  * 'selected' flag that specifies the initial selected state ('not selected',
  * i.e. 'false', is default).
  *
@@ -2027,7 +2017,7 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
     int numargs = term->size() - argnr;
 
     if ( numargs < 1 || numargs > 2
-	 || ! term->value( argnr   )->isString()
+	 || ! term->value( argnr )->isString()
 	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
@@ -2056,6 +2046,55 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
     return multiSelectionBox;
 }
 
+
+/**
+ * @widget	SingleItemSelector MultiItemSelector
+ * @short	Scrollable list of radio buttons or check boxes with a description text
+ * @class	YItemSelector
+ * @optarg	list	items	the initial items
+ * @example	SingleItemselector1.rb
+ * @example	MultiItemselector1.rb
+ *
+ *
+ * This is a scrollable list of radio buttons (SingleItemSelector) or check
+ * boxes (MultiItemSelector) with not only a one-line label for each, but an
+ * additional text block (the description) below each one and an optional icon.
+ *
+ * The desired initial number of visible items (by default 3) can be configured with
+ * the <tt>VisibleItems<tt> property. When changing that, remember to
+ * recalculate the layout with <<RecalcLayout</tt>.
+ *
+ * The <tt>Value</tt> property returns the first selected item in both modes
+ * (single or multi selection), <tt>SelectedItems</tt> returns them all.
+ *
+ * Notice that in a SingleItemSelector always has one selected item, while a
+ * MultiItemSelector may also have none.
+ **/
+YWidget *
+YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
+                                    const YCPTerm & term, const YCPList & optList, int argnr,
+                                    bool singleSelection )
+{
+    int numargs = term->size() - argnr;
+
+    if ( numargs > 1 ||
+         ( numargs == 1 && ! term->value( argnr )->isList() ) )
+    {
+	THROW_BAD_ARGS( term );
+    }
+
+    rejectAllOptions( term, optList );
+
+    YItemSelector * itemSelector = YUI::widgetFactory()->createItemSelector( parent, singleSelection );
+
+    if ( numargs == 1 )
+    {
+	YCPList itemList = term->value( argnr )->asList();
+	itemSelector->addItems( YCPItemParser::parseDescribedItemList( itemList ) );
+    }
+
+    return itemSelector;
+}
 
 
 
@@ -2086,7 +2125,7 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
  * parameter indicating the selected state. Only one of the items may have this
  * parameter set to "true"; this will be the default selection on startup.
  *
- * @note         You can and should set a keyboard shortcut within the
+ * @note	 You can and should set a keyboard shortcut within the
  * label. When the user presses the hotkey, the combo box will get the keyboard
  * focus.
  *
@@ -2097,8 +2136,9 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
 				const YCPTerm & term, const YCPList & optList, int argnr )
 {
     int numargs = term->size() - argnr;
+
     if ( numargs < 1 || numargs > 2
-	 || !term->value(argnr)->isString()
+	 || ! term->value(argnr)->isString()
 	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
@@ -2132,7 +2172,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
  * @class	YTree
  * @arg		string		label
  * @optarg	itemList	items	the items contained in the tree
- *              <code>
+ *		<code>
  *		itemList ::=
  *			[
  *				item
@@ -2148,7 +2188,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
  *				[ , true | false ]
  *				[ , itemList ]
  *			)
- *              </code>
+ *		</code>
  *
  *		The boolean parameter inside Item() indicates whether or not
  *		the respective tree item should be opened by default - if it
@@ -2156,7 +2196,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
  *		and opening subtrees. If the UI cannot handle this, all
  *		subtrees will always be open.
  *
- * @option	multiSelection	user can select multiple items at once 
+ * @option	multiSelection	user can select multiple items at once
  * @option	immediate	make :notify trigger immediately when the selected item changes
  * @example	Tree1.rb
  * @example	Tree2.rb
@@ -2202,9 +2242,9 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
 
     for ( int o=0; o < optList->size(); o++ )
     {
-	if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_immediate )	          immediate  = true;
-        else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_multiSelection )     multiSelection = true;
-        else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_recursiveSelection ) recursiveSelection = true;
+	if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_immediate )		  immediate  = true;
+	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_multiSelection )	  multiSelection = true;
+	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_recursiveSelection ) recursiveSelection = true;
 	else logUnknownOption( term, optList->value(o) );
     }
 
@@ -2223,7 +2263,7 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
 
     if ( immediate )
 	tree->setImmediateMode( true ); // includes setNotify()
-    
+
     return tree;
 }
 
@@ -2287,13 +2327,13 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  *
  * @code
  * Table(Id(:players),
- *        Header("Nick", "Age", "Role"),
- *        [
- *         Item(Id("Bluebird"), "Bluebird,	18, 	"Scout"  ),
- *         Item(Id("Ozzz"    ), "Ozzz",	23, 	"Wizard" ),
- *         Item(Id("Wannabe" ), "Wannabe",	17 ),
- *         Item(Id("Coxxan"  ), "Coxxan",	26, 	"Warrior")
- *        ]
+ *	  Header("Nick", "Age", "Role"),
+ *	  [
+ *	   Item(Id("Bluebird"), "Bluebird,	18,	"Scout"	 ),
+ *	   Item(Id("Ozzz"    ), "Ozzz",	23,	"Wizard" ),
+ *	   Item(Id("Wannabe" ), "Wannabe",	17 ),
+ *	   Item(Id("Coxxan"  ), "Coxxan",	26,	"Warrior")
+ *	  ]
  * )
  * @endcode
  *
@@ -2306,13 +2346,13 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  *
  * @code
  * Table(Id(:players),
- *        Header("Nick", "Age", "Role"),
- *        [
- *         Item(Id("Bluebird"), "Bluebird, 18, cell(Icon("scout.png"),    "Scout" )  ),
- *         Item(Id("Ozzz"    ), "Ozzz",    23,                              "Wizard"   ),
- *         Item(Id("Wannabe" ), "Wannabe", cell(Icon("underage.png", 17 )            ),
- *         Item(Id("Coxxan"  ), "Coxxan",  cell(Icon("oldman.png",   26 ), "Warrior" )
- *        ]
+ *	  Header("Nick", "Age", "Role"),
+ *	  [
+ *	   Item(Id("Bluebird"), "Bluebird, 18, cell(Icon("scout.png"),	  "Scout" )  ),
+ *	   Item(Id("Ozzz"    ), "Ozzz",	   23,				    "Wizard"   ),
+ *	   Item(Id("Wannabe" ), "Wannabe", cell(Icon("underage.png", 17 )	     ),
+ *	   Item(Id("Coxxan"  ), "Coxxan",  cell(Icon("oldman.png",   26 ), "Warrior" )
+ *	  ]
  * )
  * @endcode
  *
@@ -2325,10 +2365,11 @@ YCPDialogParser::parseTable( YWidget * parent, YWidgetOpt & opt,
 			     const YCPTerm & term, const YCPList & optList, int argnr )
 {
     int numArgs = term->size() - argnr;
+
     if ( numArgs < 1 || numArgs > 2
-	 || !term->value(argnr)->isTerm()
+	 || ! term->value(argnr)->isTerm()
 	 || term->value(argnr)->asTerm()->name() != YUISymbol_header
-	 || (numArgs == 2 && !term->value(argnr+1)->isList()))
+	 || (numArgs == 2 && ! term->value( argnr+1 )->isList()))
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2390,8 +2431,8 @@ YCPDialogParser::parseTableHeader( const YCPTerm & headerTerm )
 	    YAlignmentType	alignment	= YAlignBegin;
 	    YCPTerm		colHeaderTerm	= colHeader->asTerm();
 
-	    if      ( colHeaderTerm->name() == YUISymbol_Left   ) alignment = YAlignBegin;
-	    else if ( colHeaderTerm->name() == YUISymbol_Right  ) alignment = YAlignEnd;
+	    if	    ( colHeaderTerm->name() == YUISymbol_Left	) alignment = YAlignBegin;
+	    else if ( colHeaderTerm->name() == YUISymbol_Right	) alignment = YAlignEnd;
 	    else if ( colHeaderTerm->name() == YUISymbol_Center ) alignment = YAlignCenter;
 	    else
 	    {
@@ -2462,17 +2503,17 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
     int s = term->size() - argnr;
     if ( s < 1
 	 || s > 3
-	 || (s >= 1 && !term->value(argnr)->isString())
-	 || (s >= 2 && !term->value(argnr+1)->isInteger())
-	 || (s >= 3 && !term->value(argnr+2)->isInteger()))
+	 || (s >= 1 && ! term->value(argnr)->isString())
+	 || (s >= 2 && ! term->value( argnr+1 )->isInteger())
+	 || (s >= 3 && ! term->value( argnr+2 )->isInteger()))
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
-    string  label        = term->value( argnr )->asString()->value();
-    int	    maxValue     = 100;
+    string  label	 = term->value( argnr )->asString()->value();
+    int	    maxValue	 = 100;
     int	    initialValue = 0;
 
     if ( s >= 2 ) maxValue	= term->value( argnr+1 )->asInteger()->value();
@@ -2496,7 +2537,7 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
  * @option	animated	show an animated image (MNG, animated GIF)
  * @option	scaleToFit	scale the pixmap so it fits the available space: zoom in or out as needed
  * @option	zeroWidth	make widget report a preferred width of 0
- * @option	zeroHeight 	make widget report a preferred height of 0
+ * @option	zeroHeight	make widget report a preferred height of 0
  * @example	Image1.rb
  * @example	Image-animated.rb
  * @example	Image-scaled.rb
@@ -2508,7 +2549,7 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
  * Use <tt>Opt( :zeroWidth )</tt> and / or <tt>Opt( :zeroHeight )</tt>
  * if the real size of the image widget is determined by outside factors, e.g. by the size
  * of neighboring widgets. With those options you can override the preferred size of
- * the image widget and make it show just a part of the image.  If more screen space is
+ * the image widget and make it show just a part of the image.	If more screen space is
  * available, more of the image is shown, if not, the layout engine doesn't complain about
  * the image widget not getting its preferred size.
  *
@@ -2541,10 +2582,10 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
     }
 
     string	imageFileName	= term->value( argnr )->asString()->value();
-    bool 	zeroWidth 	= false;
-    bool 	zeroHeight 	= false;
-    bool 	animated 	= false;
-    bool 	autoScale	= false;
+    bool	zeroWidth	= false;
+    bool	zeroHeight	= false;
+    bool	animated	= false;
+    bool	autoScale	= false;
 
     for ( int o=0; o < optList->size(); o++ )
     {
@@ -2579,7 +2620,7 @@ YCPDialogParser::parseImage( YWidget * parent, YWidgetOpt & opt,
  *
  * <code> IntField(label, minValue, maxValue, initialValue) </code>
  *
- * @arg		\c string \b label         Explanatory label above the input field
+ * @arg		\c string \b label	   Explanatory label above the input field
  * @arg		\c integer \b minValue	   minimum value
  * @arg		\c integer \b maxValue	   maximum value
  * @arg		\c integer \b initialValue initial value
@@ -2612,21 +2653,21 @@ YCPDialogParser::parseIntField( YWidget * parent, YWidgetOpt & opt,
     int numArgs = term->size() - argnr;
 
     if ( numArgs != 4
-	 || ! term->value(argnr  )->isString()
-	 || ! term->value(argnr+1)->isInteger()
-	 || ! term->value(argnr+2)->isInteger()
-	 || ! term->value(argnr+3)->isInteger()
+	 || ! term->value( argnr   )->isString()
+	 || ! term->value( argnr+1 )->isInteger()
+	 || ! term->value( argnr+2 )->isInteger()
+	 || ! term->value( argnr+3 )->isInteger()
 	 )
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
-    int 	minValue	= term->value( argnr+1 )->asInteger()->value();
-    int 	maxValue	= term->value( argnr+2 )->asInteger()->value();
-    int 	initialValue	= term->value( argnr+3 )->asInteger()->value();
+    int		minValue	= term->value( argnr+1 )->asInteger()->value();
+    int		maxValue	= term->value( argnr+2 )->asInteger()->value();
+    int		initialValue	= term->value( argnr+3 )->asInteger()->value();
 
     return YUI::widgetFactory()->createIntField( parent, label, minValue, maxValue, initialValue );
 }
@@ -2689,13 +2730,13 @@ YCPDialogParser::parsePackageSelector( YWidget * parent, YWidgetOpt & opt,
 	{
 	    string sym = optList->value(o)->asSymbol()->symbol();
 
-	    if	    ( sym == YUIOpt_youMode     	) 	modeFlags |= YPkg_OnlineUpdateMode;
-	    else if ( sym == YUIOpt_updateMode  	) 	modeFlags |= YPkg_UpdateMode;
-	    else if ( sym == YUIOpt_searchMode  	) 	modeFlags |= YPkg_SearchMode;
-	    else if ( sym == YUIOpt_summaryMode 	)	modeFlags |= YPkg_SummaryMode;
+	    if	    ( sym == YUIOpt_youMode		)	modeFlags |= YPkg_OnlineUpdateMode;
+	    else if ( sym == YUIOpt_updateMode		)	modeFlags |= YPkg_UpdateMode;
+	    else if ( sym == YUIOpt_searchMode		)	modeFlags |= YPkg_SearchMode;
+	    else if ( sym == YUIOpt_summaryMode		)	modeFlags |= YPkg_SummaryMode;
 	    else if ( sym == YUIOpt_repoMode		)	modeFlags |= YPkg_RepoMode;
-	    else if ( sym == YUIOpt_testMode 		)	modeFlags |= YPkg_TestMode;
-	    else if ( sym == YUIOpt_repoMgr 		)	modeFlags |= YPkg_RepoMgr;
+	    else if ( sym == YUIOpt_testMode		)	modeFlags |= YPkg_TestMode;
+	    else if ( sym == YUIOpt_repoMgr		)	modeFlags |= YPkg_RepoMgr;
 	    else if ( sym == YUIOpt_confirmUnsupported	)	modeFlags |= YPkg_ConfirmUnsupported;
 	    else logUnknownOption( term, optList->value(o) );
 	}
@@ -2730,7 +2771,7 @@ YCPDialogParser::parsePkgSpecial( YWidget * parent, YWidgetOpt & opt,
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
     string subwidgetName = term->value( argnr )->asString()->value();
 
     return YUI::widgetFactory()->createPkgSpecial( parent, subwidgetName );
@@ -2781,7 +2822,7 @@ YCPDialogParser::parseDummySpecialWidget( YWidget *parent, YWidgetOpt & opt,
  * placeholder where the current value will be inserted (sformat() -style) and
  * newlines. If no labels are specified, only the values will be
  * displayed. Specify empty labels to suppress this.
- * @note        This is a "special" widget, i.e. not all UIs necessarily support it.  Check
+ * @note	This is a "special" widget, i.e. not all UIs necessarily support it.  Check
  * for availability with <tt>HasSpecialWidget( BarGraph )</tt> before using it.
  *
  **/
@@ -2794,13 +2835,13 @@ YCPDialogParser::parseBarGraph( YWidget *parent, YWidgetOpt & opt,
 
     if ( numArgs < 1 || numArgs > 2
 	 || ! term->value(argnr)->isList()
-	 || ( numArgs > 1 && ! term->value(argnr+1)->isList() )
+	 || ( numArgs > 1 && ! term->value( argnr+1 )->isList() )
 	 )
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YBarGraph * barGraph = YUI::optionalWidgetFactory()->createBarGraph( parent );
     YBarGraphMultiUpdate multiUpdate( barGraph ); // Hold back display updates
@@ -2883,18 +2924,18 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
     int numArgs = term->size() - argnr;
 
     if ( numArgs != 3
-	 || ! term->value(argnr  )->isString()
-	 || ! term->value(argnr+1)->isString()
-	 || ! term->value(argnr+2)->isInteger()
+	 || ! term->value(argnr	 )->isString()
+	 || ! term->value( argnr+1 )->isString()
+	 || ! term->value( argnr+2 )->isInteger()
 	 )
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
-    string	label	 	= term->value( argnr   )->asString()->value();
-    string	filename 	= term->value( argnr+1 )->asString()->value();
+    string	label		= term->value( argnr   )->asString()->value();
+    string	filename	= term->value( argnr+1 )->asString()->value();
     YFileSize_t	expectedSize	= term->value( argnr+2 )->asInteger()->value();
 
     return YUI::optionalWidgetFactory()->createDownloadProgress( parent, label, filename, expectedSize );
@@ -2935,7 +2976,7 @@ YCPDialogParser::parseDownloadProgress( YWidget *parent, YWidgetOpt & opt,
  * initially selected. If you specify only a string, UI::UserInput() will
  * return this string.
  *
- * This is a "special" widget, i.e. not all UIs necessarily support it.  Check
+ * This is a "special" widget, i.e. not all UIs necessarily support it.	 Check
  * for availability with <tt>HasSpecialWidget( :DumbTab )</tt> before
  * using it.
  *
@@ -2983,7 +3024,7 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
     YCPList itemList  = term->value( argnr   )->asList();
     YCPTerm childTerm = term->value( argnr+1 )->asTerm();
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     YDumbTab * dumbTab = YUI::optionalWidgetFactory()->createDumbTab( parent );
     dumbTab->addItems( YCPItemParser::parseItemList( itemList ) ); // Add tab pages
@@ -3024,7 +3065,7 @@ YCPDialogParser::parseDumbTab( YWidget *parent, YWidgetOpt & opt,
  * even if that means that some segments will be shown slightly out of
  * proportion.
  *
- * @note  This is a "special" widget, i.e. not all UIs necessarily support it.  Check
+ * @note  This is a "special" widget, i.e. not all UIs necessarily support it.	Check
  * for availability with <tt>HasSpecialWidget( :MultiProgressMeter )</tt> before using it.
  **/
 
@@ -3057,7 +3098,7 @@ YCPDialogParser::parseMultiProgressMeter( YWidget *parent, YWidgetOpt & opt,
 						  term->value( argnr ) ) );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     return YUI::optionalWidgetFactory()->createMultiProgressMeter( parent, dim, maxValues );
 }
@@ -3112,7 +3153,7 @@ YCPDialogParser::parseNumList( const YCPList & yList )
  * Remember you can use <tt>Opt( :notify )</tt> in order to get instant response
  * when the user changes the value - if this is desired.
  *
- * @note  This is a "special" widget, i.e. not all UIs necessarily support it.  Check
+ * @note  This is a "special" widget, i.e. not all UIs necessarily support it.	Check
  * for availability with <tt>HasSpecialWidget( :Slider )</tt> before using it.
  *
  **/
@@ -3124,21 +3165,21 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
     int numArgs = term->size() - argnr;
 
     if ( numArgs != 4
-	 || ! term->value(argnr)->isString()
-	 || ! term->value(argnr+1)->isInteger()
-	 || ! term->value(argnr+2)->isInteger()
-	 || ! term->value(argnr+3)->isInteger()
+	 || ! term->value( argnr   )->isString()
+	 || ! term->value( argnr+1 )->isInteger()
+	 || ! term->value( argnr+2 )->isInteger()
+	 || ! term->value( argnr+3 )->isInteger()
 	 )
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string	label		= term->value( argnr   )->asString()->value();
-    int 	minValue	= term->value( argnr+1 )->asInteger()->value();
-    int 	maxValue	= term->value( argnr+2 )->asInteger()->value();
-    int 	initialValue	= term->value( argnr+3 )->asInteger()->value();
+    int		minValue	= term->value( argnr+1 )->asInteger()->value();
+    int		maxValue	= term->value( argnr+2 )->asInteger()->value();
+    int		initialValue	= term->value( argnr+3 )->asInteger()->value();
 
     return YUI::optionalWidgetFactory()->createSlider( parent, label, minValue, maxValue, initialValue );
 }
@@ -3150,18 +3191,18 @@ YCPDialogParser::parseSlider( YWidget *parent, YWidgetOpt & opt,
  * @class	YPartitionSplitter
  *
  * @arg integer	usedSize		size of the used part of the partition
- * @arg integer	totalFreeSize 		total size of the free part of the partition
+ * @arg integer	totalFreeSize		total size of the free part of the partition
  *					(before the split)
  * @arg integer newPartSize		suggested size of the new partition
  * @arg integer minNewPartSize		minimum size of the new partition
  * @arg integer minFreeSize		minimum free size of the old partition
- * @arg string	usedLabel 		BarGraph label for the used part of the old partition
- * @arg string	freeLabel 		BarGraph label for the free part of the old partition
- * @arg string	newPartLabel  		BarGraph label for the new partition
+ * @arg string	usedLabel		BarGraph label for the used part of the old partition
+ * @arg string	freeLabel		BarGraph label for the free part of the old partition
+ * @arg string	newPartLabel		BarGraph label for the new partition
  * @arg string	freeFieldLabel		label for the remaining free space field
  * @arg string	newPartFieldLabel	label for the new size field
  *		PartitionSplitter( 600, 1200, 800, 300, 50,
- *                                 "Windows used\n%1 MB", "Windows used\n%1 MB", "Linux\n%1 MB", "Linux ( MB )" )
+ *				   "Windows used\n%1 MB", "Windows used\n%1 MB", "Linux\n%1 MB", "Linux ( MB )" )
  *
  * @example	PartitionSplitter1.rb
  * @example	PartitionSplitter2.rb
@@ -3192,16 +3233,16 @@ YCPDialogParser::parsePartitionSplitter( YWidget *parent, YWidgetOpt & opt,
     int numArgs = term->size() - argnr;
 
     if ( numArgs != 10
-	 || ! term->value(argnr  )->isInteger()	// usedSize
-	 || ! term->value(argnr+1)->isInteger()	// freeSize
-	 || ! term->value(argnr+2)->isInteger()	// newPartSize
-	 || ! term->value(argnr+3)->isInteger()	// minNewPartSize
-	 || ! term->value(argnr+4)->isInteger()	// minFreeSize
-	 || ! term->value(argnr+5)->isString()	// usedLabel
-	 || ! term->value(argnr+6)->isString()	// freeLabel
-	 || ! term->value(argnr+7)->isString()	// newPartLabel
-	 || ! term->value(argnr+8)->isString()	// freeFieldLabel
-	 || ! term->value(argnr+9)->isString()	// newPartFieldLabel
+	 || ! term->value( argnr   )->isInteger()       // usedSize
+	 || ! term->value( argnr+1 )->isInteger()	// freeSize
+	 || ! term->value( argnr+2 )->isInteger()	// newPartSize
+	 || ! term->value( argnr+3 )->isInteger()	// minNewPartSize
+	 || ! term->value( argnr+4 )->isInteger()	// minFreeSize
+	 || ! term->value( argnr+5 )->isString()	// usedLabel
+	 || ! term->value( argnr+6 )->isString()	// freeLabel
+	 || ! term->value( argnr+7 )->isString()	// newPartLabel
+	 || ! term->value( argnr+8 )->isString()	// freeFieldLabel
+	 || ! term->value( argnr+9 )->isString()	// newPartFieldLabel
 	 )
     {
 	THROW_BAD_ARGS( term );
@@ -3209,16 +3250,16 @@ YCPDialogParser::parsePartitionSplitter( YWidget *parent, YWidgetOpt & opt,
 
     rejectAllOptions( term, optList );
 
-    int 	usedSize		= term->value( argnr   )->asInteger()->value();
-    int 	totalFreeSize		= term->value( argnr+1 )->asInteger()->value();
-    int 	newPartSize		= term->value( argnr+2 )->asInteger()->value();
-    int 	minNewPartSize		= term->value( argnr+3 )->asInteger()->value();
-    int 	minFreeSize		= term->value( argnr+4 )->asInteger()->value();
-    string 	usedLabel		= term->value( argnr+5 )->asString()->value();
-    string 	freeLabel		= term->value( argnr+6 )->asString()->value();
-    string 	newPartLabel		= term->value( argnr+7 )->asString()->value();
-    string 	freeFieldLabel		= term->value( argnr+8 )->asString()->value();
-    string 	newPartFieldLabel	= term->value( argnr+9 )->asString()->value();
+    int		usedSize		= term->value( argnr   )->asInteger()->value();
+    int		totalFreeSize		= term->value( argnr+1 )->asInteger()->value();
+    int		newPartSize		= term->value( argnr+2 )->asInteger()->value();
+    int		minNewPartSize		= term->value( argnr+3 )->asInteger()->value();
+    int		minFreeSize		= term->value( argnr+4 )->asInteger()->value();
+    string	usedLabel		= term->value( argnr+5 )->asString()->value();
+    string	freeLabel		= term->value( argnr+6 )->asString()->value();
+    string	newPartLabel		= term->value( argnr+7 )->asString()->value();
+    string	freeFieldLabel		= term->value( argnr+8 )->asString()->value();
+    string	newPartFieldLabel	= term->value( argnr+9 )->asString()->value();
 
     return YUI::optionalWidgetFactory()->createPartitionSplitter( parent,
 								  usedSize,
@@ -3340,14 +3381,14 @@ YCPDialogParser::parseDateField( YWidget * parent, YWidgetOpt & opt,
 {
 
     if ( term->size() - argnr < 1 || term->size() - argnr > 2
-	 || !term->value(argnr)->isString()
-	 || (term->size() == argnr+2 && !term->value(argnr+1)->isString()))
+	 || ! term->value(argnr)->isString()
+	 || (term->size() == argnr+2 && ! term->value( argnr+1 )->isString()))
     {
 	THROW_BAD_ARGS( term );
     }
 
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label = term->value( argnr )->asString()->value();
 
@@ -3370,7 +3411,7 @@ YCPDialogParser::parseDateField( YWidget * parent, YWidgetOpt & opt,
  * @class	YTimeField
  * @arg		string label
  * @optarg	string initialTime
- * 		    TimeField( "Time:" , "20:20:20" )
+ *		    TimeField( "Time:" , "20:20:20" )
  *
  *
  * An input field for entering a time of day in 24 hour format.
@@ -3384,13 +3425,13 @@ YCPDialogParser::parseTimeField( YWidget * parent, YWidgetOpt & opt,
 {
 
     if ( term->size() - argnr < 1 || term->size() - argnr > 2
-	 || !term->value(argnr)->isString()
-	 || (term->size() == argnr+2 && !term->value(argnr+1)->isString()))
+	 || ! term->value(argnr)->isString()
+	 || (term->size() == argnr+2 && ! term->value( argnr+1 )->isString()))
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
     string label = term->value( argnr )->asString()->value();
 
@@ -3443,7 +3484,7 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
 			      const YCPTerm & term, const YCPList & optList, int argnr )
 {
     if ( term->size() - argnr != 6
-	 || ! isSymbolOrId( term->value( argnr   ) ) || ! term->value( argnr+1 )->isString()
+	 || ! isSymbolOrId( term->value( argnr	 ) ) || ! term->value( argnr+1 )->isString()
 	 || ! isSymbolOrId( term->value( argnr+2 ) ) || ! term->value( argnr+3 )->isString()
 	 || ! isSymbolOrId( term->value( argnr+4 ) ) || ! term->value( argnr+5 )->isString() )
     {
@@ -3457,14 +3498,14 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
 
     for ( int o=0; o < optList->size(); o++ )
     {
-	if      ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_stepsEnabled ) wizardMode = YWizardMode_Steps;
+	if	( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_stepsEnabled ) wizardMode = YWizardMode_Steps;
 	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_treeEnabled  ) wizardMode = YWizardMode_Tree;
 	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_titleOnLeft  ) wizardMode = YWizardMode_TitleOnLeft;
 	else logUnknownOption( term, optList->value(o) );
     }
 
     YWidgetID *	backButtonId		= new YCPValueWidgetID( parseIdTerm( term->value( argnr ) ) );
-    string	backButtonLabel 	= term->value( argnr+1 )->asString()->value();
+    string	backButtonLabel		= term->value( argnr+1 )->asString()->value();
 
     YWidgetID *	abortButtonId		= new YCPValueWidgetID( parseIdTerm( term->value( argnr+2 ) ) );
     string	abortButtonLabel	= term->value( argnr+3 )->asString()->value();
@@ -3487,9 +3528,9 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
     // The wizard internal contents ReplacePoint has a fixed ID :contents
     YWidgetID * contentsId =  new YCPValueWidgetID( YCPSymbol( YWizardContentsReplacePointID ) );
 
-    if ( wizard->backButton()  ) 		wizard->backButton()->setId ( backButtonId  );
-    if ( wizard->abortButton() ) 		wizard->abortButton()->setId( abortButtonId );
-    if ( wizard->nextButton()  ) 		wizard->nextButton()->setId ( nextButtonId  );
+    if ( wizard->backButton()  )		wizard->backButton()->setId ( backButtonId  );
+    if ( wizard->abortButton() )		wizard->abortButton()->setId( abortButtonId );
+    if ( wizard->nextButton()  )		wizard->nextButton()->setId ( nextButtonId  );
     wizard->contentsReplacePoint()->setId( contentsId );
 
     return wizard;
@@ -3500,12 +3541,12 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
  * @short	Timezone selector map
  * @class	YTimezoneSelector
  *
- * @arg		string pixmap     path to a jpg or png of a world map - with 0°0° being the
- *                                middle of the picture
- * @arg         map timezones     a map of timezones. The map should be between e.g. Europe/London
- *                                and the tooltip to be displayed ("United Kingdom")
+ * @arg		string pixmap	  path to a jpg or png of a world map - with 0°0° being the
+ *				  middle of the picture
+ * @arg		map timezones	  a map of timezones. The map should be between e.g. Europe/London
+ *				  and the tooltip to be displayed ("United Kingdom")
  *
- * 		    TimezoneSelector( "world.jpg", timezones )
+ *		    TimezoneSelector( "world.jpg", timezones )
  *
  *
  * An graphical timezone selector map
@@ -3515,11 +3556,11 @@ YCPDialogParser::parseWizard( YWidget * parent, YWidgetOpt & opt,
  **/
 YWidget *
 YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
-                                        const YCPTerm & term, const YCPList & optList, int argnr )
+					const YCPTerm & term, const YCPList & optList, int argnr )
 {
     if ( term->size() - argnr != 2
-	 || !term->value(argnr)->isString()
-         || !term->value(argnr+1)->isMap() )
+	 || ! term->value(argnr)->isString()
+	 || ! term->value( argnr+1 )->isMap() )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -3530,7 +3571,7 @@ YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
     map<string,string> zones;
     YCPMap secondArg = term->value( argnr+1 )->asMap();
     for ( YCPMap::const_iterator it = secondArg.begin(); it != secondArg.end(); ++it )
-        zones[ it->first->asString()->value() ] = it->second->asString()->value();
+	zones[ it->first->asString()->value() ] = it->second->asString()->value();
 
     YTimezoneSelector * selector = YUI::optionalWidgetFactory()->createTimezoneSelector( parent, pixmap, zones );
 
@@ -3543,7 +3584,7 @@ YCPDialogParser::parseTimezoneSelector( YWidget * parent, YWidgetOpt & opt,
  * @short	graph
  * @class	YGraph
  *
- * 		    Graph( "graph.dot", "dot" )
+ *		    Graph( "graph.dot", "dot" )
  *
  *
  * An graph
@@ -3556,8 +3597,8 @@ YCPDialogParser::parseGraph( YWidget * parent, YWidgetOpt & opt,
 			     const YCPTerm & term, const YCPList & optList, int argnr )
 {
     if ( term->size() - argnr != 2
-	 || !term->value(argnr)->isString()
-	 || !term->value(argnr+1)->isString() )
+	 || ! term->value(argnr)->isString()
+	 || ! term->value( argnr+1 )->isString() )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -3603,16 +3644,16 @@ YCPDialogParser::parseBusyIndicator( YWidget * parent, YWidgetOpt & opt,
     int s = term->size() - argnr;
     if ( s < 1
 	 || s > 2
-	 || (s >= 1 && !term->value(argnr)->isString())
-	 || (s >= 2 && !term->value(argnr+1)->isInteger()) )
+	 || ( s >= 1 && ! term->value(argnr)->isString()      )
+	 || ( s >= 2 && ! term->value( argnr+1 )->isInteger() ) )
     {
 	THROW_BAD_ARGS( term );
     }
 
-    rejectAllOptions( term,optList );
+    rejectAllOptions( term, optList );
 
-    string  label        = term->value( argnr )->asString()->value();
-    int	    timeout      = 1000;
+    string  label	 = term->value( argnr )->asString()->value();
+    int	    timeout	 = 1000;
 
     if ( s >= 2 ) timeout	= term->value( argnr+1 )->asInteger()->value();
 
@@ -3664,7 +3705,7 @@ YCPDialogParser::checkId( const YCPValue & v, bool complain )
     {
 	if ( complain )
 	{
-	    ycperror( "Expected `" YUISymbol_id "( any v ), not  %s", v->toString().c_str() );
+	    ycperror( "Expected `" YUISymbol_id "( any v ), not	 %s", v->toString().c_str() );
 	}
 	return false;
     }
@@ -3715,7 +3756,7 @@ YCPDialogParser::getWidgetId( const YCPTerm & term, int *argnr )
 	if ( findWidgetWithId( id,
 			       false ) ) // Don't throw exception if not found
 	{
-            // Already have a widget with that ID?
+	    // Already have a widget with that ID?
 	    ycperror( "Widget id %s is not unique", id->toString().c_str() );
 	    *argnr = 1;
 	    return YCPNull();

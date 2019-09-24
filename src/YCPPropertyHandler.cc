@@ -1,6 +1,7 @@
 /****************************************************************************
 
 Copyright (c) 2000 - 2010 Novell, Inc.
+Copyright (c) 2019 SUSE LLC
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -25,7 +26,7 @@ you may find current contact information at www.novell.com
 
 		Widget property handlers for not-so-trivial properties.
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
@@ -36,8 +37,6 @@ you may find current contact information at www.novell.com
 #include <ycp/YCPString.h>
 #include <ycp/YCPTerm.h>
 #include <ycp/YCPVoid.h>
-
-#include <list>
 
 #define y2log_component "ui"
 #include <ycp/y2log.h>
@@ -61,6 +60,7 @@ you may find current contact information at www.novell.com
 #include <yui/YCheckBox.h>
 #include <yui/YComboBox.h>
 #include <yui/YDumbTab.h>
+#include <yui/YItemSelector.h>
 #include <yui/YMenuButton.h>
 #include <yui/YMultiProgressMeter.h>
 #include <yui/YMultiSelectionBox.h>
@@ -72,7 +72,6 @@ you may find current contact information at www.novell.com
 #include <yui/YWizard.h>
 #include <yui/YUISymbols.h>
 
-using std::list;
 
 
 bool
@@ -86,6 +85,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     {
 	if ( trySetCheckBoxValue	( widget, val ) )		return true;
 	if ( trySetSelectionBoxValue	( widget, val ) )		return true;
+	if ( trySetItemSelectorValue	( widget, val ) )		return true;
 	if ( trySetTreeValue		( widget, val ) )		return true;
 	if ( trySetTableValue		( widget, val ) )		return true;
 	if ( trySetComboBoxValue	( widget, val ) )		return true;
@@ -104,6 +104,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_CurrentItem )
     {
 	if ( trySetSelectionBoxValue	( widget, val ) )		return true;
+	if ( trySetItemSelectorValue	( widget, val ) )		return true;
 	if ( trySetTreeValue		( widget, val ) )		return true;
 	if ( trySetTableValue		( widget, val ) )		return true;
 	if ( trySetDumbTabValue		( widget, val ) )		return true;
@@ -118,6 +119,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
 	if ( trySetMenuButtonItems	( widget, val ) )		return true;
 	if ( trySetTreeItems		( widget, val ) )		return true;
 	if ( trySetTableItems		( widget, val ) )		return true;
+	if ( trySetItemSelectorItems	( widget, val ) )		return true;
 	if ( trySetSelectionWidgetItems	( widget, val ) )		return true;
     }
     else if ( propertyName == YUIProperty_CurrentButton )
@@ -127,8 +129,9 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_SelectedItems )
     {
 	if ( trySetMultiSelectionBoxSelectedItems( widget, val ) )	return true;
-	if ( trySetTableSelectedItems( widget, val ) )			return true;
-	if ( trySetTreeSelectedItems( widget, val ) )			return true;
+	if ( trySetItemSelectorSelectedItems    ( widget, val ) )	return true;
+	if ( trySetTableSelectedItems           ( widget, val ) )	return true;
+	if ( trySetTreeSelectedItems            ( widget, val ) )	return true;
     }
 
     y2error( "Can't handle property %s::%s - not changing anything",
@@ -169,6 +172,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     {
 	val = tryGetCheckBoxValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetSelectionBoxValue	( widget );	if ( ! val.isNull() ) return val;
+        val = tryGetItemSelectorValue   ( widget );     if ( ! val.isNull() ) return val;
 	val = tryGetTreeValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetComboBoxValue	( widget );	if ( ! val.isNull() ) return val;
@@ -182,6 +186,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     else if ( propertyName == YUIProperty_CurrentItem )
     {
 	val = tryGetSelectionBoxValue	( widget );	if ( ! val.isNull() ) return val;
+        val = tryGetItemSelectorValue   ( widget );     if ( ! val.isNull() ) return val;
 	val = tryGetTreeCurrentItem	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetComboBoxValue	( widget );	if ( ! val.isNull() ) return val;
@@ -196,9 +201,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     }
     else if ( propertyName == YUIProperty_SelectedItems )
     {
-	val = tryGetMultiSelectionBoxSelectedItems( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetTableSelectedItems( widget );		if ( ! val.isNull() ) return val;
-	val = tryGetTreeSelectedItems( widget );		if ( ! val.isNull() ) return val;
+	val = tryGetMultiSelectionBoxSelectedItems( widget );   if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorSelectedItems   ( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTableSelectedItems          ( widget );     if ( ! val.isNull() ) return val;
+	val = tryGetTreeSelectedItems           ( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_OpenItems )
     {
@@ -216,6 +222,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
 	val = tryGetMenuButtonItems	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableItems		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTreeItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorItems	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetSelectionWidgetItems( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_Labels )
@@ -364,6 +371,13 @@ YCPPropertyHandler::trySetSelectionBoxValue( YWidget * widget, const YCPValue & 
 
 
 bool
+YCPPropertyHandler::trySetItemSelectorValue( YWidget * widget, const YCPValue & val )
+{
+    return trySetSelectionWidgetValue<YItemSelector, YCPItem>( widget, val );
+}
+
+
+bool
 YCPPropertyHandler::trySetTreeValue( YWidget * widget, const YCPValue & val )
 {
     return trySetSelectionWidgetValue<YTree, YCPTreeItem>( widget, val );
@@ -387,7 +401,7 @@ YCPPropertyHandler::trySetDumbTabValue( YWidget * widget, const YCPValue & val )
 bool
 YCPPropertyHandler::trySetComboBoxValue( YWidget * widget, const YCPValue & val )
 {
-    YComboBox * comboBox = dynamic_cast<YComboBox *> (widget);
+    YComboBox * comboBox = dynamic_cast<YComboBox *>( widget );
 
     if ( ! comboBox )
 	return false;
@@ -425,9 +439,30 @@ YCPPropertyHandler::trySetComboBoxValue( YWidget * widget, const YCPValue & val 
 
 
 bool
+YCPPropertyHandler::trySetItemSelectorItems( YWidget * widget, const YCPValue & val )
+{
+    YItemSelector * itemSelector = dynamic_cast<YItemSelector *>( widget );
+
+    if ( ! itemSelector )
+	return false;
+
+    if ( val->isList() )
+    {
+	itemSelector->setItems( YCPItemParser::parseDescribedItemList( val->asList() ) );
+	return true;
+    }
+
+    YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_Items,
+						      YOtherProperty ),
+					   widget ) );
+    return false;
+}
+
+
+bool
 YCPPropertyHandler::trySetSelectionWidgetItems( YWidget * widget, const YCPValue & val )
 {
-    YSelectionWidget * selWidget = dynamic_cast<YSelectionWidget *> (widget );
+    YSelectionWidget * selWidget = dynamic_cast<YSelectionWidget *>( widget );
 
     if ( ! selWidget )
 	return false;
@@ -669,6 +704,13 @@ YCPPropertyHandler::trySetMultiSelectionBoxSelectedItems( YWidget * widget, cons
 
 
 bool
+YCPPropertyHandler::trySetItemSelectorSelectedItems( YWidget * widget, const YCPValue & val )
+{
+    return trySetSelectionWidgetSelectedItems<YItemSelector, YCPItem>( widget, val );
+}
+
+
+bool
 YCPPropertyHandler::trySetTableSelectedItems( YWidget * widget, const YCPValue & val )
 {
     return trySetSelectionWidgetSelectedItems<YTable, YCPTableItem>( widget, val );
@@ -887,6 +929,13 @@ YCPPropertyHandler::tryGetSelectionBoxValue( YWidget * widget )
 
 
 YCPValue
+YCPPropertyHandler::tryGetItemSelectorValue( YWidget * widget )
+{
+    return tryGetSelectionWidgetValue<YItemSelector, YCPItem>( widget );
+}
+
+
+YCPValue
 YCPPropertyHandler::tryGetTreeValue( YWidget * widget )
 {
     return tryGetSelectionWidgetValue<YTree, YCPTreeItem>( widget );
@@ -957,6 +1006,11 @@ YCPPropertyHandler::tryGetRadioButtonGroupCurrentButton( YWidget * widget )
 }
 
 
+/**
+ * Return a list of the IDs of the selected items.
+ *
+ * Notice that this does NOT return the complete selected items, only their IDs!
+ **/
 template<class Widget_t, class Item_t >
 YCPValue tryGetSelectionWidgetSelectedItems( YWidget * widget )
 {
@@ -993,6 +1047,13 @@ YCPValue
 YCPPropertyHandler::tryGetMultiSelectionBoxSelectedItems( YWidget * widget )
 {
     return tryGetSelectionWidgetSelectedItems<YMultiSelectionBox, YCPItem>( widget );
+}
+
+
+YCPValue
+YCPPropertyHandler::tryGetItemSelectorSelectedItems( YWidget * widget )
+{
+    return tryGetSelectionWidgetSelectedItems<YItemSelector, YCPItem>( widget );
 }
 
 
@@ -1278,6 +1339,19 @@ YCPPropertyHandler::tryGetTreeItems( YWidget * widget )
 	return YCPNull();
 
     return YCPTreeItemWriter::itemList( tree->itemsBegin(), tree->itemsEnd() );
+}
+
+
+YCPValue
+YCPPropertyHandler::tryGetItemSelectorItems( YWidget * widget )
+{
+    YItemSelector * itemSelector = dynamic_cast<YItemSelector *> (widget);
+
+    if ( ! itemSelector )
+	return YCPNull();
+
+    return YCPItemWriter::describedItemList( itemSelector->itemsBegin(),
+                                             itemSelector->itemsEnd() );
 }
 
 
