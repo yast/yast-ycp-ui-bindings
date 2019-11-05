@@ -267,6 +267,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_CheckBox		)	w = parseCheckBox		( p, opt, term, ol, n );
     else if ( s == YUIWidget_CheckBoxFrame	)	w = parseCheckBoxFrame		( p, opt, term, ol, n );
     else if ( s == YUIWidget_ComboBox		)	w = parseComboBox		( p, opt, term, ol, n );
+    else if ( s == YUIWidget_CustomStatusItemSelector )	w = parseCustomStatusItemSelector( p, opt, term, ol, n );
     else if ( s == YUIWidget_Empty		)	w = parseEmpty			( p, opt, term, ol, n );
     else if ( s == YUIWidget_Frame		)	w = parseFrame			( p, opt, term, ol, n );
     else if ( s == YUIWidget_HBox		)	w = parseLayoutBox		( p, opt, term, ol, n, YD_HORIZ );
@@ -833,8 +834,9 @@ YCPDialogParser::parseFrame( YWidget * parent, YWidgetOpt & opt,
 			     const YCPTerm & term, const YCPList & optList, int argnr )
 {
 
-    int s = term->size() - argnr;
-    if ( s != 2
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs != 2
 	 || ! term->value( argnr )->isString()
 	 || ! term->value( argnr+1 )->isTerm() )
     {
@@ -1528,11 +1530,11 @@ YWidget *
 YCPDialogParser::parseMenuButton( YWidget * parent, YWidgetOpt & opt,
 				  const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int numargs = term->size() - argnr;
+    int numArgs = term->size() - argnr;
 
-    if ( numargs < 1 || numargs > 2
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value( argnr )->isString()
-	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1543,7 +1545,7 @@ YCPDialogParser::parseMenuButton( YWidget * parent, YWidgetOpt & opt,
 
     YMenuButton * menuButton = YUI::widgetFactory()->createMenuButton( parent, label );
 
-    if ( numargs >= 2 )
+    if ( numArgs >= 2 )
     {
 	YCPList itemList = term->value( argnr+1 )->asList();
 	menuButton->addItems( YCPMenuItemParser::parseMenuItemList( itemList ) );
@@ -1577,10 +1579,11 @@ YWidget *
 YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
 				const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int size = term->size() - argnr;
-    if ( size < 1 || size > 2
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value( argnr )->isString()
-	 || ( size == 2 && ! term->value( argnr+1 )->isBoolean() ) )
+	 || ( numArgs == 2 && ! term->value( argnr+1 )->isBoolean() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1590,7 +1593,7 @@ YCPDialogParser::parseCheckBox( YWidget * parent, YWidgetOpt & opt,
     string label   = term->value( argnr )->asString()->value();
     bool   checked = false;
 
-    if ( size == 2 )
+    if ( numArgs == 2 )
 	checked = term->value( argnr+1 )->asBoolean()->value();
 
     YCheckBox * checkBox = YUI::widgetFactory()->createCheckBox( parent, label, checked );
@@ -1640,8 +1643,9 @@ YWidget *
 YCPDialogParser::parseCheckBoxFrame( YWidget * parent, YWidgetOpt & opt,
 				     const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int s = term->size() - argnr;
-    if ( s != 3
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs != 3
 	 || ! term->value( argnr   )->isString()
 	 || ! term->value( argnr+1 )->isBoolean()
 	 || ! term->value( argnr+2 )->isTerm()
@@ -1712,10 +1716,11 @@ YCPDialogParser::parseRadioButton( YWidget * parent, YWidgetOpt & opt,
 				   const YCPTerm & term, const YCPList & optList, int argnr )
 {
 
-    int s = term->size() - argnr;
-    if ( s < 1 || s > 2
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value( argnr )->isString()
-	 || ( s == 2 && ! term->value( argnr+1 )->isBoolean() ) )
+	 || ( numArgs == 2 && ! term->value( argnr+1 )->isBoolean() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1724,7 +1729,8 @@ YCPDialogParser::parseRadioButton( YWidget * parent, YWidgetOpt & opt,
 
     string label     = term->value( argnr )->asString()->value();
     bool   isChecked = false;
-    if ( s == 2 )
+
+    if ( numArgs == 2 )
 	isChecked = term->value( argnr+1 )->asBoolean()->value();
 
     YRadioButton * radioButton = YUI::widgetFactory()->createRadioButton( parent, label, isChecked );
@@ -1945,11 +1951,11 @@ YWidget *
 YCPDialogParser::parseSelectionBox( YWidget * parent, YWidgetOpt & opt,
 				    const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int numargs = term->size() - argnr;
+    int numArgs = term->size() - argnr;
 
-    if ( numargs < 1 || numargs > 2
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value( argnr )->isString()
-	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -1974,7 +1980,7 @@ YCPDialogParser::parseSelectionBox( YWidget * parent, YWidgetOpt & opt,
     if ( immediate )
 	selBox->setImmediateMode( true ); // includes setNotify()
 
-    if ( numargs >= 2 )
+    if ( numArgs >= 2 )
     {
 	YCPList itemList = term->value( argnr+1 )->asList();
 	selBox->addItems( YCPItemParser::parseItemList( itemList ) );
@@ -2014,11 +2020,11 @@ YWidget *
 YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
 					 const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int numargs = term->size() - argnr;
+    int numArgs = term->size() - argnr;
 
-    if ( numargs < 1 || numargs > 2
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value( argnr )->isString()
-	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2037,7 +2043,7 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
     if ( shrinkable )
 	multiSelectionBox->setShrinkable( true );
 
-    if ( numargs >= 2 )
+    if ( numArgs >= 2 )
     {
 	YCPList itemList = term->value( argnr+1 )->asList();
 	multiSelectionBox->addItems( YCPItemParser::parseItemList( itemList ) );
@@ -2052,8 +2058,12 @@ YCPDialogParser::parseMultiSelectionBox( YWidget * parent, YWidgetOpt & opt,
  * @short	Scrollable list of radio buttons or check boxes with a description text
  * @class	YItemSelector
  * @optarg	list	items	the initial items
- * @example	SingleItemselector1.rb
- * @example	MultiItemselector1.rb
+ *
+ * @example	ItemSelector1.rb
+ * @example	ItemSelector2-minimalistic.rb
+ * @example	MultiItemSelector1.rb
+ * @example	SingleItemSelector1.rb
+ * @example	SingleItemSelector2-icons.rb
  *
  *
  * This is a scrollable list of radio buttons (SingleItemSelector) or check
@@ -2075,10 +2085,10 @@ YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
                                     const YCPTerm & term, const YCPList & optList, int argnr,
                                     bool singleSelection )
 {
-    int numargs = term->size() - argnr;
+    int numArgs = term->size() - argnr;
 
-    if ( numargs > 1 ||
-         ( numargs == 1 && ! term->value( argnr )->isList() ) )
+    if ( numArgs > 1 ||
+         ( numArgs == 1 && ! term->value( argnr )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2087,7 +2097,7 @@ YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
 
     YItemSelector * itemSelector = YUI::widgetFactory()->createItemSelector( parent, singleSelection );
 
-    if ( numargs == 1 )
+    if ( numArgs == 1 )
     {
 	YCPList itemList = term->value( argnr )->asList();
 	itemSelector->addItems( YCPItemParser::parseDescribedItemList( itemList ) );
@@ -2096,6 +2106,124 @@ YCPDialogParser::parseItemSelector( YWidget *parent, YWidgetOpt & opt,
     return itemSelector;
 }
 
+
+
+/**
+ * @widget	CustomStatusItemSelector
+ * @short	Scrollable list of items with a custom status with a description text
+ * @class	YItemSelector
+ * @optarg	list	states  definition of the custom status values
+ * @optarg	list	items	the initial items
+ *
+ * @example	ItemSelector1.rb
+ * @example	ItemSelector2-minimalistic.rb
+ * @example	MultiItemSelector1.rb
+ * @example	SingleItemSelector1.rb
+ * @example	SingleItemSelector2-icons.rb
+ *
+ *
+ * This is very much like the MultiItemSelector, but each item can have more
+ * different status values than just 0 or 1 (or true or false). The list of
+ * possible status values is the first list in the widget's arguments.
+ *
+ * Each status value has a string for the icon to use, a string for the text
+ * equivalent (for the NCurses UI) of the status indicator ("[ ]", "[x]" or "[
+ * ]", "[ +]", "[a+]") and an optional integer for the next status to
+ * automatically go to when the user clicks on an item with that status (-1
+ * means the application will handle it; this is the default if not specified).
+ *
+ * The icons use the usual fallback chain for UI icons: Use compiled-in icons
+ * if available, use the theme, or, if an absolute path is specified, use that
+ * absolute path.
+ *
+ * For the text indicator it is highly recommended to use strings of the same
+ * length to line up items properly.
+ *
+ * If the application chooses to handle the next status, it is recommended to
+ * set the notify option for the widget. In that case, the widget sends menu
+ * events (not widget events!) with the ID of the item the user clicked (or
+ * activated with the keyboard).
+ **/
+YWidget *
+YCPDialogParser::parseCustomStatusItemSelector( YWidget * parent, YWidgetOpt & opt,
+                                                const YCPTerm & term, const YCPList & optList, int argnr )
+{
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs < 1 || numArgs > 2 ||
+         ( ! term->value( argnr )->isList() ) ||
+         ( numArgs == 2 && ! term->value( argnr+1 )->isList() ) )
+    {
+	THROW_BAD_ARGS( term );
+    }
+
+    rejectAllOptions( term, optList );
+
+    YItemCustomStatusVector customStates = parseCustomStates( term->value( argnr )->asList() );
+    YItemSelector * itemSelector = YUI::widgetFactory()->createCustomStatusItemSelector( parent, customStates );
+
+    if ( numArgs == 2 )
+    {
+	YCPList itemList = term->value( argnr+1 )->asList();
+	itemSelector->addItems( YCPItemParser::parseDescribedItemList( itemList ) );
+    }
+
+    return itemSelector;
+}
+
+
+/**
+ * Parse a custom status definition list (minimum 2 entries):
+ *
+ *      iconName          Ncurses nextStatus  no.
+ *   [
+ *     ["iconDontInstall", "[  ]",  1],      // 0
+ *     ["iconInstall",     "[++]",  0],      // 1
+ *     ["iconAutoInstall", "[a+]"    ],      // 2
+ *     ["iconKeep",        "[ x]"   4],      // 3
+ *     ["iconRemove",      "[--]",  3],      // 4
+ *     ["iconAutoRemove",  "[a-]"    ]       // 5
+ *   ]
+ **/
+YItemCustomStatusVector
+YCPDialogParser::parseCustomStates( const YCPList & statesList )
+{
+    const char * usage = "Expected: [ [\"iconName1\", \"textIndicator1\", int nextStatus], [...], ...]";
+    
+    YItemCustomStatusVector customStates;
+
+    for ( int i=0; i < statesList.size(); i++ )
+    {
+        YCPValue val = statesList->value( i );
+
+        if ( ! val->isList() )
+            YUI_THROW( YCPDialogSyntaxErrorException( usage, statesList ) );
+        
+        YCPList stat = val->asList();
+
+        if ( stat->size() < 2 || stat->size() > 3 ||
+             ! stat->value( 0 )->isString() ||
+             ! stat->value( 1 )->isString() ||
+             ( stat->size() == 3 && ! stat->value( 2 )->isInteger() ) )
+        {
+            YUI_THROW( YCPDialogSyntaxErrorException( usage, statesList ) );
+        }
+
+        string iconName      = stat->value( 0 )->asString()->value();
+        string textIndicator = stat->value( 1 )->asString()->value();
+        int    nextStatus    = stat->size() == 3 ? stat->value( 2 )->asInteger()->value() : -1;
+
+        if ( nextStatus > statesList.size() - 1 )
+            YUI_THROW( YCPDialogSyntaxErrorException( "nextStatus > maxStatus", statesList ) );
+
+        customStates.push_back( YItemCustomStatus( iconName, textIndicator, nextStatus ) );
+    }
+
+    if ( customStates.size() < 2 )
+        YUI_THROW( YCPDialogSyntaxErrorException( "Need at least 2 custom status values", statesList ) );
+    
+    return customStates;
+}
 
 
 /**
@@ -2135,11 +2263,11 @@ YWidget *
 YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
 				const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int numargs = term->size() - argnr;
+    int numArgs = term->size() - argnr;
 
-    if ( numargs < 1 || numargs > 2
+    if ( numArgs < 1 || numArgs > 2
 	 || ! term->value(argnr)->isString()
-	 || ( numargs >= 2 && ! term->value( argnr+1 )->isList() ) )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isList() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2155,7 +2283,7 @@ YCPDialogParser::parseComboBox( YWidget * parent, YWidgetOpt & opt,
 
     YComboBox * comboBox = YUI::widgetFactory()->createComboBox( parent, label, editable );
 
-    if ( numargs >= 2 )
+    if ( numArgs >= 2 )
     {
 	YCPList itemList = term->value( argnr+1 )->asList();
 	comboBox->addItems( YCPItemParser::parseItemList( itemList ) );
@@ -2500,12 +2628,12 @@ YWidget *
 YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
 				   const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int s = term->size() - argnr;
-    if ( s < 1
-	 || s > 3
-	 || (s >= 1 && ! term->value(argnr)->isString())
-	 || (s >= 2 && ! term->value( argnr+1 )->isInteger())
-	 || (s >= 3 && ! term->value( argnr+2 )->isInteger()))
+    int numArgs = term->size() - argnr;
+    if ( numArgs < 1
+	 || numArgs > 3
+	 || ( numArgs >= 1 && ! term->value(argnr)->isString() )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isInteger() )
+	 || ( numArgs >= 3 && ! term->value( argnr+2 )->isInteger()) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -2516,8 +2644,8 @@ YCPDialogParser::parseProgressBar( YWidget * parent, YWidgetOpt & opt,
     int	    maxValue	 = 100;
     int	    initialValue = 0;
 
-    if ( s >= 2 ) maxValue	= term->value( argnr+1 )->asInteger()->value();
-    if ( s >= 3 ) initialValue	= term->value( argnr+2 )->asInteger()->value();
+    if ( numArgs >= 2 ) maxValue	= term->value( argnr+1 )->asInteger()->value();
+    if ( numArgs >= 3 ) initialValue	= term->value( argnr+2 )->asInteger()->value();
 
     YProgressBar * progressBar = YUI::widgetFactory()->createProgressBar( parent, label, maxValue );
 
@@ -3641,11 +3769,12 @@ YWidget *
 YCPDialogParser::parseBusyIndicator( YWidget * parent, YWidgetOpt & opt,
 				   const YCPTerm & term, const YCPList & optList, int argnr )
 {
-    int s = term->size() - argnr;
-    if ( s < 1
-	 || s > 2
-	 || ( s >= 1 && ! term->value(argnr)->isString()      )
-	 || ( s >= 2 && ! term->value( argnr+1 )->isInteger() ) )
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs < 1
+	 || numArgs > 2
+	 || ( numArgs >= 1 && ! term->value(argnr)->isString()      )
+	 || ( numArgs >= 2 && ! term->value( argnr+1 )->isInteger() ) )
     {
 	THROW_BAD_ARGS( term );
     }
@@ -3655,7 +3784,7 @@ YCPDialogParser::parseBusyIndicator( YWidget * parent, YWidgetOpt & opt,
     string  label	 = term->value( argnr )->asString()->value();
     int	    timeout	 = 1000;
 
-    if ( s >= 2 ) timeout	= term->value( argnr+1 )->asInteger()->value();
+    if ( numArgs >= 2 ) timeout	= term->value( argnr+1 )->asInteger()->value();
 
     YBusyIndicator * busyIndicator = YUI::widgetFactory()->createBusyIndicator( parent, label, timeout );
 
