@@ -76,7 +76,7 @@ you may find current contact information at www.novell.com
 
 bool
 YCPPropertyHandler::setComplexProperty( YWidget *		widget,
-					const string & 		propertyName,
+					const string &		propertyName,
 					const YCPValue &	val )
 {
     // y2debug( "%s::%s", widget->widgetClass(), propertyName.c_str() );
@@ -95,7 +95,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_Values )
     {
 	if ( trySetMultiProgressMeterValues ( widget, val ) )		return true;
-	if ( trySetBarGraphValues       ( widget, val ) )		return true;
+	if ( trySetBarGraphValues	( widget, val ) )		return true;
     }
     else if ( propertyName == YUIProperty_Labels )
     {
@@ -109,7 +109,7 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
 	if ( trySetTableValue		( widget, val ) )		return true;
 	if ( trySetDumbTabValue		( widget, val ) )		return true;
 
-	if ( trySetMultiSelectionBoxCurrentItem( widget, val ) )	return true;
+	if ( trySetMultiSelectionBoxCurrentItem ( widget, val ) )	return true;
     }
     else if ( propertyName == YUIProperty_Items )
     {
@@ -122,6 +122,10 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
 	if ( trySetItemSelectorItems	( widget, val ) )		return true;
 	if ( trySetSelectionWidgetItems	( widget, val ) )		return true;
     }
+    else if ( propertyName == YUIProperty_ItemStatus )
+    {
+	if ( trySetSelectionWidgetItemStatus	( widget, val ) )	return true;
+    }
     else if ( propertyName == YUIProperty_CurrentButton )
     {
 	if ( trySetRadioButtonGroupCurrentButton( widget, val ) )	return true;
@@ -129,9 +133,9 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_SelectedItems )
     {
 	if ( trySetMultiSelectionBoxSelectedItems( widget, val ) )	return true;
-	if ( trySetItemSelectorSelectedItems    ( widget, val ) )	return true;
-	if ( trySetTableSelectedItems           ( widget, val ) )	return true;
-	if ( trySetTreeSelectedItems            ( widget, val ) )	return true;
+	if ( trySetItemSelectorSelectedItems	( widget, val ) )	return true;
+	if ( trySetTableSelectedItems		( widget, val ) )	return true;
+	if ( trySetTreeSelectedItems		( widget, val ) )	return true;
     }
 
     y2error( "Can't handle property %s::%s - not changing anything",
@@ -143,8 +147,8 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
 
 bool
 YCPPropertyHandler::setComplexProperty( YWidget *		widget,
-					const YCPTerm & 	propertyTerm,
-					const YCPValue &	val 		)
+					const YCPTerm &		propertyTerm,
+					const YCPValue &	val		)
 {
     string propertyName = propertyTerm->name();
 
@@ -172,12 +176,12 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     {
 	val = tryGetCheckBoxValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetSelectionBoxValue	( widget );	if ( ! val.isNull() ) return val;
-        val = tryGetItemSelectorValue   ( widget );     if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTreeValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetComboBoxValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetDumbTabValue	( widget );	if ( ! val.isNull() ) return val;
-        val = tryGetRadioButtonGroupCurrentButton( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetRadioButtonGroupCurrentButton( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_Values )
     {
@@ -186,7 +190,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     else if ( propertyName == YUIProperty_CurrentItem )
     {
 	val = tryGetSelectionBoxValue	( widget );	if ( ! val.isNull() ) return val;
-        val = tryGetItemSelectorValue   ( widget );     if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorValue	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTreeCurrentItem	( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableValue		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetComboBoxValue	( widget );	if ( ! val.isNull() ) return val;
@@ -201,10 +205,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     }
     else if ( propertyName == YUIProperty_SelectedItems )
     {
-	val = tryGetMultiSelectionBoxSelectedItems( widget );   if ( ! val.isNull() ) return val;
-	val = tryGetItemSelectorSelectedItems   ( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetTableSelectedItems          ( widget );     if ( ! val.isNull() ) return val;
-	val = tryGetTreeSelectedItems           ( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorSelectedItems	( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTableSelectedItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTreeSelectedItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetMultiSelectionBoxSelectedItems( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_OpenItems )
     {
@@ -219,11 +223,15 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
 	// Make sure to try YMenuButton, YTable, YTree, before YSelectionWidget:
 	// they all inherit YSelectionWidget!
 
-	val = tryGetMenuButtonItems	( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetTableItems		( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetTreeItems		( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetItemSelectorItems	( widget );	if ( ! val.isNull() ) return val;
-	val = tryGetSelectionWidgetItems( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetMenuButtonItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTableItems			( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetTreeItems			( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetItemSelectorItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetSelectionWidgetItems	( widget );	if ( ! val.isNull() ) return val;
+    }
+    else if ( propertyName == YUIProperty_ItemStatus )
+    {
+	val = tryGetSelectionWidgetItemStatus	( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_Labels )
     {
@@ -515,10 +523,81 @@ YCPPropertyHandler::trySetTreeItems( YWidget * widget, const YCPValue & val )
 	return true;
     }
 
-    YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_Items,
+    YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_ItemStatus,
 						      YOtherProperty ),
 					   widget ) );
     return false;
+}
+
+
+bool
+YCPPropertyHandler::trySetSelectionWidgetItemStatus( YWidget * widget, const YCPValue & val )
+{
+    YSelectionWidget * selWidget = dynamic_cast<YSelectionWidget *>( widget );
+
+    if ( ! selWidget )
+	return false;
+
+    bool ok = val->isMap();
+
+    if ( ok )
+    {
+	YCPMap statusMap = val->asMap();
+
+	for ( YCPMap::const_iterator it = statusMap->begin();
+	      it != statusMap->end() && ok;
+	      ++it )
+	{
+	    ok = setItemStatus( selWidget, it->first, it->second );
+	}
+    }
+
+    if ( ! ok )
+    {
+	YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_ItemStatus,
+							  YOtherProperty ),
+					       widget ) );
+    }
+
+    return ok;
+}
+
+
+bool
+YCPPropertyHandler::setItemStatus( YSelectionWidget *	widget,
+				   const YCPValue &	itemId,
+				   const YCPValue &	newStatus )
+{
+    int status;
+
+    if ( newStatus->isInteger() )
+	status = newStatus->asInteger()->value();
+    else if ( newStatus->isBoolean() )
+	status = newStatus->asBoolean()->value() ? 1 : 0;
+    else
+    {
+	y2error( "Setting ItemStatus for item with ID %s: "
+		 "Expected integer or boolean, not %s",
+		 itemId->toString().c_str(), newStatus->toString().c_str() );
+
+	return false;
+    }
+
+    YCPItem * item = findItem<YCPItem>( widget, itemId );
+
+    if ( ! item )
+    {
+	y2error( "%s %s has no item with ID %s",
+		 widget->widgetClass(),
+		 widget->debugLabel().c_str(),
+		 itemId->toString().c_str() );
+
+	return false;
+    }
+
+    widget->setItemStatus( item, status );
+
+    return true;
 }
 
 
@@ -888,7 +967,7 @@ YCPPropertyHandler::tryGetCheckBoxValue( YWidget * widget )
 
     switch ( checkBox->value() )
     {
-	case YCheckBox_on:		return YCPBoolean( true  );
+	case YCheckBox_on:		return YCPBoolean( true	 );
 	case YCheckBox_off:		return YCPBoolean( false );
 	case YCheckBox_dont_care:	return YCPVoid();	// nil
     }
@@ -1124,8 +1203,8 @@ YCPPropertyHandler::tryGetTreeOpenItems( YWidget * widget )
 
 void
 YCPPropertyHandler::getTreeOpenItems( YCPMap &			openItems,
-				      YItemConstIterator 	begin,
-				      YItemConstIterator 	end )
+				      YItemConstIterator	begin,
+				      YItemConstIterator	end )
 {
     for ( YItemConstIterator it = begin; it != end; ++it )
     {
@@ -1161,7 +1240,7 @@ YCPPropertyHandler::tryGetTreeCurrentBranch( YWidget * widget )
     // YTree::CurrentBranch: The path from the root to the current item as a
     // list of IDs or, if an item doesn't have an ID, its label
     //
-    //     "/" -> `usr -> `share -> "doc"
+    //	   "/" -> `usr -> `share -> "doc"
     //
     // -> [ "/", `usr, `share, "doc" ]
 
@@ -1316,13 +1395,13 @@ YCPPropertyHandler::tryGetTreeCurrentItem( YWidget * widget )
     YTree * tree = dynamic_cast<YTree *> (widget);
 
     if ( ! tree )
-        return YCPNull();
+	return YCPNull();
 
     YItem * currentItem = tree->currentItem();
     YCPTreeItem * item = dynamic_cast<YCPTreeItem *> (currentItem);
 
     if ( item )
-        return item->id();
+	return item->id();
 
     return YCPVoid();
 
@@ -1351,7 +1430,7 @@ YCPPropertyHandler::tryGetItemSelectorItems( YWidget * widget )
 	return YCPNull();
 
     return YCPItemWriter::describedItemList( itemSelector->itemsBegin(),
-                                             itemSelector->itemsEnd() );
+					     itemSelector->itemsEnd() );
 }
 
 
@@ -1364,6 +1443,36 @@ YCPPropertyHandler::tryGetSelectionWidgetItems( YWidget * widget )
 	return YCPNull();
 
     return YCPItemWriter::itemList( selWidget->itemsBegin(), selWidget->itemsEnd() );
+}
+
+
+YCPValue
+YCPPropertyHandler::tryGetSelectionWidgetItemStatus( YWidget * widget )
+{
+    YSelectionWidget * selWidget = dynamic_cast<YSelectionWidget *> (widget);
+
+    if ( ! selWidget )
+	return YCPNull();
+
+    YCPMap result;
+
+    for ( YItemConstIterator it = selWidget->itemsBegin(); it != selWidget->itemsEnd(); ++it )
+    {
+        YItem * item = *it;
+
+        if ( item )
+        {
+            YItem   * item = *it;
+            YCPItem * ycpItem = dynamic_cast<YCPItem *>( item );
+
+            if ( ycpItem && ycpItem->hasId() )
+                result->add( ycpItem->id(), YCPInteger( item->status() ) );
+            else
+                result->add( YCPString( item->label() ), YCPInteger( item->status() ) );
+        }
+    }
+
+    return result;
 }
 
 

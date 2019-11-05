@@ -66,7 +66,7 @@ public:
      * Return 'true' on success, 'false' on failure.
      **/
     static bool setComplexProperty( YWidget *		widget,
-				    const string & 	propertyName,
+				    const string &	propertyName,
 				    const YCPValue &	val );
 
     /**
@@ -75,15 +75,15 @@ public:
      * Return 'true' on success, 'false' on failure.
      **/
     static bool setComplexProperty( YWidget *		widget,
-				    const YCPTerm & 	propertyTerm,
-				    const YCPValue &	val 		);
+				    const YCPTerm &	propertyTerm,
+				    const YCPValue &	val		);
 
     /**
      * Get a complex property.
      *
      * Return YCPNull upon failure, a non-null YCPValue (the result) upon success.
      **/
-    static YCPValue getComplexProperty( YWidget * 	widget,
+    static YCPValue getComplexProperty( YWidget *	widget,
 					const string &	propertyName );
 
     /**
@@ -91,7 +91,7 @@ public:
      *
      * Return YCPNull upon failure, a non-null YCPValue (the result) upon success.
      **/
-    static YCPValue getComplexProperty( YWidget * 	widget,
+    static YCPValue getComplexProperty( YWidget *	widget,
 					const YCPTerm &	propertyTerm );
 
 
@@ -114,11 +114,12 @@ protected:
     static bool trySetTreeItems				( YWidget * widget, const YCPValue & val );
     static bool trySetTableItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTableCell				( YWidget * widget, const YCPTerm  & propTerm, const YCPValue & val );
-    static bool trySetItemSelectorItems                 ( YWidget * widget, const YCPValue & val );
+    static bool trySetItemSelectorItems			( YWidget * widget, const YCPValue & val );
     static bool trySetSelectionWidgetItems		( YWidget * widget, const YCPValue & val );
+    static bool trySetSelectionWidgetItemStatus		( YWidget * widget, const YCPValue & val );
     static bool trySetRadioButtonGroupCurrentButton	( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxSelectedItems	( YWidget * widget, const YCPValue & val );
-    static bool trySetItemSelectorSelectedItems         ( YWidget * widget, const YCPValue & val );
+    static bool trySetItemSelectorSelectedItems		( YWidget * widget, const YCPValue & val );
     static bool trySetTableSelectedItems		( YWidget * widget, const YCPValue & val );
     static bool trySetTreeSelectedItems			( YWidget * widget, const YCPValue & val );
     static bool trySetMultiSelectionBoxCurrentItem	( YWidget * widget, const YCPValue & val );
@@ -141,7 +142,7 @@ protected:
     static YCPValue tryGetComboBoxValue			( YWidget * widget );
     static YCPValue tryGetRadioButtonGroupCurrentButton	( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxSelectedItems( YWidget * widget );
-    static YCPValue tryGetItemSelectorSelectedItems     ( YWidget * widget );
+    static YCPValue tryGetItemSelectorSelectedItems	( YWidget * widget );
     static YCPValue tryGetTableSelectedItems		( YWidget * widget );
     static YCPValue tryGetTreeSelectedItems		( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxCurrentItem	( YWidget * widget );
@@ -152,22 +153,28 @@ protected:
     static YCPValue tryGetTableItem			( YWidget * widget, const YCPTerm & propertyTerm );
     static YCPValue tryGetTableItems			( YWidget * widget );
     static YCPValue tryGetTreeItems			( YWidget * widget );
-    static YCPValue tryGetItemSelectorItems             ( YWidget * widget );
+    static YCPValue tryGetItemSelectorItems		( YWidget * widget );
     static YCPValue tryGetMenuButtonItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItems		( YWidget * widget );
+    static YCPValue tryGetSelectionWidgetItemStatus	( YWidget * widget );
     static YCPValue tryGetBarGraphValues		( YWidget * widget );
     static YCPValue tryGetBarGraphLabels		( YWidget * widget );
-    static YCPValue tryGetTreeCurrentItem               ( YWidget * widget );
+    static YCPValue tryGetTreeCurrentItem		( YWidget * widget );
 
 
-
+    /**
+     * Set the status of a widget's item to a new value.
+     **/
+    static bool setItemStatus( YSelectionWidget *   widget,
+			       const YCPValue &	    itemId,
+			       const YCPValue &	    newStatus );
     /**
      * Helper function for tryGetTreeOpenItems(): Get any open tree items
      * between iterators 'begin' and 'end' and add them to the 'openItems' map.
      **/
-    static void getTreeOpenItems( YCPMap & 		openItems,
-				  YItemConstIterator 	begin,
-				  YItemConstIterator 	end );
+    static void getTreeOpenItems( YCPMap &		openItems,
+				  YItemConstIterator	begin,
+				  YItemConstIterator	end );
 };
 
 
