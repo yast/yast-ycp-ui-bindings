@@ -6,8 +6,14 @@ module Yast
       Yast.import "UI"
 
       create_widgets
-      handle_events
-      result = fetch_result
+      widget = UI.UserInput
+
+      if widget == :cancel # WM_CLOSE (Alt-F4)
+        UI.CloseDialog
+        return
+      end
+
+      result = fetch_result # As long as the widget still exists!
       UI.CloseDialog
       show_result(result)
     end
@@ -21,7 +27,7 @@ module Yast
         ["checkbox-on",  "[x]", 0]
       ]
     end
-      
+
     def items
       [
         # Notice no item IDs, so we'll get the item label as the result.
@@ -42,10 +48,6 @@ module Yast
           PushButton("&OK")
         )
       )
-    end
-
-    def handle_events
-      UI.UserInput
     end
 
     def fetch_result

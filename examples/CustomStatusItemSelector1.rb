@@ -77,7 +77,8 @@ module Yast
         event = UI.WaitForEvent
         log.info("Event: #{event}")
 
-        break if [:close, :cancel].include?(event["WidgetID"]) # :cancel is WM_CLOSE
+        break if event["WidgetID"] == :close
+        break if event["EventType"] == "CancelEvent"  # WM_CLOSE (Alt-F4)
 
         # If Opt(:notify) is set, the CustomStatusItemSelector sends MenuEvents
         # with the ID of the item the user clicked or activated via keyboard.

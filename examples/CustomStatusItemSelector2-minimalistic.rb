@@ -28,7 +28,13 @@ module Yast
 	  PushButton("&OK")
 	)
       )
-      UI.UserInput
+
+      widget = UI.UserInput
+
+      if widget == :cancel      # WM_CLOSE
+        UI.CloseDialog
+        return
+      end
 
       # Fetch the result as long as the widget still exists, i.e. BEFORE UI.CloseDialog
 
