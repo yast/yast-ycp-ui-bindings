@@ -6,22 +6,22 @@ module Yast
       Yast.import "UI"
 
       UI.OpenDialog(
-        VBox(
-          SingleItemSelector(
-           Id(:pizza),
-           [
-             # Notice no item IDs, so we'll get the item label as the result.
-             # Even the descriptions are optional.
-             Item("Pizza Margherita",       "Very basic with just tomatoes and cheese"),
-             Item("Pizza Capricciosa",      "Ham and vegetables"                      ),
-             Item("Pizza Funghi",           "Mushrooms"                               ),
-             Item("Pizza Prosciutto",       "Ham"                                     ),
-             Item("Pizza Quattro Stagioni", "Different toppings in each quarter"      ),
-             Item("Calzone",                "Folded over"                             )
-           ]
-          ),
-          PushButton("&OK")
-        )
+	VBox(
+	  SingleItemSelector(
+	    Id(:pizza),
+	    [
+	      # Notice no item IDs, so we'll get the item label as the result.
+	      # Even the descriptions are optional.
+	      Item("Pizza Margherita",	     "Very basic with just tomatoes and cheese"),
+	      Item("Pizza Capricciosa",	     "Ham and vegetables"		       ),
+	      Item("Pizza Funghi",	     "Mushrooms"			       ),
+	      Item("Pizza Prosciutto",	     "Ham"				       ),
+	      Item("Pizza Quattro Stagioni", "Different toppings in each quarter"      ),
+              Item("Calzone",		     "Folded over"			       )
+	    ]
+	  ),
+	  PushButton("&OK")
+	)
       )
       UI.UserInput
 
@@ -37,10 +37,10 @@ module Yast
 
       # Show the result in a pop-up dialog
       UI.OpenDialog(
-        VBox(
-          Label("Selected:\n#{result}"),
-          PushButton("&OK")
-        )
+	VBox(
+	  Label("Selected:\n#{result}"),
+	  PushButton("&OK")
+	)
       )
       UI.UserInput
       UI.CloseDialog
