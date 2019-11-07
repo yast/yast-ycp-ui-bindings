@@ -7,8 +7,13 @@ module Yast
 
       UI.OpenDialog(
 	VBox(
-	  SingleItemSelector(
+	  CustomStatusItemSelector(
 	    Id(:pizza),
+	    [
+	      # Icon, NCursesIndicator, NextStatus
+	      ["checkbox-off", "[ ]", 1],
+	      ["checkbox-on",  "[x]", 0]
+	    ],
 	    [
 	      # Notice no item IDs, so we'll get the item label as the result.
 	      # Even the descriptions are optional.
@@ -17,28 +22,30 @@ module Yast
 	      Item("Pizza Funghi",	     "Mushrooms"			       ),
 	      Item("Pizza Prosciutto",	     "Ham"				       ),
 	      Item("Pizza Quattro Stagioni", "Different toppings in each quarter"      ),
-              Item("Calzone",		     "Folded over"			       )
+	      Item("Calzone",		     "Folded over"			       )
 	    ]
-	  ),
+	   ),
 	  PushButton("&OK")
 	)
       )
-      UI.UserInput
+
+      widget = UI.UserInput
+
+      if widget == :cancel      # WM_CLOSE
+        UI.CloseDialog
+        return
+      end
 
       # Fetch the result as long as the widget still exists, i.e. BEFORE UI.CloseDialog
-      # For a SingleItemSelector, use :Value (i.e. the first selected item);
-      # for a MultiItemSelector,  use :SelectedItems
-      #
-      # :SelectedItems returns an array of the the ID (or the label string if
-      # there is no ID) of each selected item, not the complete item.
 
-      result = UI.QueryWidget(:pizza, :Value)
+      result = UI.QueryWidget(:pizza, :SelectedItems).join(", ")
+      result = "(nothing)" if result.empty?
       UI.CloseDialog
 
       # Show the result in a pop-up dialog
       UI.OpenDialog(
 	VBox(
-	  Label("Selected:\n#{result}"),
+	  Label("\n  Selected:\n\n  #{result}  \n"),
 	  PushButton("&OK")
 	)
       )

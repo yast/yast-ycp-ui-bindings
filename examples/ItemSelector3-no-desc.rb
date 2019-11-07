@@ -11,13 +11,13 @@ module Yast
 	    Id(:pizza),
 	    [
 	      # Notice no item IDs, so we'll get the item label as the result.
-	      # Even the descriptions are optional.
-	      Item("Pizza Margherita",	     "Very basic with just tomatoes and cheese"),
-	      Item("Pizza Capricciosa",	     "Ham and vegetables"		       ),
-	      Item("Pizza Funghi",	     "Mushrooms"			       ),
-	      Item("Pizza Prosciutto",	     "Ham"				       ),
-	      Item("Pizza Quattro Stagioni", "Different toppings in each quarter"      ),
-              Item("Calzone",		     "Folded over"			       )
+	      # Also no descriptions.
+	      Item("Pizza Margherita"	   ),
+	      Item("Pizza Capricciosa"	   ),
+	      Item("Pizza Funghi"	   ),
+	      Item("Pizza Prosciutto"	   ),
+	      Item("Pizza Quattro Stagioni"),
+	      Item("Calzone"		   )
 	    ]
 	  ),
 	  PushButton("&OK")

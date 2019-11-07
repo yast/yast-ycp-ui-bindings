@@ -34,6 +34,7 @@ you may find current contact information at www.novell.com
 #include <ycp/YCPList.h>
 
 #include <yui/YTypes.h>
+#include <yui/YItemCustomStatus.h>
 
 using std::vector;
 
@@ -222,9 +223,15 @@ protected:
     static YWidget * parseMultiSelectionBox( YWidget *parent, YWidgetOpt & opt,
 					     const YCPTerm & term, const YCPList & optList, int argnr );
 
+    /**
+     * SingleItemSelector, MultiItemSelector
+     **/
     static YWidget * parseItemSelector( YWidget *parent, YWidgetOpt & opt,
                                         const YCPTerm & term, const YCPList & optList, int argnr,
                                         bool singleSelection );
+    
+    static YWidget * parseCustomStatusItemSelector( YWidget *parent, YWidgetOpt & opt,
+                                                    const YCPTerm & term, const YCPList & optList, int argnr );
 
     static YWidget * parseComboBox( YWidget *parent, YWidgetOpt & opt,
 				    const YCPTerm & term, const YCPList & optList, int argnr );
@@ -291,6 +298,10 @@ protected:
 
     static YWidget * parseBusyIndicator( YWidget *parent, YWidgetOpt & opt,
                                          const YCPTerm & term, const YCPList & optList, int argnr );
+
+
+    static YItemCustomStatusVector parseCustomStates( const YCPList & statesList );
+    
     /**
      * Look for a widget id in a widget term. If it finds one, returns
      * it and sets argnr to point after `id(), whether it turned out valid
