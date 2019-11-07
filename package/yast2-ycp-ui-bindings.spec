@@ -38,8 +38,8 @@ BuildRequires:	sgml-skel
 Requires:	yast2-core
 BuildRequires:	yast2-core-devel
 
-# YWidgetFactory::createSingleItemSelector()
-BuildRequires:	libyui-devel >= 3.8.0
+# YUIWidget_CustomStatusItemSelector
+BuildRequires:	libyui-devel >= 3.8.4
 
 # libyui ImplPtr
 BuildRequires:	boost-devel
