@@ -15,6 +15,9 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+# YUIWidget_CustomStatusItemSelector
+%define min_yui_version	3.8.4
+%define yui_so		10
 
 Name:           yast2-ycp-ui-bindings
 Version:        4.2.4
@@ -38,8 +41,8 @@ BuildRequires:	sgml-skel
 Requires:	yast2-core
 BuildRequires:	yast2-core-devel
 
-# YUIWidget_CustomStatusItemSelector
-BuildRequires:	libyui-devel >= 3.8.4
+BuildRequires:	libyui-devel >= %min_yui_version
+Requires:	libyui%yui_so >= %min_yui_version
 
 # libyui ImplPtr
 BuildRequires:	boost-devel
@@ -60,7 +63,7 @@ Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
 Requires:	glibc-devel
 Requires:	libstdc++-devel
 Requires:	boost-devel
-Requires:	libyui-devel
+Requires:	libyui-devel >= %min_yui_version
 Requires:	yast2-core-devel
 Requires:	yast2-devtools
 
