@@ -5,6 +5,9 @@ module Yast
   class Table3Client < Client
     def main
       Yast.import "UI"
+
+      # items are on purpose not sorted
+
       @foodItems = [
         Item(Id(3), "Spaghetti", 8),
         Item(Id(4), "Steak Sandwich", 12),
@@ -17,7 +20,10 @@ module Yast
         Item(Id(1), "Audi", 50000),
         Item(Id(2), "VW", 40000),
         Item(Id(3), "BMW", 60000),
-        Item(Id(3), "Porsche", 80000)
+        Item(Id(3), "Porsche", 80000),
+        Item(Id(4), "Bentley", 200000),
+        Item(Id(5), "Bugatti", 23000000),
+        Item(Id(6), "Lada", 8000)
       ]
 
       @itemLists = [@foodItems, @carItems]
@@ -30,7 +36,7 @@ module Yast
           MinSize(
             30,
             10,
-            Table(Id(:table), Header("Name", "Price"), @foodItems)
+            Table(Id(:table), Header("Name", Right("Price")), @foodItems)
           ),
           Right(
             HBox(
