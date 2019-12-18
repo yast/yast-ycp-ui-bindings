@@ -153,7 +153,7 @@ YCPTableItemParser::parseTableItem( const YCPTerm & itemTerm )
 	if ( ! item->hasId() )			// No ID specified?
 	{
 	    // Use the first non-empty cell label as ID for the entire item
-	    
+
 	    for ( YTableCellConstIterator it = item->cellsBegin();
 		  ! item->hasId() && it != item->cellsEnd();
 		  ++it )
@@ -178,9 +178,11 @@ YCPTableItemParser::parseTableCell( YCPTableItem * parent, const YCPTerm & cellT
 {
     YCPString label	= YCPNull();
     YCPString iconName	= YCPNull();
-    const char * usage	= "Expected `cell(`icon(\"myicon.png\"), \"mylabel\")";
+    YCPString sortKey	= YCPNull();
 
-    if ( cellTerm->size() < 1 || cellTerm->size() > 2 )
+    const char * usage	= "Expected `cell(`icon(\"myicon.png\"), `sortKey(\"sda001\"), \"mylabel\")";
+
+    if ( cellTerm->size() < 1 || cellTerm->size() > 3 )
 	YUI_THROW( YCPDialogSyntaxErrorException( usage, cellTerm ) );
 
     for ( int i=0; i < cellTerm->size(); ++i )
@@ -194,16 +196,23 @@ YCPTableItemParser::parseTableCell( YCPTableItem * parent, const YCPTerm & cellT
 
 	    label = arg->asString();
 	}
-	else if ( arg->isTerm() )	// `icon("myicon.png")
+	else if ( arg->isTerm() )	// `icon("myicon.png") or `sortKey("sda001")
 	{
-	    YCPTerm iconTerm = arg->asTerm();
+	    YCPTerm term = arg->asTerm();
 
-	    if ( iconTerm->name() == YUISymbol_icon &&
-		 iconTerm->size() == 1 &&
-		 iconTerm->value(0)->isString() &&
+	    if ( term->name() == YUISymbol_icon &&
+		 term->size() == 1 &&
+		 term->value(0)->isString() &&
 		 iconName.isNull() )			// no icon name yet
 	    {
-		iconName = iconTerm->value(0)->asString();
+		iconName = term->value(0)->asString();
+	    }
+	    else if ( term->name() == YUISymbol_sortKey &&
+		      term->size() == 1 &&
+		      term->value(0)->isString() &&
+		      sortKey.isNull() )		// no sort key yet
+	    {
+		sortKey = term->value(0)->asString();
 	    }
 	    else
 		YUI_THROW( YCPDialogSyntaxErrorException( usage, cellTerm ) );
@@ -221,9 +230,12 @@ YCPTableItemParser::parseTableCell( YCPTableItem * parent, const YCPTerm & cellT
 
     if ( label.isNull()    )
 	label = YCPString( "" );
-    
+
     if ( iconName.isNull() )
 	iconName = YCPString( "" );
-    
-    parent->addCell( label, iconName );
+
+    if ( sortKey.isNull() )
+	sortKey = YCPString( "" );
+
+    parent->addCell( label, iconName, sortKey );
 }
