@@ -78,12 +78,12 @@ public:
     void setId( const YCPValue & newId ) { _id = newId; }
 
     /**
-     * Create a new cell and add it (even if both 'label' and
-     * 'iconName' are empty).
+     * Create a new cell and add it (even if all 'label', 'iconName'
+     * and 'sortKey' are empty).
      **/
-    void addCell( const YCPString & label, const YCPString & iconName )
-	{ YTableItem::addCell( label->value(), iconName->value() ); }
-    
+    void addCell( const YCPString & label, const YCPString & iconName, const YCPString & sortKey )
+	{ YTableItem::addCell( label->value(), iconName->value(), sortKey->value() ); }
+
     void addCell( const YCPString & label )
 	{ YTableItem::addCell( label->value() ); }
 
@@ -102,7 +102,7 @@ public:
 
 
 private:
-    
+
     YCPValue _id;
 };
 
