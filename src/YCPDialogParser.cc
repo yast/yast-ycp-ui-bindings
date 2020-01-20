@@ -2422,8 +2422,8 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  * columns) from that list (In that case, use the :SelectedItems property, not
  * :Value).
  *
- * Each cell (each column within each row) has a label text and an optional
- * icon.
+ * Each cell (each column within each row) has a label text, an optional icon and
+ * an also optional a sort-key (used instead of the label text during sort).
  *
  * (Note: Not all UIs (in particular not text-based UIs) support displaying
  * icons, so an icon should never be an exclusive means to display any kind of
@@ -2447,9 +2447,10 @@ YCPDialogParser::parseTree( YWidget * parent, YWidgetOpt & opt,
  * case any missing cells are assumed to be empty. If an item has more cells
  * than the table has columns, any extra cells are ignored.
  *
- * Each cell has a text label (which might also be an empty string) and
- * optionally an icon. If a cell has an icon, it has to be specified with
- * cell(Icon("myiconname.png", "Label text")).
+ * Each cell has a text label (which might also be an empty string),
+ * optionally an icon and also optionally a sort-key. If a cell has an
+ * icon or sort-key, it has to be specified with
+ * cell(Icon("myiconname.png"), sortKey("key 42"), "Label text").
  *
  * A simple table is specified like this:
  *
