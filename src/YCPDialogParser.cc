@@ -2867,6 +2867,7 @@ YCPDialogParser::parsePackageSelector( YWidget * parent, YWidgetOpt & opt,
 	    else if ( sym == YUIOpt_testMode		)	modeFlags |= YPkg_TestMode;
 	    else if ( sym == YUIOpt_repoMgr		)	modeFlags |= YPkg_RepoMgr;
 	    else if ( sym == YUIOpt_confirmUnsupported	)	modeFlags |= YPkg_ConfirmUnsupported;
+	    else if ( sym == YUIOpt_onlineSearch	)	modeFlags |= YPkg_OnlineSearch;
 	    else logUnknownOption( term, optList->value(o) );
 	}
 	else logUnknownOption( term, optList->value(o) );
