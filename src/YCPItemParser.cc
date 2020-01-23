@@ -30,6 +30,7 @@ you may find current contact information at www.novell.com
 
 #include <ycp/YCPTerm.h>
 #include <ycp/YCPBoolean.h>
+#include <ycp/YCPInteger.h>
 
 #include "YCPItemParser.h"
 #include "YCP_UI_Exception.h"
@@ -122,9 +123,10 @@ YCPItemParser::parseItem( const YCPTerm & itemTerm, bool allowDescription )
     YCPString	label	        = YCPNull();
     YCPString   description     = YCPNull();
     YCPBoolean  selected        = YCPNull();
+    YCPInteger  status          = YCPNull();
 
     const char * usage =
-	"Expected: `item(`id(`myID), `icon(\"MyIcon.png\"), \"MyItemText\", \"Description\", boolean selected )";
+	"Expected: `item(`id(`myID), `icon(\"MyIcon.png\"), \"MyItemText\", \"Description\", (bool|int) status )";
 
 
     for ( int i=0; i < itemTerm->size(); i++ )
@@ -169,11 +171,16 @@ YCPItemParser::parseItem( const YCPTerm & itemTerm, bool allowDescription )
                 YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
             }
         }
-	else if ( arg->isBoolean() 		// "selected" flag
-		  && selected.isNull() )	// and don't have a "selected" flag yet
+	else if ( arg->isBoolean() 		// Old syntax: Boolean "selected" flag
+		  && status.isNull() )          // and don't have a status yet
 	{
-	    selected = arg->asBoolean();
+	    status = arg->asBoolean()->value() ? 1 : 0;
 	}
+	else if ( arg->isInteger()              // New syntax: Integer status
+                  && status.isNull() )          // and don't have a status yet
+        {
+            status = arg->asInteger();
+        }
 	else
 	{
 	    YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
@@ -192,11 +199,11 @@ YCPItemParser::parseItem( const YCPTerm & itemTerm, bool allowDescription )
     if ( id.isNull() )			// no `id() ?
 	id = label;			// use the label instead
 
-    if ( selected.isNull() )		// "selected" not specified?
-	selected = YCPBoolean( false );	// use "not selected" (false) as default
-
-    YCPItem * item = new YCPItem( id, label, description, iconName, selected->value() );
+    YCPItem * item = new YCPItem( id, label, description, iconName );
     YUI_CHECK_NEW( item );
+
+    if ( ! status.isNull() )
+	item->setStatus( status->value() );
 
     return item;
 }
