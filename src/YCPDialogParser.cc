@@ -1196,6 +1196,7 @@ bool YCPDialogParser::startsWith( const string & str, const char * word )
  * @class	YLabel
  * @arg		string label
  * @option	outputField make the label look like an input field in read-only mode
+ * @option	autoWrap automatic word wrapping (use with caution!)
  * @option	boldFont use a bold font
  *
  * @example	Label1.rb
@@ -1211,6 +1212,16 @@ bool YCPDialogParser::startsWith( const string & str, const char * word )
  * A <tt>Label</tt> is static text displayed in the dialog.
  * A <tt>Heading</tt> is static text with a bold and/or larger font.
  * In both cases, the text may contain newlines.
+ *
+ * The <tt>autoWrap</tt> option makes the label wrap words automatically: Any
+ * whitespace between words is normalized to a single blank, and then newlines
+ * are added as needed to make it fit into its assigned width. The height
+ * changes accordingly. An auto-wrap label does not have a reasonable preferred
+ * width, so it is strongly advised to put it into a MinWidth container widget
+ * or otherwise enforce a reasonable width from the outside. A dialog with many
+ * auto-wrapping labels might have trouble finding a reasonable geometry to
+ * accomodate all widgets, so use this option sparingly. In particular, do not
+ * simply add this option to all labels; this is bound to fail.
  **/
 
 YWidget *
@@ -1228,10 +1239,12 @@ YCPDialogParser::parseLabel( YWidget * parent, YWidgetOpt & opt,
     // Parse options
 
     bool isOutputField = false;
+    bool autoWrap      = false;
 
     for ( int o=0; o < optList->size(); o++ )
     {
-	if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_outputField ) isOutputField = true;
+	if      ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_outputField ) isOutputField = true;
+	else if ( optList->value(o)->isSymbol() && optList->value(o)->asSymbol()->symbol() == YUIOpt_autoWrap    ) autoWrap      = true;
 	else logUnknownOption( term, optList->value(o) );
     }
 
@@ -1244,6 +1257,9 @@ YCPDialogParser::parseLabel( YWidget * parent, YWidgetOpt & opt,
 
     if ( opt.boldFont.value() )
 	label->setUseBoldFont();
+
+    if ( autoWrap )
+        label->setAutoWrap();
 
     return label;
 }
