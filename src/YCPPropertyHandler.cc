@@ -61,7 +61,7 @@ you may find current contact information at www.novell.com
 #include <yui/YComboBox.h>
 #include <yui/YDumbTab.h>
 #include <yui/YItemSelector.h>
-#include <yui/YMenuButton.h>
+#include <yui/YMenuWidget.h>
 #include <yui/YMultiProgressMeter.h>
 #include <yui/YMultiSelectionBox.h>
 #include <yui/YRadioButton.h>
@@ -113,10 +113,10 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     }
     else if ( propertyName == YUIProperty_Items )
     {
-	// Make sure to try YMenuButton, YTable, YTree, before YSelectionWidget:
+	// Make sure to try YMenuWidget, YTable, YTree, before YSelectionWidget:
 	// they all inherit YSelectionWidget!
 
-	if ( trySetMenuButtonItems	( widget, val ) )		return true;
+	if ( trySetMenuWidgetItems	( widget, val ) )		return true;
 	if ( trySetTreeItems		( widget, val ) )		return true;
 	if ( trySetTableItems		( widget, val ) )		return true;
 	if ( trySetItemSelectorItems	( widget, val ) )		return true;
@@ -220,10 +220,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     }
     else if ( propertyName == YUIProperty_Items )
     {
-	// Make sure to try YMenuButton, YTable, YTree, before YSelectionWidget:
+	// Make sure to try YMenuWidget, YTable, YTree, before YSelectionWidget:
 	// they all inherit YSelectionWidget!
 
-	val = tryGetMenuButtonItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetMenuWidgetItems		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableItems			( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTreeItems			( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetItemSelectorItems		( widget );	if ( ! val.isNull() ) return val;
@@ -489,16 +489,16 @@ YCPPropertyHandler::trySetSelectionWidgetItems( YWidget * widget, const YCPValue
 
 
 bool
-YCPPropertyHandler::trySetMenuButtonItems( YWidget * widget, const YCPValue & val )
+YCPPropertyHandler::trySetMenuWidgetItems( YWidget * widget, const YCPValue & val )
 {
-    YMenuButton * menuButton = dynamic_cast<YMenuButton *> (widget );
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget );
 
-    if ( ! menuButton )
+    if ( ! menuWidget )
 	return false;
 
     if ( val->isList() )
     {
-	menuButton->setItems( YCPMenuItemParser::parseMenuItemList( val->asList() ) );
+	menuWidget->setItems( YCPMenuItemParser::parseMenuItemList( val->asList() ) );
 	return true;
     }
 
@@ -1367,14 +1367,14 @@ YCPPropertyHandler::tryGetTableItem( YWidget * widget, const YCPTerm & propTerm 
 
 
 YCPValue
-YCPPropertyHandler::tryGetMenuButtonItems( YWidget * widget )
+YCPPropertyHandler::tryGetMenuWidgetItems( YWidget * widget )
 {
-    YMenuButton * menuButton = dynamic_cast<YMenuButton *> (widget);
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget);
 
-    if ( ! menuButton )
+    if ( ! menuWidget )
 	return YCPNull();
 
-    return YCPMenuItemWriter::itemList( menuButton->itemsBegin(), menuButton->itemsEnd() );
+    return YCPMenuItemWriter::itemList( menuWidget->itemsBegin(), menuWidget->itemsEnd() );
 }
 
 

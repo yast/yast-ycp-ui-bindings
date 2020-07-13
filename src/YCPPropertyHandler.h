@@ -110,7 +110,7 @@ protected:
     static bool trySetTableValue			( YWidget * widget, const YCPValue & val );
     static bool trySetDumbTabValue			( YWidget * widget, const YCPValue & val );
     static bool trySetComboBoxValue			( YWidget * widget, const YCPValue & val );
-    static bool trySetMenuButtonItems			( YWidget * widget, const YCPValue & val );
+    static bool trySetMenuWidgetItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTreeItems				( YWidget * widget, const YCPValue & val );
     static bool trySetTableItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTableCell				( YWidget * widget, const YCPTerm  & propTerm, const YCPValue & val );
@@ -154,7 +154,7 @@ protected:
     static YCPValue tryGetTableItems			( YWidget * widget );
     static YCPValue tryGetTreeItems			( YWidget * widget );
     static YCPValue tryGetItemSelectorItems		( YWidget * widget );
-    static YCPValue tryGetMenuButtonItems		( YWidget * widget );
+    static YCPValue tryGetMenuWidgetItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItemStatus	( YWidget * widget );
     static YCPValue tryGetBarGraphValues		( YWidget * widget );

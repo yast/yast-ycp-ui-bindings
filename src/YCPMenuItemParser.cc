@@ -173,8 +173,11 @@ YCPMenuItemParser::parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm
     if ( iconName.isNull() )
 	iconName = YCPString( "" );
 
-    if ( id.isNull() )			// no `id() ?
-	id = label;			// use the label instead
+    if ( startsWith( label->value(), "---" ) )   // separator item?
+        label = YCPString( "" );
+
+    if ( id.isNull() && ! label.isEmpty() ) // no `id() ?
+	id = label;			    // use the label instead
 
     YCPMenuItem * item = new YCPMenuItem( parent, label, id, iconName );
     YUI_CHECK_NEW( item );
@@ -189,3 +192,10 @@ YCPMenuItemParser::parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm
 
     return item;
 }
+
+
+bool YCPMenuItemParser::startsWith( const string & str, const char * word )
+{
+    return strncasecmp( str.c_str(), word, strlen( word ) )== 0;
+}
+

@@ -197,7 +197,7 @@ protected:
 
     static YWidget * parseMenuButton( YWidget *parent, YWidgetOpt & opt,
 				      const YCPTerm & term, const YCPList & optList, int argnr );
-
+    
     static YWidget * parseCheckBox( YWidget *parent, YWidgetOpt & opt,
 				    const YCPTerm & term, const YCPList & optList, int argnr );
 
@@ -232,6 +232,9 @@ protected:
     
     static YWidget * parseCustomStatusItemSelector( YWidget *parent, YWidgetOpt & opt,
                                                     const YCPTerm & term, const YCPList & optList, int argnr );
+
+    static YWidget * parseMenuBar( YWidget *parent, YWidgetOpt & opt,
+                                   const YCPTerm & term, const YCPList & optList, int argnr );
 
     static YWidget * parseComboBox( YWidget *parent, YWidgetOpt & opt,
 				    const YCPTerm & term, const YCPList & optList, int argnr );

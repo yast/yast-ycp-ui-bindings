@@ -82,7 +82,11 @@ protected:
      **/
     static YCPMenuItem * parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm );
 
-    
+    /**
+     * Return 'true' if 'str' starts with 'word'. This is case insensitive.
+     **/
+    static bool startsWith( const string & str, const char * word );
+
 };
 
 
