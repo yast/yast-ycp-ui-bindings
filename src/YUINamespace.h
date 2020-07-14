@@ -25,7 +25,7 @@ you may find current contact information at www.novell.com
    Authors:	Stanislav Visnovsky <visnov@suse.cz>
 		Martin Vidner <mvidner@susez.cz>
 
-   Maintainer:	Stefan Hundhammer <sh@suse.de>
+   Maintainer:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 

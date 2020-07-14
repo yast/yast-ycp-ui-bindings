@@ -23,7 +23,7 @@ you may find current contact information at www.novell.com
    File:	YUIComponentCreator.h
 
    Authors:	Stanislav Visnovsky <visnov@suse.de>
-		Stefan Hundhammer <sh@suse.de>
+		Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 

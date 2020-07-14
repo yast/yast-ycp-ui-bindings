@@ -26,7 +26,7 @@ you may find current contact information at www.novell.com
    Authors:	Klaus Kaempf <kkaempf@suse.de>
 		Stanislav Visnovsky <visnov@suse.cz>
 
-   Maintainer:	Stefan Hundhammer <sh@suse.de>
+   Maintainer:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
