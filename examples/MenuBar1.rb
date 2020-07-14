@@ -16,17 +16,17 @@ module Yast
     def dialog_widgets
       MinSize( 50, 20,
         VBox(
-          term(:MenuBar, Id(:menu_bar), main_menus ),
+          term(:MenuBar, Id(:menu_bar), main_menus),
           HVCenter(
             HVSquash(
               VBox(
-                Left(Label( "Last Event:" )),
+                Left(Label("Last Event:")),
                 VSpacing( 0.2 ),
                 MinWidth( 20,
                   Label(Id(:last_event), Opt(:outputField), "<none>")
                 ),
                 VSpacing( 2 ),
-                CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true )
+                CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true)
               )
             )
           )
