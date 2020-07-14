@@ -1528,6 +1528,14 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
  * A menu bar is required to have only menus (not plain menu items) at the top
  * level. Menus can have submenus or separators. A separator is a menu item
  * with an empty label or a label that starts with "---".
+ *
+ * Invididual menu entries (both actions and submenus) can be enabled or
+ * disabled with the EnabledItems property: It receives a hash of item ID keys
+ * with a boolean value each that specifies if that item should be enabled
+ * (true) or disabled (false). Items that are not in that hash are not touched,
+ * i.e. they keep their current enabled or disabled status.
+ *
+ * See the MenuBar1.rb example how to do this.
  **/
 
 YWidget *

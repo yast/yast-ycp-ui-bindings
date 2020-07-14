@@ -44,6 +44,7 @@ using std::string;
 class YCPItem;
 class YWidget;
 class YSelectionWidget;
+class YMenuWidget;
 
 
 /**
@@ -126,6 +127,7 @@ protected:
     static bool trySetMultiProgressMeterValues		( YWidget * widget, const YCPValue & val );
     static bool trySetBarGraphValues			( YWidget * widget, const YCPValue & val );
     static bool trySetBarGraphLabels			( YWidget * widget, const YCPValue & val );
+    static bool trySetMenuWidgetEnabledItems		( YWidget * widget, const YCPValue & val );
 
     /**
      * All tryGet..() functions try to dynamic_cast 'widget' to the expected
@@ -165,9 +167,17 @@ protected:
     /**
      * Set the status of a widget's item to a new value.
      **/
-    static bool setItemStatus( YSelectionWidget *   widget,
-			       const YCPValue &	    itemId,
-			       const YCPValue &	    newStatus );
+    static bool setItemStatus	( YSelectionWidget *	widget,
+				  const YCPValue &	itemId,
+				  const YCPValue &	newStatus );
+
+    /**
+     * Enable or disable a menu item.
+     **/
+    static bool setItemEnabled	( YMenuWidget *		widget,
+				  const YCPValue &	itemId,
+				  const YCPValue &	newEnabled );
+
     /**
      * Helper function for tryGetTreeOpenItems(): Get any open tree items
      * between iterators 'begin' and 'end' and add them to the 'openItems' map.

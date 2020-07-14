@@ -133,9 +133,13 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_SelectedItems )
     {
 	if ( trySetMultiSelectionBoxSelectedItems( widget, val ) )	return true;
-	if ( trySetItemSelectorSelectedItems	( widget, val ) )	return true;
-	if ( trySetTableSelectedItems		( widget, val ) )	return true;
-	if ( trySetTreeSelectedItems		( widget, val ) )	return true;
+	if ( trySetItemSelectorSelectedItems	 ( widget, val ) )	return true;
+	if ( trySetTableSelectedItems		 ( widget, val ) )	return true;
+	if ( trySetTreeSelectedItems		 ( widget, val ) )	return true;
+    }
+    else if ( propertyName == YUIProperty_EnabledItems )
+    {
+	if ( trySetMenuWidgetEnabledItems( widget, val ) )              return true;
     }
 
     y2error( "Can't handle property %s::%s - not changing anything",
@@ -304,8 +308,12 @@ Item_t * findItem( const YCPValue &	wantedId,
     {
 	Item_t * item = dynamic_cast<Item_t *> (*it);
 
-	if ( item && wantedId->equal( item->id() ) )
+	if ( item &&
+             ! item->id().isNull() &&
+             wantedId->equal( item->id() ) )
+        {
 	    return item;
+        }
 
 	if ( (*it)->hasChildren() )
 	{
@@ -950,6 +958,73 @@ YCPPropertyHandler::trySetBarGraphLabels( YWidget * widget, const YCPValue & val
 }
 
 
+bool
+YCPPropertyHandler::trySetMenuWidgetEnabledItems( YWidget * widget, const YCPValue & val )
+{
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *>( widget );
+
+    if ( ! menuWidget )
+        return false;
+
+    bool ok = val->isMap();
+
+    if ( ok )
+    {
+	YCPMap statusMap = val->asMap();
+
+	for ( YCPMap::const_iterator it = statusMap->begin();
+	      it != statusMap->end() && ok;
+	      ++it )
+	{
+	    ok = setItemEnabled( menuWidget, it->first, it->second );
+	}
+    }
+
+    if ( ! ok )
+    {
+	YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_EnabledItems,
+							  YOtherProperty ),
+					       widget ) );
+    }
+
+    return ok;
+}
+
+
+bool
+YCPPropertyHandler::setItemEnabled( YMenuWidget *	widget,
+                                    const YCPValue &	itemId,
+                                    const YCPValue &	newEnabled )
+{
+    bool enabled;
+
+    if ( newEnabled->isBoolean() )
+	enabled = newEnabled->asBoolean()->value();
+    else
+    {
+	y2error( "Setting ItemEnabled for item with ID %s: "
+		 "Expected boolean, not %s",
+		 itemId->toString().c_str(), newEnabled->toString().c_str() );
+
+	return false;
+    }
+
+    YCPMenuItem * item = findItem<YCPMenuItem>( widget, itemId );
+
+    if ( ! item )
+    {
+	y2error( "%s %s has no item with ID %s",
+		 widget->widgetClass(),
+		 widget->debugLabel().c_str(),
+		 itemId->toString().c_str() );
+
+	return false;
+    }
+
+    widget->setItemEnabled( item, enabled );
+
+    return true;
+}
 
 
 
@@ -1508,6 +1583,3 @@ YCPPropertyHandler::tryGetBarGraphLabels( YWidget * widget )
 
     return result;
 }
-
-
-

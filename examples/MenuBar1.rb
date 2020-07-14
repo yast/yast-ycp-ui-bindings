@@ -5,6 +5,7 @@ module Yast
     Yast.import "UI"
     def main
       UI.OpenDialog(dialog_widgets)
+      update_actions
       handle_events
       UI.CloseDialog
       nil
@@ -13,7 +14,7 @@ module Yast
     def dialog_widgets
       MinSize( 50, 20,
         VBox(
-          term(:MenuBar, main_menus ),
+          term(:MenuBar, Id(:menu_bar), main_menus ),
           HVCenter(
             HVSquash(
               VBox(
@@ -21,7 +22,9 @@ module Yast
                 VSpacing( 0.2 ),
                 MinWidth( 20,
                   Label(Id(:last_event), Opt(:outputField), "<none>")
-                )
+                ),
+                VSpacing( 2 ),
+                CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true )
               )
             )
           )
@@ -87,6 +90,8 @@ module Yast
         case id
         when :quit, :cancel # :cancel is WM_CLOSE
           break # leave event loop
+        when :read_only
+          update_actions
         end
 
         show_event(id)
@@ -96,6 +101,26 @@ module Yast
 
     def show_event(id)
       UI.ChangeWidget(:last_event, :Value, id.to_s)
+    end
+
+    # Enable or disable menu items depending on the current content of the
+    # "Read Only" check box.
+    def update_actions
+      read_only = Convert.to_boolean(UI.QueryWidget(:read_only, :Value))
+
+      # Enable or disable individual menu entries (actions as well as submenus):
+      #
+      # Specify a hash of item IDs with a boolean indicating if it should be
+      # enabled (true) or disabled (false). Menu items that are not in this hash will
+      # not be touched, i.e. they retain their current enabled / disabled status.
+
+      UI.ChangeWidget(:menu_bar, :EnabledItems,
+        {
+          :save  => !read_only,
+          :cut   => !read_only,
+          :paste => !read_only
+        }
+      )
     end
   end
 end
