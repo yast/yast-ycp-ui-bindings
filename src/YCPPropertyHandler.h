@@ -162,6 +162,7 @@ protected:
     static YCPValue tryGetBarGraphValues		( YWidget * widget );
     static YCPValue tryGetBarGraphLabels		( YWidget * widget );
     static YCPValue tryGetTreeCurrentItem		( YWidget * widget );
+    static YCPValue tryGetMenuWidgetEnabledItems        ( YWidget * widget );
 
 
     /**
@@ -185,6 +186,15 @@ protected:
     static void getTreeOpenItems( YCPMap &		openItems,
 				  YItemConstIterator	begin,
 				  YItemConstIterator	end );
+
+    /**
+     * Helper function for tryGetMenuWidgetEnabledItems(): Get the enabled /
+     * disabled status of items between iterators 'begin' and 'end' for all
+     * items that have an ID and add them to the itemStatusMap.
+     **/
+    static void getMenuWidgetEnabledItems( YCPMap &		itemStatusMap,
+                                           YItemConstIterator	begin,
+                                           YItemConstIterator	end );
 };
 
 

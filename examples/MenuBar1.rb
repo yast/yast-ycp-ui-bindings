@@ -3,6 +3,8 @@
 module Yast
   class MenuBar1Client < Client
     Yast.import "UI"
+    include Yast::Logger
+
     def main
       UI.OpenDialog(dialog_widgets)
       update_actions
@@ -37,7 +39,8 @@ module Yast
         term(:menu, "&File", file_menu),
         term(:menu, "&Edit", edit_menu),
         term(:menu, "&View", view_menu),
-        term(:menu, "&Options", options_menu)
+        term(:menu, "&Options", options_menu),
+        term(:menu, "&Debug", debug_menu)
       ].freeze
     end
 
@@ -83,6 +86,13 @@ module Yast
       ].freeze
     end
 
+    def debug_menu
+      [
+        Item(Id(:dump_status), "Dump enabled / disabled &status"),
+        Item(Id(:dump_disabled), "Dump &disabled items")
+      ].freeze
+    end
+
     def handle_events
       while true
         id = UI.UserInput
@@ -92,6 +102,10 @@ module Yast
           break # leave event loop
         when :read_only
           update_actions
+        when :dump_status
+          dump_item_status
+        when :dump_disabled
+          dump_disabled_ids
         end
 
         show_event(id)
@@ -121,6 +135,19 @@ module Yast
           :paste => !read_only
         }
       )
+    end
+
+    # Dump the enabled / disabled states of the menu items to the log.
+    def dump_item_status
+      states = UI.QueryWidget(:menu_bar, :EnabledItems)
+      log.info("Enabled/disabled: #{states}")
+    end
+
+    # Dump the IDs of all disabled menu items to the log.
+    def dump_disabled_ids
+      states = UI.QueryWidget(:menu_bar, :EnabledItems)
+      states.reject! { |k, v| v }
+      log.info("Disabled: #{states.keys}")
     end
   end
 end

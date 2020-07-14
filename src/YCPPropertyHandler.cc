@@ -214,6 +214,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
 	val = tryGetTreeSelectedItems		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetMultiSelectionBoxSelectedItems( widget );	if ( ! val.isNull() ) return val;
     }
+    else if ( propertyName == YUIProperty_EnabledItems )
+    {
+	val = tryGetMenuWidgetEnabledItems      ( widget );	if ( ! val.isNull() ) return val;
+    }
     else if ( propertyName == YUIProperty_OpenItems )
     {
 	val = tryGetTreeOpenItems	( widget );	if ( ! val.isNull() ) return val;
@@ -308,19 +312,14 @@ Item_t * findItem( const YCPValue &	wantedId,
     {
 	Item_t * item = dynamic_cast<Item_t *> (*it);
 
-	if ( item &&
-             ! item->id().isNull() &&
-             wantedId->equal( item->id() ) )
-        {
+	if ( item && item->hasId() && wantedId->equal( item->id() ) )
 	    return item;
-        }
 
 	if ( (*it)->hasChildren() )
 	{
 	    Item_t * result = findItem<Item_t>( wantedId,
 						(*it)->childrenBegin(),
 						(*it)->childrenEnd() );
-
 	    if ( result )
 		return result;
 	}
@@ -1283,7 +1282,7 @@ YCPPropertyHandler::getTreeOpenItems( YCPMap &			openItems,
 {
     for ( YItemConstIterator it = begin; it != end; ++it )
     {
-	YTreeItem * item = dynamic_cast<YTreeItem *> (*it);
+	YTreeItem * item = dynamic_cast<YTreeItem *>(*it);
 
 	if ( item )
 	{
@@ -1582,4 +1581,37 @@ YCPPropertyHandler::tryGetBarGraphLabels( YWidget * widget )
 	result->add( YCPString( barGraph->segment(i).label() ) );
 
     return result;
+}
+
+
+YCPValue
+YCPPropertyHandler::tryGetMenuWidgetEnabledItems( YWidget * widget )
+{
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget );
+
+    if ( ! menuWidget )
+        return YCPNull();
+
+    YCPMap itemStatusMap;
+    getMenuWidgetEnabledItems( itemStatusMap, menuWidget->itemsBegin(), menuWidget->itemsEnd() );
+
+    return itemStatusMap;
+}
+
+
+void
+YCPPropertyHandler::getMenuWidgetEnabledItems( YCPMap &			itemStatusMap,
+                                               YItemConstIterator	begin,
+                                               YItemConstIterator	end )
+{
+    for ( YItemConstIterator it = begin; it != end; ++it )
+    {
+        YCPMenuItem * item = dynamic_cast<YCPMenuItem *>( *it );
+
+        if ( item && item->hasId() )
+            itemStatusMap.add( item->id(), YCPBoolean( item->isEnabled() ) );
+
+        if ( item->hasChildren() )
+            getMenuWidgetEnabledItems( itemStatusMap, item->childrenBegin(), item->childrenEnd() );
+    }
 }
