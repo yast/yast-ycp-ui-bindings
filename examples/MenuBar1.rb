@@ -120,7 +120,7 @@ module Yast
     # Enable or disable menu items depending on the current content of the
     # "Read Only" check box.
     def update_actions
-      read_only = Convert.to_boolean(UI.QueryWidget(:read_only, :Value))
+      read_only = UI.QueryWidget(:read_only, :Value)
 
       # Enable or disable individual menu entries (actions as well as submenus):
       #
