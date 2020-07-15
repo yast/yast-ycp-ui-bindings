@@ -29,7 +29,8 @@ module Yast
                 CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true)
               )
             )
-          )
+          ),
+          Right(PushButton(Id(:cancel), "&Quit"))
         )
       )
     end
