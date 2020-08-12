@@ -16,7 +16,7 @@ module Yast
     def dialog_widgets
       MinSize( 50, 20,
         VBox(
-          term(:MenuBar, Id(:menu_bar), main_menus),
+          MenuBar(Id(:menu_bar), main_menus),
           HVCenter(
             HVSquash(
               VBox(
@@ -37,11 +37,11 @@ module Yast
 
     def main_menus
       [
-        term(:menu, "&File", file_menu),
-        term(:menu, "&Edit", edit_menu),
-        term(:menu, "&View", view_menu),
-        term(:menu, "&Options", options_menu),
-        term(:menu, "&Debug", debug_menu)
+        Menu("&File", file_menu),
+        Menu("&Edit", edit_menu),
+        Menu("&View", view_menu),
+        Menu("&Options", options_menu),
+        Menu("&Debug", debug_menu)
       ].freeze
     end
 
