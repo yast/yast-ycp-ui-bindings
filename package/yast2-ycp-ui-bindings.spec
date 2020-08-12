@@ -15,12 +15,12 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# YUIWidget_CustomStatusItemSelector
-%define min_yui_version	3.10.0
-%define yui_so		12
+# YUIWidget_MenuBar
+%define min_yui_version	3.11.0
+%define yui_so		13
 
 Name:           yast2-ycp-ui-bindings
-Version:        4.3.0
+Version:        4.3.1
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build

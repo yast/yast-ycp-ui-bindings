@@ -23,7 +23,7 @@ you may find current contact information at www.novell.com
 
   File:		YCPMenuItemParser.h
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
@@ -82,7 +82,11 @@ protected:
      **/
     static YCPMenuItem * parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm );
 
-    
+    /**
+     * Return 'true' if 'str' starts with 'word'. This is case insensitive.
+     **/
+    static bool startsWith( const string & str, const char * word );
+
 };
 
 

@@ -61,7 +61,7 @@ you may find current contact information at www.novell.com
 #include <yui/YComboBox.h>
 #include <yui/YDumbTab.h>
 #include <yui/YItemSelector.h>
-#include <yui/YMenuButton.h>
+#include <yui/YMenuWidget.h>
 #include <yui/YMultiProgressMeter.h>
 #include <yui/YMultiSelectionBox.h>
 #include <yui/YRadioButton.h>
@@ -113,10 +113,10 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     }
     else if ( propertyName == YUIProperty_Items )
     {
-	// Make sure to try YMenuButton, YTable, YTree, before YSelectionWidget:
+	// Make sure to try YMenuWidget, YTable, YTree, before YSelectionWidget:
 	// they all inherit YSelectionWidget!
 
-	if ( trySetMenuButtonItems	( widget, val ) )		return true;
+	if ( trySetMenuWidgetItems	( widget, val ) )		return true;
 	if ( trySetTreeItems		( widget, val ) )		return true;
 	if ( trySetTableItems		( widget, val ) )		return true;
 	if ( trySetItemSelectorItems	( widget, val ) )		return true;
@@ -133,9 +133,13 @@ YCPPropertyHandler::setComplexProperty( YWidget *		widget,
     else if ( propertyName == YUIProperty_SelectedItems )
     {
 	if ( trySetMultiSelectionBoxSelectedItems( widget, val ) )	return true;
-	if ( trySetItemSelectorSelectedItems	( widget, val ) )	return true;
-	if ( trySetTableSelectedItems		( widget, val ) )	return true;
-	if ( trySetTreeSelectedItems		( widget, val ) )	return true;
+	if ( trySetItemSelectorSelectedItems	 ( widget, val ) )	return true;
+	if ( trySetTableSelectedItems		 ( widget, val ) )	return true;
+	if ( trySetTreeSelectedItems		 ( widget, val ) )	return true;
+    }
+    else if ( propertyName == YUIProperty_EnabledItems )
+    {
+	if ( trySetMenuWidgetEnabledItems( widget, val ) )              return true;
     }
 
     y2error( "Can't handle property %s::%s - not changing anything",
@@ -210,6 +214,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
 	val = tryGetTreeSelectedItems		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetMultiSelectionBoxSelectedItems( widget );	if ( ! val.isNull() ) return val;
     }
+    else if ( propertyName == YUIProperty_EnabledItems )
+    {
+	val = tryGetMenuWidgetEnabledItems      ( widget );	if ( ! val.isNull() ) return val;
+    }
     else if ( propertyName == YUIProperty_OpenItems )
     {
 	val = tryGetTreeOpenItems	( widget );	if ( ! val.isNull() ) return val;
@@ -220,10 +228,10 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     }
     else if ( propertyName == YUIProperty_Items )
     {
-	// Make sure to try YMenuButton, YTable, YTree, before YSelectionWidget:
+	// Make sure to try YMenuWidget, YTable, YTree, before YSelectionWidget:
 	// they all inherit YSelectionWidget!
 
-	val = tryGetMenuButtonItems		( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetMenuWidgetItems		( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTableItems			( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetTreeItems			( widget );	if ( ! val.isNull() ) return val;
 	val = tryGetItemSelectorItems		( widget );	if ( ! val.isNull() ) return val;
@@ -304,7 +312,7 @@ Item_t * findItem( const YCPValue &	wantedId,
     {
 	Item_t * item = dynamic_cast<Item_t *> (*it);
 
-	if ( item && wantedId->equal( item->id() ) )
+	if ( item && item->hasId() && wantedId->equal( item->id() ) )
 	    return item;
 
 	if ( (*it)->hasChildren() )
@@ -312,7 +320,6 @@ Item_t * findItem( const YCPValue &	wantedId,
 	    Item_t * result = findItem<Item_t>( wantedId,
 						(*it)->childrenBegin(),
 						(*it)->childrenEnd() );
-
 	    if ( result )
 		return result;
 	}
@@ -489,16 +496,16 @@ YCPPropertyHandler::trySetSelectionWidgetItems( YWidget * widget, const YCPValue
 
 
 bool
-YCPPropertyHandler::trySetMenuButtonItems( YWidget * widget, const YCPValue & val )
+YCPPropertyHandler::trySetMenuWidgetItems( YWidget * widget, const YCPValue & val )
 {
-    YMenuButton * menuButton = dynamic_cast<YMenuButton *> (widget );
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget );
 
-    if ( ! menuButton )
+    if ( ! menuWidget )
 	return false;
 
     if ( val->isList() )
     {
-	menuButton->setItems( YCPMenuItemParser::parseMenuItemList( val->asList() ) );
+	menuWidget->setItems( YCPMenuItemParser::parseMenuItemList( val->asList() ) );
 	return true;
     }
 
@@ -950,6 +957,73 @@ YCPPropertyHandler::trySetBarGraphLabels( YWidget * widget, const YCPValue & val
 }
 
 
+bool
+YCPPropertyHandler::trySetMenuWidgetEnabledItems( YWidget * widget, const YCPValue & val )
+{
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *>( widget );
+
+    if ( ! menuWidget )
+        return false;
+
+    bool ok = val->isMap();
+
+    if ( ok )
+    {
+	YCPMap statusMap = val->asMap();
+
+	for ( YCPMap::const_iterator it = statusMap->begin();
+	      it != statusMap->end() && ok;
+	      ++it )
+	{
+	    ok = setItemEnabled( menuWidget, it->first, it->second );
+	}
+    }
+
+    if ( ! ok )
+    {
+	YUI_THROW( YUIBadPropertyArgException( YProperty( YUIProperty_EnabledItems,
+							  YOtherProperty ),
+					       widget ) );
+    }
+
+    return ok;
+}
+
+
+bool
+YCPPropertyHandler::setItemEnabled( YMenuWidget *	widget,
+                                    const YCPValue &	itemId,
+                                    const YCPValue &	newEnabled )
+{
+    bool enabled;
+
+    if ( newEnabled->isBoolean() )
+	enabled = newEnabled->asBoolean()->value();
+    else
+    {
+	y2error( "Setting ItemEnabled for item with ID %s: "
+		 "Expected boolean, not %s",
+		 itemId->toString().c_str(), newEnabled->toString().c_str() );
+
+	return false;
+    }
+
+    YCPMenuItem * item = findItem<YCPMenuItem>( widget, itemId );
+
+    if ( ! item )
+    {
+	y2error( "%s %s has no item with ID %s",
+		 widget->widgetClass(),
+		 widget->debugLabel().c_str(),
+		 itemId->toString().c_str() );
+
+	return false;
+    }
+
+    widget->setItemEnabled( item, enabled );
+
+    return true;
+}
 
 
 
@@ -1208,7 +1282,7 @@ YCPPropertyHandler::getTreeOpenItems( YCPMap &			openItems,
 {
     for ( YItemConstIterator it = begin; it != end; ++it )
     {
-	YTreeItem * item = dynamic_cast<YTreeItem *> (*it);
+	YTreeItem * item = dynamic_cast<YTreeItem *>(*it);
 
 	if ( item )
 	{
@@ -1367,14 +1441,14 @@ YCPPropertyHandler::tryGetTableItem( YWidget * widget, const YCPTerm & propTerm 
 
 
 YCPValue
-YCPPropertyHandler::tryGetMenuButtonItems( YWidget * widget )
+YCPPropertyHandler::tryGetMenuWidgetItems( YWidget * widget )
 {
-    YMenuButton * menuButton = dynamic_cast<YMenuButton *> (widget);
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget);
 
-    if ( ! menuButton )
+    if ( ! menuWidget )
 	return YCPNull();
 
-    return YCPMenuItemWriter::itemList( menuButton->itemsBegin(), menuButton->itemsEnd() );
+    return YCPMenuItemWriter::itemList( menuWidget->itemsBegin(), menuWidget->itemsEnd() );
 }
 
 
@@ -1510,4 +1584,34 @@ YCPPropertyHandler::tryGetBarGraphLabels( YWidget * widget )
 }
 
 
+YCPValue
+YCPPropertyHandler::tryGetMenuWidgetEnabledItems( YWidget * widget )
+{
+    YMenuWidget * menuWidget = dynamic_cast<YMenuWidget *> (widget );
 
+    if ( ! menuWidget )
+        return YCPNull();
+
+    YCPMap itemStatusMap;
+    getMenuWidgetEnabledItems( itemStatusMap, menuWidget->itemsBegin(), menuWidget->itemsEnd() );
+
+    return itemStatusMap;
+}
+
+
+void
+YCPPropertyHandler::getMenuWidgetEnabledItems( YCPMap &			itemStatusMap,
+                                               YItemConstIterator	begin,
+                                               YItemConstIterator	end )
+{
+    for ( YItemConstIterator it = begin; it != end; ++it )
+    {
+        YCPMenuItem * item = dynamic_cast<YCPMenuItem *>( *it );
+
+        if ( item && item->hasId() )
+            itemStatusMap.add( item->id(), YCPBoolean( item->isEnabled() ) );
+
+        if ( item->hasChildren() )
+            getMenuWidgetEnabledItems( itemStatusMap, item->childrenBegin(), item->childrenEnd() );
+    }
+}

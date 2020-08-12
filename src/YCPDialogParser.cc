@@ -82,6 +82,7 @@ you may find current contact information at www.novell.com
 #include <yui/YLabel.h>
 #include <yui/YLayoutBox.h>
 #include <yui/YLogView.h>
+#include <yui/YMenuBar.h>
 #include <yui/YMenuButton.h>
 #include <yui/YMultiLineEdit.h>
 #include <yui/YMultiProgressMeter.h>
@@ -287,6 +288,7 @@ YCPDialogParser::parseWidgetTreeTerm( YWidget *		p,
     else if ( s == YUIWidget_Left		)	w = parseAlignment		( p, opt, term, ol, n, YAlignBegin,	YAlignUnchanged );
     else if ( s == YUIWidget_LogView		)	w = parseLogView		( p, opt, term, ol, n );
     else if ( s == YUIWidget_MarginBox		)	w = parseMarginBox		( p, opt, term, ol, n );
+    else if ( s == YUIWidget_MenuBar		)	w = parseMenuBar		( p, opt, term, ol, n );
     else if ( s == YUIWidget_MenuButton		)	w = parseMenuButton		( p, opt, term, ol, n );
     else if ( s == YUIWidget_MinHeight		)	w = parseMinSize		( p, opt, term, ol, n, false, true  );
     else if ( s == YUIWidget_MinSize		)	w = parseMinSize		( p, opt, term, ol, n, true,  true  );
@@ -1512,6 +1514,57 @@ YCPDialogParser::parsePushButton( YWidget * parent, YWidgetOpt & opt,
 
 
 /**
+ * @widget	MenuBar
+ * @short	Classic menu bar with pull-down menus
+ * @class	YMenuBar
+ * @optarg	itemList	menu items
+ * @example	MenuBar1.rb
+ *
+ *
+ * This is a classical menu bar. Use this with caution: YaST typically uses a
+ * wizard-driven approach where a menu bar is often very much out of place;
+ * it's a different UI philosophy.
+ *
+ * A menu bar is required to have only menus (not plain menu items) at the top
+ * level. Menus can have submenus or separators. A separator is a menu item
+ * with an empty label or a label that starts with "---".
+ *
+ * Invididual menu entries (both actions and submenus) can be enabled or
+ * disabled with the EnabledItems property: It receives a hash of item ID keys
+ * with a boolean value each that specifies if that item should be enabled
+ * (true) or disabled (false). Items that are not in that hash are not touched,
+ * i.e. they keep their current enabled or disabled status.
+ *
+ * See the MenuBar1.rb example how to do this.
+ **/
+
+YWidget *
+YCPDialogParser::parseMenuBar( YWidget * parent, YWidgetOpt & opt,
+                               const YCPTerm & term, const YCPList & optList, int argnr )
+{
+    int numArgs = term->size() - argnr;
+
+    if ( numArgs > 1 ||
+         ( numArgs == 2 && ! term->value( argnr+1 )->isList() ) )
+    {
+	THROW_BAD_ARGS( term );
+    }
+
+    rejectAllOptions( term, optList );
+
+    YMenuBar * menuBar = YUI::widgetFactory()->createMenuBar( parent );
+
+    if ( numArgs == 1 )
+    {
+	YCPList itemList = term->value( argnr )->asList();
+	menuBar->addItems( YCPMenuItemParser::parseMenuItemList( itemList ) );
+    }
+
+    return menuBar;
+}
+
+
+/**
  * @widget	MenuButton
  * @short	Button with popup menu
  * @class	YMenuButton
@@ -2205,7 +2258,7 @@ YItemCustomStatusVector
 YCPDialogParser::parseCustomStates( const YCPList & statesList )
 {
     const char * usage = "Expected: [ [\"iconName1\", \"textIndicator1\", int nextStatus], [...], ...]";
-    
+
     YItemCustomStatusVector customStates;
 
     for ( int i=0; i < statesList.size(); i++ )
@@ -2214,7 +2267,7 @@ YCPDialogParser::parseCustomStates( const YCPList & statesList )
 
         if ( ! val->isList() )
             YUI_THROW( YCPDialogSyntaxErrorException( usage, statesList ) );
-        
+
         YCPList stat = val->asList();
 
         if ( stat->size() < 2 || stat->size() > 3 ||
@@ -2237,7 +2290,7 @@ YCPDialogParser::parseCustomStates( const YCPList & statesList )
 
     if ( customStates.size() < 2 )
         YUI_THROW( YCPDialogSyntaxErrorException( "Need at least 2 custom status values", statesList ) );
-    
+
     return customStates;
 }
 

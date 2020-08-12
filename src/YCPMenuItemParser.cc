@@ -23,7 +23,7 @@ you may find current contact information at www.novell.com
 
   File:		YCPMenuItemParser.h
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 
@@ -37,6 +37,7 @@ you may find current contact information at www.novell.com
 #include "YCPMenuItemParser.h"
 #include "YCP_UI_Exception.h"
 #include <yui/YUISymbols.h>
+#include <yui/YShortcut.h>
 
 #define VERBOSE_PARSER	0
 
@@ -173,8 +174,11 @@ YCPMenuItemParser::parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm
     if ( iconName.isNull() )
 	iconName = YCPString( "" );
 
-    if ( id.isNull() )			// no `id() ?
-	id = label;			// use the label instead
+    if ( startsWith( label->value(), "---" ) )   // separator item?
+        label = YCPString( "" );
+
+    if ( id.isNull() && ! label.isEmpty() ) // no `id() ?
+	id = YCPString( YShortcut::cleanShortcutString( label->value() ) ); // use the label instead
 
     YCPMenuItem * item = new YCPMenuItem( parent, label, id, iconName );
     YUI_CHECK_NEW( item );
@@ -189,3 +193,10 @@ YCPMenuItemParser::parseMenuItem( YCPMenuItem * parent, const YCPTerm & itemTerm
 
     return item;
 }
+
+
+bool YCPMenuItemParser::startsWith( const string & str, const char * word )
+{
+    return strncasecmp( str.c_str(), word, strlen( word ) )== 0;
+}
+

@@ -23,7 +23,7 @@ you may find current contact information at www.novell.com
 
   File:		YCP_UI_Exception.h
 
-  Author:     	Stefan Hundhammer <sh@suse.de>
+  Author:     	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 

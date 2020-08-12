@@ -22,7 +22,7 @@ you may find current contact information at www.novell.com
 
   File:		YCPTreeItemWriter.cc
 
-  Author:	Stefan Hundhammer <sh@suse.de>
+  Author:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 

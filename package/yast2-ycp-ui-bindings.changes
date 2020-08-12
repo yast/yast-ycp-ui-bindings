@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Aug 11 15:10:00 UTC 2020 - Stefan Hundhammer <shundhammer@suse.com>
+
+- Added MenuBar widget (bsc#1175115)
+- Require libyui.so.13
+- 4.3.11
+
+-------------------------------------------------------------------
 Thu Jun  4 11:52:17 UTC 2020 - Stefan Hundhammer <shundhammer@suse.com>
 
 - Added widget option autoWrap for label widget (bsc#1172513) 

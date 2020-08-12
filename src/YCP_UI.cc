@@ -24,7 +24,7 @@ you may find current contact information at www.novell.com
 
   File:		YCP_UI.cc
 
-  Authors:	Stefan Hundhammer <sh@suse.de>
+  Authors:	Stefan Hundhammer <shundhammer@suse.de>
 
 /-*/
 

@@ -44,6 +44,7 @@ using std::string;
 class YCPItem;
 class YWidget;
 class YSelectionWidget;
+class YMenuWidget;
 
 
 /**
@@ -110,7 +111,7 @@ protected:
     static bool trySetTableValue			( YWidget * widget, const YCPValue & val );
     static bool trySetDumbTabValue			( YWidget * widget, const YCPValue & val );
     static bool trySetComboBoxValue			( YWidget * widget, const YCPValue & val );
-    static bool trySetMenuButtonItems			( YWidget * widget, const YCPValue & val );
+    static bool trySetMenuWidgetItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTreeItems				( YWidget * widget, const YCPValue & val );
     static bool trySetTableItems			( YWidget * widget, const YCPValue & val );
     static bool trySetTableCell				( YWidget * widget, const YCPTerm  & propTerm, const YCPValue & val );
@@ -126,6 +127,7 @@ protected:
     static bool trySetMultiProgressMeterValues		( YWidget * widget, const YCPValue & val );
     static bool trySetBarGraphValues			( YWidget * widget, const YCPValue & val );
     static bool trySetBarGraphLabels			( YWidget * widget, const YCPValue & val );
+    static bool trySetMenuWidgetEnabledItems		( YWidget * widget, const YCPValue & val );
 
     /**
      * All tryGet..() functions try to dynamic_cast 'widget' to the expected
@@ -154,20 +156,29 @@ protected:
     static YCPValue tryGetTableItems			( YWidget * widget );
     static YCPValue tryGetTreeItems			( YWidget * widget );
     static YCPValue tryGetItemSelectorItems		( YWidget * widget );
-    static YCPValue tryGetMenuButtonItems		( YWidget * widget );
+    static YCPValue tryGetMenuWidgetItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItems		( YWidget * widget );
     static YCPValue tryGetSelectionWidgetItemStatus	( YWidget * widget );
     static YCPValue tryGetBarGraphValues		( YWidget * widget );
     static YCPValue tryGetBarGraphLabels		( YWidget * widget );
     static YCPValue tryGetTreeCurrentItem		( YWidget * widget );
+    static YCPValue tryGetMenuWidgetEnabledItems        ( YWidget * widget );
 
 
     /**
      * Set the status of a widget's item to a new value.
      **/
-    static bool setItemStatus( YSelectionWidget *   widget,
-			       const YCPValue &	    itemId,
-			       const YCPValue &	    newStatus );
+    static bool setItemStatus	( YSelectionWidget *	widget,
+				  const YCPValue &	itemId,
+				  const YCPValue &	newStatus );
+
+    /**
+     * Enable or disable a menu item.
+     **/
+    static bool setItemEnabled	( YMenuWidget *		widget,
+				  const YCPValue &	itemId,
+				  const YCPValue &	newEnabled );
+
     /**
      * Helper function for tryGetTreeOpenItems(): Get any open tree items
      * between iterators 'begin' and 'end' and add them to the 'openItems' map.
@@ -175,6 +186,15 @@ protected:
     static void getTreeOpenItems( YCPMap &		openItems,
 				  YItemConstIterator	begin,
 				  YItemConstIterator	end );
+
+    /**
+     * Helper function for tryGetMenuWidgetEnabledItems(): Get the enabled /
+     * disabled status of items between iterators 'begin' and 'end' for all
+     * items that have an ID and add them to the itemStatusMap.
+     **/
+    static void getMenuWidgetEnabledItems( YCPMap &		itemStatusMap,
+                                           YItemConstIterator	begin,
+                                           YItemConstIterator	end );
 };
 
 
