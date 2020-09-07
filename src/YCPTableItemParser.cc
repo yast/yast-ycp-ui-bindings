@@ -95,6 +95,7 @@ YCPTableItemParser::parseTableItem( const YCPTerm & itemTerm )
 {
     YCPTableItem * item = new YCPTableItem();
     YUI_CHECK_NEW( item );
+    YItemCollection children;
 
     const char * usage =
 	"Expected: `item(`id(`myID), (\"MyLabelText\"|`cell(...)), ... )";
@@ -144,6 +145,30 @@ YCPTableItemParser::parseTableItem( const YCPTerm & itemTerm )
 	    {
 		item->addCell( YCPString("") );
 	    }
+            else if ( arg->isList() )           // child items list
+            {
+                // A children list should be the next-to-last or the last
+                // argument of the term, but it doesn't really matter where, so
+                // let's just allow it anywhere. It is still best practice to
+                // specifiy it at the end of the term, and better yet, it
+                // should be followed by one of :open or :closed.
+
+                children = parseTableItemList( arg->asList() );
+            }
+            else if ( arg->isSymbol()    &&     // :open  or  :closed
+                      ( arg->asSymbol()->symbol() == YUISymbol_open   ||
+                        arg->asSymbol()->symbol() == YUISymbol_closed    ) )
+            {
+                // This is a lot less strict than it could be, and this is
+                // intentional:
+                //
+                // An application may specify :open or :closed anywhere in the
+                // term, no matter if a children list was already specifed or
+                // if there is one at all. If there are no children, setting
+                // the item to open or closed does not do any harm.
+
+                item->setOpen( arg->asSymbol()->symbol() == YUISymbol_open );
+            }
 	    else
 	    {
 		YUI_THROW( YCPDialogSyntaxErrorException( usage, itemTerm ) );
@@ -168,6 +193,12 @@ YCPTableItemParser::parseTableItem( const YCPTerm & itemTerm )
 	delete item;
 	throw;
     }
+
+
+    // If there were any child items, add them to this item
+
+    for ( YItemIterator it = children.begin(); it != children.end(); ++it )
+        item->addChild( *it );
 
     return item;
 }
