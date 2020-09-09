@@ -6,8 +6,6 @@ module Yast
     def main
       Yast.import "UI"
 
-
-
       UI.OpenDialog(
         MinSize( 40, 15,
           VBox(

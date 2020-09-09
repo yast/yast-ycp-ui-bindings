@@ -5,6 +5,7 @@ module Yast
   class TreeCheckboxClient < Client
     def main
       Yast.import "UI"
+
       UI.OpenDialog(
         MinSize( 40, 15,
           VBox(
