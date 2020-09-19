@@ -46,9 +46,9 @@ module Yast
 
     def disk_items
       [
-        Item(Id(:sda), "/dev/sda", "931.5G", sda_items, :open),
-        Item(Id(:sdb), "/dev/sdb", "931.5G", sdb_items, :closed),
-        Item(Id(:sdc), "/dev/sdc", "232.9G", sdc_items, :open)
+        Item(Id(:sda), "/dev/sda", "931.5G", "", "", sda_items, :open),
+        Item(Id(:sdb), "/dev/sdb", "931.5G", "", "", sdb_items, :closed),
+        Item(Id(:sdc), "/dev/sdc", "232.9G", "", "", sdc_items, :open)
       ]
     end
 
