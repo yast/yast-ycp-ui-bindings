@@ -8,6 +8,7 @@ module Yast
 
     def main
       UI.OpenDialog(main_dialog)
+      update_selected(current_table_item)
       handle_events
       UI.CloseDialog
     end
@@ -25,8 +26,8 @@ module Yast
             table,
             VSpacing(0.2),
             Left(Label("Selected:")),
-            Label(Id(:selected), Opt(:outputField, :hstretch), ""),
-            VSpacing(0.5),
+            Label(Id(:selected), Opt(:outputField, :hstretch), "..."),
+            VSpacing(0.3),
             Right(
               PushButton(Id(:close), "&Close")
             )
