@@ -32,7 +32,7 @@ module Yast
 
       @delivery = Tree(
         Id(:delivery_service),
-        Opt(:notify, :notifyContextMenu),
+        Opt(:notify, :immediate, :notifyContextMenu),
         "&Delivery Service",
         [
           Item(
