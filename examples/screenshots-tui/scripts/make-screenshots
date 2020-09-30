@@ -1,0 +1,38 @@
+#! /bin/sh
+
+# make screenshots in English
+LANG=en_US.UTF-8
+export LANG
+
+MYDIR=$(dirname $0)
+
+. "$MYDIR"/tmux-uitest.sh
+
+# $1 example script, like ../../Foo.rb
+do_example() {
+    SCRIPT="$1"
+    OUTDIR=$(dirname "$SCRIPT")/screenshots-tui
+    BASE=$(basename "$SCRIPT" .rb)
+
+    echo "= $BASE ="
+
+    tmux_new_session /usr/sbin/yast "$SCRIPT"
+    tmux_await YaST2
+    if [ $? != 0 ]; then
+        : > "$OUTDIR/$BASE-1.txt"
+        : > "$OUTDIR/$BASE-1.esc"
+        return
+    fi
+    sleep 0.1                   # draw the rest of the screen
+
+    tmux_capture_pane "$OUTDIR/$BASE-1"
+    tmux_send_keys Enter
+
+    if tmux_has_session; then
+        tmux_kill_session
+    fi
+}
+
+for i in $MYDIR/../../*.rb; do
+    do_example "$i"
+done
