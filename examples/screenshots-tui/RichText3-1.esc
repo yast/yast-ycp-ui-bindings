@@ -1,0 +1,24 @@
+[30m[46m YaST2 - ./../../RichText3.rb @ ohmu
+[1m[37m[44m
+ [0m[37m[44m┌────────────────────────────────────────────────────────────────────────────┐[1m
+ [0m[37m[44m│[1m[33m[47mRichText example[0m[30m[47m                                                            [37m[44m┬[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m│[1m
+ [0m[37m[44m│[30m[47mThis is a [1mRichText[0m[30m[47m widget. Lines are wrapped automatically, this is a very  [37m[44m│[1m
+ [0m[37m[44m│[30m[47mvery very very long long long long long long line .                         [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m│[1m
+ [0m[37m[44m│[30m[47mIt's very much like [1mHTML[0m[30m[47m, but not quite as powerful.                        [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m│[1m
+ [0m[37m[44m│[30m[47mText in [1mpre[0m[30m[47m tags preserves newlines and spaces.                             [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m┴[1m
+ [0m[37m[44m│[30m[47mTable in pre                                                                [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                host    ip adress       info      description               [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                sturm   10.10.0.159     old       work station              [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m│[1m
+ [0m[37m[44m│[30m[47mLines are    [1mnot[0m[30m[47m      wrapped but HTML tags are [1minterpreted[0m[30m[47m and entities lik[37m[44m│[1m
+ [0m[37m[44m│[30m[47mAfter [1m/pre[0m[30m[47m the text is [1mHTML[0m[30m[47m text like before.                               [37m[44m│[1m
+ [0m[37m[44m│[30m[47m                                                                            [37m[44m│[1m
+ [0m[37m[44m│[30m[47mMuch much more text .............. continous much much more text .... follow[37m[44m│[1m
+ [0m[37m[44m└├─────────────────────────────────────┤─────────────────────────────────────┘[1m
+ [0m[37m[44m                                     [30m[46m[[1m[33mO[0m[30m[46mK][37m[44m                                     [1m
+
+[0m[30m[46m

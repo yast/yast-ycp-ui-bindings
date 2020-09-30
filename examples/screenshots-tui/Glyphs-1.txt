@@ -1,0 +1,24 @@
+ YaST2 - ./../../Glyphs.rb @ ohmu
+
+
+                    ┌──────────────────────────────────────┐
+                    │                Glyphs                │
+                    │<- ArrowLeft                          │
+                    │-> ArrowRight                         │
+                    │^ ArrowUp                             │
+                    │v ArrowDown                           │
+                    │x CheckMark                           │
+                    │=> BulletArrowRight                   │
+                    │o BulletCircle                        │
+                    │[] BulletSquare                       │
+                    │                                      │
+                    │If you see only question marks,       │
+                    │maybe you forgot to start this example│
+                    │with the correct font -               │
+                    │use the 'start_glyphs' script!        │
+                    │                 [OK]                 │
+                    └──────────────────────────────────────┘
+
+
+
+

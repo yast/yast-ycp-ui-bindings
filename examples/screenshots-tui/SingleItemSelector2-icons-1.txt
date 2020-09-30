@@ -1,0 +1,24 @@
+ YaST2 - ./../../SingleItemSelector2-icons.rb @ ohmu
+
+     ┌────────────────────────────────────────────────────────────────────┐
+     │                         Desktop Selection                          │
+     │                                                                    │
+     │  ┌──────────────────────────────────────────────────────────────┐  │
+     │  │( ) KDE Plasma                                                │  │
+     │  │    A powerful modern desktop with emphasis on features.      │  │
+     │  │    Motto: "Simple by default, powerful when needed."         │  │
+     │  │                                                              │  │
+     │  │( ) GNOME                                                     │  │
+     │  │    A modern desktop with emphasis on ease of use.            │  │
+     │  │    Motto: "An easy and elegant way to use your computer."    │  │
+     │  │                                                              │  │
+     │  │(x) Xfce                                                      │  │
+     │  │    A fast and lightweight desktop that is also (but not only)│  │
+     │  │    suitable for less powerful machines.                      │  │
+     │  └──────────────────────────────────────────────────────────────┘  │
+     │                                                                    │
+     │                                [OK]                                │
+     └────────────────────────────────────────────────────────────────────┘
+
+
+

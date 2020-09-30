@@ -1,0 +1,24 @@
+ YaST2 - ./../../Events.rb @ ohmu
+
+                                 Event Example
+  Use the "Close" button to quit. All other widgets will only show the event.
+  After 7 seconds of inactivity a timeout event will occur.
+
+ ┌Delivery Serv┐┌Pizza────────┐┌Toppings─────┐┌─────────────┐┌─────────────┐
+ │─┬─Europe    ↓│A la Chef    ↑│[x] Cheese   ↓│[ ]│Coca Cola↓│Please also  ↓
+ └├──────┤─────┘└├──┤─────────┘└─────────────┘└├────┤───────┘└─────────────┘
+ To:                 Name:┌Address:─┐ ┌Payment─────────────┐
+ Mr.▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒↓▒▒▒▒▒│         │ │(x) Cash on Delivery│
+                          │         │ │( ) Credit Card     │
+                          │         │ │( ) Bill me Later   │
+                          └─────────┘ └────────────────────┘
+
+ [Or][More In][Cancel Ord][Special.↓] [ ] Send Giuseppe over if I forget to pay
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │No event yet - click something (or wait for timeout)                        │
+ └────────────────────────────────────────────────────────────────────────────┘
+ [Help]                                                                 [Close]
+
+
+ F1 Help  F2 Order  F3 More Info  F4 Cancel Order

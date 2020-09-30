@@ -1,0 +1,24 @@
+ YaST2 - ./../../BusyIndicator.rb @ ohmu
+
+
+
+
+
+
+
+
+                            ┌─────────────────────┐
+                            │Sample busy indicator│
+                            │                     │
+                            │     [send tick]     │
+                            │              [Close]│
+                            └─────────────────────┘
+
+
+
+
+
+
+
+
+

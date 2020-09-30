@@ -1,0 +1,24 @@
+ YaST2 - ./../../GetDisplayInfo.rb @ ohmu
+
+                   ┌────────────────────────────────────────┐
+                   │Display capabilities:                   │
+                   │┌──────────────────────────────────────┐│
+                   ││ *  Colors: 8                         ┬│
+                   ││ *  DefaultHeight: 22                 ││
+                   ││ *  DefaultWidth: 80                  ││
+                   ││ *  Depth: -1                         ││
+                   ││ *  HasAnimationSupport: false        ││
+                   ││ *  HasFullUtf8Support: true          ││
+                   ││ *  HasIconSupport: false             ││
+                   ││ *  HasImageSupport: false            ││
+                   ││ *  Height: 22                        ││
+                   ││ *  LeftHandedMouse: false            ││
+                   ││ *  RichTextSupportsTable: false      ││
+                   ││ *  TextMode: true                    ┴│
+                   ││ *  Width: 80                         ││
+                   │└──────────────────────────────────────┘│
+                   │                  [OK]                  │
+                   └────────────────────────────────────────┘
+
+
+

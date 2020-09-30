@@ -1,0 +1,24 @@
+ YaST2 - ./../../PatternSelector-wizard-with-packages.rb @ ohmu
+
+ Reading package database...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText2.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │This is a RichText in   plainText   mode.                                   │
+ │No HTML                 tags    are     supported       here, tabs      and │
+ │are output literally                                                        │
+ │as are HTML tags like <b> or <i> or &product;.                              │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ └├─────────────────────────────────────────────────┤─────────────────────────┘
+                                      [OK]
+
+

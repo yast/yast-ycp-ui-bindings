@@ -1,0 +1,24 @@
+ YaST2 - ./../../TimezoneSelector.rb @ ohmu
+
+
+
+
+
+
+
+
+
+                       ┌────────────────────────────────┐
+                       │Timezone Selector not supported!│
+                       │            [Oops!]             │
+                       └────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+

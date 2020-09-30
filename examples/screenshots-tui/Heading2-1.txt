@@ -1,0 +1,24 @@
+ YaST2 - ./../../Heading2.rb @ ohmu
+
+
+
+
+
+
+
+
+                              ┌──────────────────┐
+                              │This Is a Heading.│
+                              │ This is a Label. │
+                              │       [OK]       │
+                              └──────────────────┘
+
+
+
+
+
+
+
+
+
+

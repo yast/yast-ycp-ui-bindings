@@ -1,0 +1,24 @@
+ YaST2 - ./../../SelectionBox4.rb @ ohmu
+
+
+
+
+
+
+                          ┌─────────────────────────┐
+                          │┌Select your Pizza:─────┐│
+                          ││Napoli                 ─│
+                          ││Funghi                 ││
+                          ││Salami                 ││
+                          │└├────┤─────────────────┘│
+                          │[Today's special][Veggie]│
+                          │          [OK]           │
+                          └─────────────────────────┘
+
+
+
+
+
+
+
+

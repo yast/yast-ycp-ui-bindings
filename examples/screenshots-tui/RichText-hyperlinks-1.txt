@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText-hyperlinks.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │RichText example                                                            │
+ │                                                                            │
+ │RichText may contain hyperlinks,very much like HTML.                        │
+ │                                                                            │
+ │Clicking on a link will make UI::UserInput() return with the href part of   │
+ │the hyperlink as a (string) return value.                                   │
+ │                                                                            │
+ │Known (HTML-like) entities                                                  │
+ │                                                                            │
+ │ *  &product; for the product name (SUSE Linux)                             │
+ │ *  &amp; for &                                                             │
+ │ *  &lt; for <                                                              │
+ │ *  &gt; for >                                                              │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+ You clicked:
+                                    [Close]
+
+
