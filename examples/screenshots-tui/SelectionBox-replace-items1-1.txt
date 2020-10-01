@@ -1,0 +1,24 @@
+ YaST2 - ./../../SelectionBox-replace-items1.rb @ ohmu
+
+
+
+
+
+
+                         ┌───────────────────────────┐
+                         │┌Daily Specials:──────────┐│
+                         ││Pizza Napoli             ┬│
+                         ││Pizza Funghi             ┴│
+                         ││Pizza Salami             ││
+                         │└─────────────────────────┘│
+                         │[Pizza][Pasta][Strict Diet]│
+                         │           [OK]            │
+                         └───────────────────────────┘
+
+
+
+
+
+
+
+

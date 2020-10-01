@@ -1,0 +1,24 @@
+ YaST2 - ./../../MultiLineEdit-setInputMaxLength.rb @ ohmu
+
+
+
+
+
+                            ┌──────────────────────┐
+                            │┌Multi Line Edit─────┐│
+                            ││pizza               ││
+                            ││pasta               ││
+                            ││pronta              ││
+                            │└────────────────────┘│
+                            │Limit characters to...│
+                            │                   -1↑│
+                            │    [limit input]     │
+                            │        [Exit]        │
+                            └──────────────────────┘
+
+
+
+
+
+
+

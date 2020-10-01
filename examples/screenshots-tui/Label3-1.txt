@@ -1,0 +1,24 @@
+ YaST2 - ./../../Label3.rb @ ohmu
+
+
+
+
+
+
+
+
+                        ┌─────────────────────────────┐
+                        │Select your favourite Beatle:│
+                        │                             │
+                        │ [John][Paul][George][Ringo] │
+                        │            [OK]             │
+                        └─────────────────────────────┘
+
+
+
+
+
+
+
+
+

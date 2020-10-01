@@ -1,0 +1,24 @@
+ YaST2 - ./../../WindowID.rb @ ohmu
+
+  Penguins
+
+
+
+
+
+                    ┌──────────────────────────────────────┐
+                    │           UI Syntax Error            │
+                    │Invalid arguments for the Image widget│
+                    │         Check the log file!          │
+                    │                                      │
+                    │               [Close]                │
+                    └──────────────────────────────────────┘
+
+
+
+
+
+
+ [Help]                 [Back]                 [Abort]                 [Next]
+
+ F10 Close

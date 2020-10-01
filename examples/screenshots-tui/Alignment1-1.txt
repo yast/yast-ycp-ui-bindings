@@ -1,0 +1,24 @@
+ YaST2 - ./../../Alignment1.rb @ ohmu
+
+
+
+
+
+
+
+
+
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │[This is a very long button - it reserves extra space for the label.]│
+    │[                      Stretchable button                      ]Label│
+    └─────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+

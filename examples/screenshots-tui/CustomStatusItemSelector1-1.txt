@@ -1,0 +1,24 @@
+ YaST2 - ./../../CustomStatusItemSelector1.rb @ ohmu
+                 ┌────────────────────────────────────────────┐
+                 │  ┌──────────────────────────────────────┐  │
+                 │  │[  ] KDE Plasma                       ┬  │
+                 │  │     Full-fledged desktop             │  │
+                 │  │                                      │  │
+                 │  │[  ] Xfce                             │  │
+                 │  │     Lightweight desktop              │  │
+                 │  │                                      │  │
+                 │  │[  ] X Window System                  │  │
+                 │  │     X11, simple window manager, xterm│  │
+                 │  │                                      │  │
+                 │  │[  ] LibreOffice                      │  │
+                 │  │     Office suite                     │  │
+                 │  │                                      ┴  │
+                 │  │[  ] Server Tools                     │  │
+                 │  │     Web server, database, file server│  │
+                 │  │                                      │  │
+                 │  └──────────────────────────────────────┘  │
+                 │                                            │
+                 │                                            │
+                 └────────────────────────────────────────────┘
+
+

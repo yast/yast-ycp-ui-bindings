@@ -1,0 +1,24 @@
+ YaST2 - ./../../Wizard1.rb @ ohmu
+
+
+
+
+
+
+
+                  ┌─────────────────────────────────────────┐
+                  │             UI Syntax Error             │
+                  │Unsupported optional widget type: YWizard│
+                  │           Check the log file!           │
+                  │                                         │
+                  │                 [Close]                 │
+                  └─────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+ F10 Close

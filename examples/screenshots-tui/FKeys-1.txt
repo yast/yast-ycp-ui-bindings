@@ -1,0 +1,24 @@
+ YaST2 - ./../../FKeys.rb @ ohmu
+
+
+               ┌───────────────────────────────────────────────┐
+               │                                               │
+               │Use this with the NCurses UI.                  │
+               │Press [F1] there to show function key bindings.│
+               │                                               │
+               │                                               │
+               │Last Button:                                   │
+               │                                               │
+               │                                               │
+               │[  Add  ][ Edit  ][Delete ]         [ Info  ]  │
+               │                                               │
+               │[ Back  ]         [ Abort ]         [ Next  ]  │
+               │                                               │
+               │                                               │
+               │                                               │
+               │                                        [Close]│
+               └───────────────────────────────────────────────┘
+
+
+
+ F2 Info  F3 Add  F4 Edit  F5 Delete  F8 Back  F9 Abort  F10 Next

@@ -1,0 +1,24 @@
+ YaST2 - ./../../ItemSelector1.rb @ ohmu
+
+
+
+                          ┌──────────────────────────┐
+                          │  Program Configuration   │
+                          │  ┌Selection Mode──────┐  │
+                          │  │( ) Single Selection│  │
+                          │  │(x) Multi-Selection │  │
+                          │  └────────────────────┘  │
+                          │                          │
+                          │  [x] Notify              │
+                          │                          │
+                          │  Visible Items:          │
+                          │            ↓ 4↑          │
+                          │                          │
+                          │                          │
+                          │   [Continue] [Cancel]    │
+                          └──────────────────────────┘
+
+
+
+
+ F9 Cancel  F10 Continue

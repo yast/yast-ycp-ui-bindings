@@ -1,0 +1,24 @@
+ YaST2 - ./../../Tree-recursive-large.rb @ ohmu
+
+
+
+
+
+
+                              ┌──────────────────┐
+                              │TreeWidget Example│
+                              │┌Modules─────────┐│
+                              ││─+─[ ] dog      ─│
+                              ││───[ ] Mouse    ││
+                              ││───[ ] spider   ││
+                              │└────────────────┘│
+                              │[OK][Log selected]│
+                              └──────────────────┘
+
+
+
+
+
+
+
+

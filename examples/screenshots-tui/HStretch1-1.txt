@@ -1,0 +1,24 @@
+ YaST2 - ./../../HStretch1.rb @ ohmu
+
+
+
+
+
+
+
+
+         ┌───────────────────────────────────────────────────────────┐
+         │                    Some text goes here                    │
+         │This is some more text, that is quite long, as you can see.│
+         │[OK]                                                       │
+         └───────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+

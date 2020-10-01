@@ -1,0 +1,24 @@
+ YaST2 - ./../../MenuBar1.rb @ ohmu
+
+
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│Error                                                                         │
+│Internal error. Please report a bug report with logs.                         │
+│Run save_y2logs to get complete logs.                                         │
+│                                                                              │
+│Caller:  /home/martin/svn/yast-ycp-ui-bindings/examples/MenuBar1.rb:40:in `mai│
+│                                                                              │
+│Details: undefined method `Menu' for #<Yast::MenuBar1Client:0x0000564ad458b360│
+│                                                                              │
+│Start the Ruby debugger now and debug the issue? (Experts only!)              │
+│                                                                              │
+│                                  [Yes] [No]                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+ F9 No  F10 Yes

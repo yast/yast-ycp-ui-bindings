@@ -1,0 +1,24 @@
+ YaST2 - ./../../PopupStressTest.rb @ ohmu
+
+                               Pop-up Stress Test
+
+
+
+
+
+                  Sit back and watch the pop-up dialogs.
+
+                  Experiment with minimizing this application
+                  and with working with some other application
+                  while this is running.
+
+
+
+
+
+
+
+
+                                                                        [Close]
+
+

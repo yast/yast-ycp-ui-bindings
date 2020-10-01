@@ -1,0 +1,24 @@
+ YaST2 - ./../../DefaultSizeDialogs.rb @ ohmu
+
+                                Top level dialog
+                                   ┌OK─────┐
+                                   └Level 1┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

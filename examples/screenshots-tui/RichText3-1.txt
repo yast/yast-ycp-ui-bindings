@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText3.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │RichText example                                                            ┬
+ │                                                                            │
+ │This is a RichText widget. Lines are wrapped automatically, this is a very  │
+ │very very very long long long long long long line .                         │
+ │                                                                            │
+ │It's very much like HTML, but not quite as powerful.                        │
+ │                                                                            │
+ │Text in pre tags preserves newlines and spaces.                             │
+ │                                                                            ┴
+ │Table in pre                                                                │
+ │                host    ip adress       info      description               │
+ │                sturm   10.10.0.159     old       work station              │
+ │                                                                            │
+ │Lines are    not      wrapped but HTML tags are interpreted and entities lik│
+ │After /pre the text is HTML text like before.                               │
+ │                                                                            │
+ │Much much more text .............. continous much much more text .... follow│
+ └├─────────────────────────────────────┤─────────────────────────────────────┘
+                                      [OK]
+
+

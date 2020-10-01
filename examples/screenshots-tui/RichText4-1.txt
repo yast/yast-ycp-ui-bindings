@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText4.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │RichText example                                                            ┬
+ │                                                                            │
+ │This is a RichText widget.                                                  │
+ │                                                                            │
+ │It's very much like HTML, but not quite as powerful.                        │
+ │                                                                            │
+ │bold and italic you can rely on.                                            │
+ │But in text mode bold and italic it look the same.                          │
+ │                                                                            │
+ │Bold used for status:                                                       ┴
+ │                                                                            │
+ │-i-: keep the installed version ( package locked )                          │
+ │ i : All requirements of this pattern/language are satisfied                │
+ │                                                                            │
+ │Italic used for special info:                                               │
+ │                                                                            │
+ │Please read the Users Manual.                                               │
+ └────────────────────────────────────────────────────────────────────────────┘
+                                      [OK]
+
+

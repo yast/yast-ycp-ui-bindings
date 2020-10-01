@@ -1,0 +1,24 @@
+ YaST2 - ./../../MultiLineEdit4.rb @ ohmu
+
+
+
+
+
+
+                      ┌─────────────────────────────────┐
+                      │┌Problem description:───────────┐│
+                      ││My first input is already      ││
+                      ││here                           ││
+                      ││                               ││
+                      │└───────────────────────────────┘│
+                      │Number of characters entered:0   │
+                      │              [OK]               │
+                      └─────────────────────────────────┘
+
+
+
+
+
+
+
+

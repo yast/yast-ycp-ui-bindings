@@ -1,0 +1,24 @@
+ YaST2 - ./../../MultiSelectionBox3.rb @ ohmu
+
+
+
+
+
+
+
+                           ┌────────────────────────┐
+                           │┌Select pizza toppings:┐│
+                           ││[ ] Cheese            ─│
+                           ││[ ] Tomatoes          ││
+                           ││[ ] Mushrooms         ││
+                           │└──────────────────────┘│
+                           │          [OK]          │
+                           └────────────────────────┘
+
+
+
+
+
+
+
+
