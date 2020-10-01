@@ -12,26 +12,35 @@ tmux_new_session() {
     tmux new-session -s "$SESSION" -x 80 -y 24 -d "$@"
 }
 
+# A --quiet grep
+# $1 regex (POSIX ERE) to find in captured pane
+# retcode: true or false
+tmux_grep() {
+    local REGEX="$1"
+    tmux capture-pane -t "$SESSION" -p | grep -E --quiet "$REGEX"
+    RESULT=(${PIPESTATUS[@]})
+
+    if [ ${RESULT[0]} != 0 ]; then
+        # capturing the pane failed; the session may have exited already
+        return 2
+    fi
+    
+    # capturing went fine, pass on the grep result
+    test ${RESULT[1]} = 0
+}
+
 # $1 regex (POSIX ERE) to find in captured pane
 tmux_await() {
     local REGEX="$1"
 
     local SLEEPS=(0.1 0.2 0.2 0.5 1 2 2 5)
-    for S in "${SLEEPS[@]}"; do
-        tmux capture-pane -t "$SESSION" -p | grep -E --quiet "$REGEX"
-        RESULT=(${PIPESTATUS[@]})
-
-        if [ ${RESULT[0]} != 0 ]; then
-            # capturing the pane failed; the session may have exited already
-            return 1
-        fi
-        if [ ${RESULT[1]} = 0 ]; then
-            # found the expected REGEX
-            return 0
-        fi
-
-        sleep "$S"
+    for SL in "${SLEEPS[@]}"; do
+        tmux_grep "$REGEX" && return 0
+        if [ $? = 2 ]; then return 2; fi # session not found
+        # text not found, continue waiting for it
+        sleep "$SL"
     done
+    # text not found, timed out
     false
 }
 
@@ -49,7 +58,7 @@ tmux_capture_pane() {
     # by filtering out the escape sequences
 }
 
-# $1 keys; see:
+# $1 keys ("C-X" for Ctrl-X, "M-X" for Alt-X, think "Meta"); for details see:
 #   man tmux | less +/"^KEY BINDINGS"
 tmux_send_keys() {
     if $VERBOSE; then
@@ -112,13 +121,6 @@ function not_expect_text()
     kill_session "$SESSION"
     exit 1
   fi
-}
-
-function send_keys()
-{
-  echo "Sending keys: $2"
-  # -t target-pane
-  tmux send-keys -t "$1" "$2"
 }
 
 function process_exited()
