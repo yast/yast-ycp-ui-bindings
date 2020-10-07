@@ -1,14 +1,14 @@
 # encoding: utf-8
 
-# Example for table with nested items
+# Example for table with multi-selection and nested items
 
 module Yast
-  class TableNestedItems < Client
+  class TableNestedMultiSel < Client
     Yast.import "UI"
 
     def main
       UI.OpenDialog(main_dialog)
-      update_selected(current_table_item)
+      update_selected(selected_items)
       handle_events
       UI.CloseDialog
     end
@@ -86,21 +86,20 @@ module Yast
         when :close, :cancel # :cancel is WM_CLOSE
           break # leave event loop
         when :table
-          update_selected(current_table_item)
+          update_selected(selected_items)
         end
         id
       end
     end
 
-    def current_table_item
-      UI.QueryWidget(Id(:table), :CurrentItem)
+    def selected_items
+      UI.QueryWidget(Id(:table), :SelectedItems)
     end
 
-    def update_selected(id)
-      id ||= "<nil>"
-      UI.ChangeWidget(Id(:selected), :Value, id.to_s)
+    def update_selected(ids)
+      UI.ChangeWidget(Id(:selected), :Value, ids.join(", "))
     end
   end
 end
 
-Yast::TableNestedItems.new.main
+Yast::TableNestedMultiSel.new.main

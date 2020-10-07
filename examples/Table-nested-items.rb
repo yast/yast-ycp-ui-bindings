@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# Example for table with nested items
+# Example for table with single-selection and nested items
 
 module Yast
   class TableNestedItems < Client

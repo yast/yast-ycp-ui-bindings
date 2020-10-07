@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-# Example for table with nested items
+# Example for table with single-selection and with flat items (no nesting)
 
 module Yast
-  class TableNestedItems < Client
+  class TableFlatItems < Client
     Yast.import "UI"
 
     def main
@@ -88,4 +88,4 @@ module Yast
   end
 end
 
-Yast::TableNestedItems.new.main
+Yast::TableFlatItems.new.main
