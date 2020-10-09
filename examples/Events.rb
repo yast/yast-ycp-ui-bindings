@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# (Advanced) YCP example for various UI events:
+# (Advanced) example for various UI events:
 #
 # Create a dialog with all kinds of widgets that can generate events and
 # display any event nicely formatted in a RichText widget.
@@ -32,7 +32,7 @@ module Yast
 
       @delivery = Tree(
         Id(:delivery_service),
-        Opt(:notify, :notifyContextMenu),
+        Opt(:notify, :immediate, :notifyContextMenu),
         "&Delivery Service",
         [
           Item(

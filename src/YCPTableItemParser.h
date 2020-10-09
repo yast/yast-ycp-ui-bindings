@@ -46,9 +46,21 @@ public:
      *
      *     [
      *         `item(`id(`myID1 ), "Label1", "Label2", "Label3" ),
-     *         `item(`id(`myID1 ), "Label1", `cell("Label2"), "Label3" ),
-     *         `item(`id(`myID2 ), "Label1", `cell(`icon( "icon2.png"), "Label2" ), "Label3" ),
-     *         `item(`id(`myID2 ), "Label1", `cell( "Label2", `icon( "icon2.png")), "Label3" )
+     *         `item(`id(`myID2 ), "Label1", `cell("Label2"), "Label3" ),
+     *         `item(`id(`myID3 ), "Label1", `cell(`icon( "icon2.png"), "Label2" ), "Label3" ),
+     *         `item(`id(`myID4 ), "Label1", `cell( "Label2", `icon( "icon2.png")), "Label3" ),
+     *         `item(`id(`myID5 ), "Label1", "Label2", "Label3",
+     *               [
+     *                   `item(`id(`myId51, "Label1", "Label2", "Label3")),
+     *                   `item(`id(`myId52, "Label1", "Label2", "Label3"))
+     *               ],
+     *               `open),
+     *         `item(`id(`myID6 ), "Label1", "Label2", "Label3",
+     *               [
+     *                   `item(`id(`myId61, "Label1", "Label2", "Label3")),
+     *                   `item(`id(`myId62, "Label1", "Label2", "Label3"))
+     *               ],
+     *               `closed),
      *     ]
      *
      * Return a list of newly created YTableItem-derived objects.
@@ -61,12 +73,26 @@ public:
 protected:
 
     /**
-     * Parse an item term:
+     * Parse an item term; one of:
      *
      *         `item(`id(`myID1 ), "Label1", "Label2", "Label3" )
-     *         `item(`id(`myID1 ), "Label1", `cell( "Label2" ), "Label3" )
-     *         `item(`id(`myID2 ), "Label1", `cell(`icon( "icon2.png" ), "Label2" ), "Label3" )
-     *         `item(`id(`myID2 ), "Label1", `cell( "Label2", `icon( "icon2.png")), "Label3" )
+     *         `item(`id(`myID2 ), "Label1", `cell( "Label2" ), "Label3" )
+     *         `item(`id(`myID3 ), "Label1", `cell(`icon( "icon2.png" ), "Label2" ), "Label3" )
+     *         `item(`id(`myID4 ), "Label1", `cell( "Label2", `icon( "icon2.png")), "Label3" )
+     *
+     *         `item(`id(`myID5 ), "Label1", "Label2", "Label3",
+     *               [
+     *                   `item(`id(`myId51, "Label1", "Label2", "Label3")),
+     *                   `item(`id(`myId52, "Label1", "Label2", "Label3"))
+     *               ],
+     *               `open)
+     *
+     *         `item(`id(`myID6 ), "Label1", "Label2", "Label3",
+     *               [
+     *                   `item(`id(`myId61, "Label1", "Label2", "Label3")),
+     *                   `item(`id(`myId62, "Label1", "Label2", "Label3"))
+     *               ],
+     *               `closed)
      *
      * `cell() is optional if there is only a label and no icon for that cell.
      *

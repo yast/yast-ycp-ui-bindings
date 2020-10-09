@@ -17,10 +17,10 @@
 
 # YUIWidget_MenuBar
 %define min_yui_version	3.11.0
-%define yui_so		13
+%define yui_so		14
 
 Name:           yast2-ycp-ui-bindings
-Version:        4.3.2
+Version:        4.3.3
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build

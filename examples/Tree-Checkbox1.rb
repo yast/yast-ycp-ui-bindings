@@ -2,7 +2,7 @@
 
 # Tree with icons
 module Yast
-  class TreeCheckbox2Client < Client
+  class TreeCheckboxClient < Client
     def main
       Yast.import "UI"
 
@@ -12,14 +12,14 @@ module Yast
             Heading("YaST2 Mini Control Center"),
             Tree(
               Id(:mod),
-              Opt(:notify, :multiSelection, :immediate),
+              Opt(:multiSelection),
               "Modules",
               [
                 Item(
                   Id("country"),
                   term(:icon, "yast-yast-language.png"),
                   "Localization",
-                  false,
+                  true,
                   [
                     Item(
                       Id("keyboard"),
@@ -35,34 +35,28 @@ module Yast
                 ),
                 Item(Id("mouse"), term(:icon, "yast-mouse.png"), "Mouse"),
                 Item(Id("lan"), term(:icon, "yast-lan.png"), "Network"),
-                Item(Id("xmas"), term(:icon, "yast-software.png"), "Merry X-Mas"),
+                Item(Id(:xmas), term(:icon, "yast-software.png"), "Merry X-Mas"),
                 Item(
-                  Id("newyear"),
+                  Id(:newyear),
                   term(:icon, "yast-software.png"),
                   "Happy New Year"
                 )
               ]
             ),
-            HBox(
-              PushButton(Id(:ok), Opt(:default), "&OK"),
-              PushButton(Id(:deselect), "&Log selected")
-            )
+            PushButton(Id(:ok), Opt(:default), "&OK")
           )
         )
       )
 
-      UI.ChangeWidget(:mod, :SelectedItems, ["keyboard", "xmas", "newyear"])
+      UI.ChangeWidget(:mod, :SelectedItems, [:xmas, :newyear])
+
       @id = nil
-      @current = Convert.to_string(UI.QueryWidget(Id(:mod), :CurrentItem))
-      Builtins.y2milestone("Current item: %1", @current)
       begin
-        @id = UI.UserInput
+        @id = UI.TimeoutUserInput(300)
         @selected_items = Convert.to_list(
           UI.QueryWidget(Id(:mod), :SelectedItems)
         )
-        Builtins.y2milestone("Selected items: %1", @selected_items)
-        @current = Convert.to_string(UI.QueryWidget(Id(:mod), :CurrentItem))
-        Builtins.y2milestone("Current item: %1", @current)
+        Builtins.y2warning("Selected items: %1", @selected_items)
       end until @id == :ok
 
       nil
@@ -70,4 +64,4 @@ module Yast
   end
 end
 
-Yast::TreeCheckbox2Client.new.main
+Yast::TreeCheckboxClient.new.main
