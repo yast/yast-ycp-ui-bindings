@@ -1,7 +1,7 @@
 /****************************************************************************
 
 Copyright (c) 2000 - 2010 Novell, Inc.
-Copyright (c) 2019 SUSE LLC
+Copyright (c) 2019 - 2020 SUSE LLC
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -220,7 +220,7 @@ YCPPropertyHandler::getComplexProperty( YWidget * widget, const string & propert
     }
     else if ( propertyName == YUIProperty_OpenItems )
     {
-	val = tryGetTreeOpenItems	( widget );	if ( ! val.isNull() ) return val;
+	val = tryGetOpenItems           ( widget );	if ( ! val.isNull() ) return val;
     }
     else if ( propertyName == YUIProperty_CurrentBranch )
     {
@@ -1261,24 +1261,24 @@ YCPPropertyHandler::tryGetWizardCurrentItem( YWidget * widget )
 
 
 YCPValue
-YCPPropertyHandler::tryGetTreeOpenItems( YWidget * widget )
+YCPPropertyHandler::tryGetOpenItems( YWidget * widget )
 {
-    YTree * tree = dynamic_cast<YTree *> (widget);
+    YSelectionWidget * selWidget = dynamic_cast<YSelectionWidget *> (widget);
 
-    if ( ! tree )
+    if ( ! selWidget )
 	return YCPNull();
 
     YCPMap openItems;
-    getTreeOpenItems( openItems, tree->itemsBegin(), tree->itemsEnd() );
+    getOpenItems( openItems, selWidget->itemsBegin(), selWidget->itemsEnd() );
 
     return openItems;
 }
 
 
 void
-YCPPropertyHandler::getTreeOpenItems( YCPMap &			openItems,
-				      YItemConstIterator	begin,
-				      YItemConstIterator	end )
+YCPPropertyHandler::getOpenItems( YCPMap &              openItems,
+                                  YItemConstIterator	begin,
+                                  YItemConstIterator	end )
 {
     for ( YItemConstIterator it = begin; it != end; ++it )
     {
@@ -1286,18 +1286,35 @@ YCPPropertyHandler::getTreeOpenItems( YCPMap &			openItems,
 
 	if ( item )
 	{
-	    YCPTreeItem * ycpTreeItem = dynamic_cast<YCPTreeItem *> (item);
+            YTreeItem * yTreeItem = dynamic_cast<YTreeItem *> (item);
 
-	    if ( item->isOpen() )
+	    if ( yTreeItem->isOpen() )
 	    {
-		if ( ycpTreeItem && ycpTreeItem->hasId() )
-		    openItems.add( ycpTreeItem->id(), YCPString( "ID" ) );
-		else
-		    openItems.add( YCPString( item->label() ), YCPString( "Text" ) );
+                YCPTableItem * ycpTableItem = dynamic_cast<YCPTableItem *> (item);
+
+                if ( ycpTableItem )
+                {
+                    if ( ycpTableItem->hasId() )
+                        openItems.add( ycpTableItem->id(), YCPString( "ID" ) );
+                    else
+                        openItems.add( ycpTableItem->label( 0 ), YCPString( "Text" ) );
+                }
+                else
+                {
+                    YCPTreeItem * ycpTreeItem  = dynamic_cast<YCPTreeItem *> (item);
+
+                    if ( ycpTreeItem )
+                    {
+                        if ( ycpTreeItem->hasId() )
+                            openItems.add( ycpTreeItem->id(), YCPString( "ID" ) );
+                        else
+                            openItems.add( ycpTreeItem->label(), YCPString( "Text" ) );
+                    }
+                }
 	    }
 
 	    if ( item->hasChildren() )
-		getTreeOpenItems( openItems, item->childrenBegin(), item->childrenEnd() );
+		getOpenItems( openItems, item->childrenBegin(), item->childrenEnd() );
 	}
     }
 }
