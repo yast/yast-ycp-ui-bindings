@@ -10,21 +10,13 @@ module Yast
         VBox(
           Image(
             Id("image"),
-            "/usr/share/YaST2/theme/current/wallpapers/welcome.jpg",
+            "/usr/share/grub2/themes/openSUSE/logo.png",
             "fallback text"
           ),
           PushButton(Opt(:default), "&OK")
         )
       )
       UI.UserInput
-      if UI.WidgetExists(Id("image"))
-        UI.ChangeWidget(Id("image"), :Enabled, false)
-        UI.UserInput
-        UI.ChangeWidget(Id("image"), :Enabled, true)
-        UI.UserInput
-      else
-        Builtins.y2error("No such widget id")
-      end
       UI.CloseDialog
 
       nil
