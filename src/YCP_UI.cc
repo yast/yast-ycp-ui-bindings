@@ -681,16 +681,16 @@ YCPValue YCP_UI::ChangeWidget( const YCPValue & idValue, const YCPValue & proper
 						idValue->toString().c_str() ) );
 	}
 
-	YCPValue	id	= YCPDialogParser::parseIdTerm( idValue );
-	YWidget *	widget 	= YCPDialogParser::findWidgetWithId( id,
-								     true ); // throw if not found
+	YCPValue   id	  = YCPDialogParser::parseIdTerm( idValue );
+	YWidget *  widget = YCPDialogParser::findWidgetWithId( id,
+                                                               true ); // throw if not found
 
 	YPropertySet propSet = widget->propertySet();
 
 	if ( property->isSymbol() )
 	{
 	    string oldShortcutString = widget->shortcutString();
-	    string propertyName	 = property->asSymbol()->symbol();
+	    string propertyName	     = property->asSymbol()->symbol();
 
 	    YPropertyValue val;
 
@@ -715,8 +715,8 @@ YCPValue YCP_UI::ChangeWidget( const YCPValue & idValue, const YCPValue & proper
 	}
 	else if ( property->isTerm() )
 	{
-	    bool success	= YCPPropertyHandler::setComplexProperty( widget, property->asTerm(), newValue );
-	    ret		= YCPBoolean( success );
+	    bool success = YCPPropertyHandler::setComplexProperty( widget, property->asTerm(), newValue );
+	    ret	 = YCPBoolean( success );
 	}
 	else
 	{
