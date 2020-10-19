@@ -117,8 +117,7 @@ module Yast
     end
 
     def update_open_items(ids)
-      ids ||= "<nil>"
-      UI.ChangeWidget(Id(:open_items), :Value, ids.to_s)
+      UI.ChangeWidget(Id(:open_items), :Value, ids.inspect)
     end
   end
 end
