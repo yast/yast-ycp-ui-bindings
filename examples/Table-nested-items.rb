@@ -27,10 +27,16 @@ module Yast
             VSpacing(0.2),
             table,
             VSpacing(0.2),
-            Left(Label("Selected:")),
-            Label(Id(:selected), Opt(:outputField, :hstretch), "..."),
-            Left(Label("Open Items:")),
-            Label(Id(:open_items), Opt(:outputField, :hstretch), "..."),
+            HBox(
+              # Putting both in one line to enable grepping for NCurses UI tests
+              HSquash(MinWidth(12, Label("Selected: "))),
+              Label(Id(:selected), Opt(:outputField, :hstretch), "...")
+            ),
+            HBox(
+              # Putting both in one line to enable grepping for NCurses UI tests
+              HSquash(MinWidth(12, Label("Open Items: "))),
+              Label(Id(:open_items), Opt(:outputField, :hstretch), "...")
+            ),
             VSpacing(0.3),
             Right(
               PushButton(Id(:close), "&Close")
