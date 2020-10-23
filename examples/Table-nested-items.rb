@@ -5,10 +5,12 @@
 module Yast
   class TableNestedItems < Client
     Yast.import "UI"
+    include Yast::Logger
 
     def main
       UI.OpenDialog(main_dialog)
       update_selected(current_table_item)
+      update_open_items(open_items)
       handle_events
       UI.CloseDialog
     end
@@ -25,8 +27,16 @@ module Yast
             VSpacing(0.2),
             table,
             VSpacing(0.2),
-            Left(Label("Selected:")),
-            Label(Id(:selected), Opt(:outputField, :hstretch), "..."),
+            HBox(
+              # Putting both in one line to enable grepping for NCurses UI tests
+              HSquash(MinWidth(12, Label("Selected: "))),
+              Label(Id(:selected), Opt(:outputField, :hstretch), "...")
+            ),
+            HBox(
+              # Putting both in one line to enable grepping for NCurses UI tests
+              HSquash(MinWidth(12, Label("Open Items: "))),
+              Label(Id(:open_items), Opt(:outputField, :hstretch), "...")
+            ),
             VSpacing(0.3),
             Right(
               PushButton(Id(:close), "&Close")
@@ -87,6 +97,7 @@ module Yast
           break # leave event loop
         when :table
           update_selected(current_table_item)
+          update_open_items(open_items)
         end
         id
       end
@@ -99,6 +110,14 @@ module Yast
     def update_selected(id)
       id ||= "<nil>"
       UI.ChangeWidget(Id(:selected), :Value, id.to_s)
+    end
+
+    def open_items
+      UI.QueryWidget(Id(:table), :OpenItems).keys
+    end
+
+    def update_open_items(ids)
+      UI.ChangeWidget(Id(:open_items), :Value, ids.inspect)
     end
   end
 end

@@ -1,7 +1,7 @@
 /****************************************************************************
 
 Copyright (c) 2000 - 2010 Novell, Inc.
-Copyright (c) 2019 SUSE LLC
+Copyright (c) 2019 - 2020  SUSE LLC
 All Rights Reserved.
 
 This program is free software; you can redistribute it and/or
@@ -148,7 +148,7 @@ protected:
     static YCPValue tryGetTableSelectedItems		( YWidget * widget );
     static YCPValue tryGetTreeSelectedItems		( YWidget * widget );
     static YCPValue tryGetMultiSelectionBoxCurrentItem	( YWidget * widget );
-    static YCPValue tryGetTreeOpenItems			( YWidget * widget );
+    static YCPValue tryGetOpenItems			( YWidget * widget );
     static YCPValue tryGetTreeCurrentBranch		( YWidget * widget );
     static YCPValue tryGetWizardCurrentItem		( YWidget * widget );
     static YCPValue tryGetTableCell			( YWidget * widget, const YCPTerm & propertyTerm );
@@ -180,12 +180,12 @@ protected:
 				  const YCPValue &	newEnabled );
 
     /**
-     * Helper function for tryGetTreeOpenItems(): Get any open tree items
+     * Helper function for tryGetOpenItems(): Get any open tree items
      * between iterators 'begin' and 'end' and add them to the 'openItems' map.
      **/
-    static void getTreeOpenItems( YCPMap &		openItems,
-				  YItemConstIterator	begin,
-				  YItemConstIterator	end );
+    static void getOpenItems( YCPMap &                  openItems,
+                              YItemConstIterator	begin,
+                              YItemConstIterator	end );
 
     /**
      * Helper function for tryGetMenuWidgetEnabledItems(): Get the enabled /
