@@ -2,6 +2,7 @@
 Wed Oct 28 16:52:12 UTC 2020 - Stefan Hundhammer <shundhammer@suse.com>
 
 - Added example for more in-depth MultiSelectionBox testing
+  (bsc#1177982, bsc#1177985)
 - 4.3.5
 
 -------------------------------------------------------------------
