@@ -1,5 +1,10 @@
 # encoding: utf-8
 
+# Example for a menu bar and its shortcuts vs. button shortcuts
+#
+# This is also used in the NCurses UI test suite.
+# When changing this example, make sure that test suite does not fail!
+
 module Yast
   class MenuBarShortcutsClient < Client
     Yast.import "UI"
@@ -22,21 +27,21 @@ module Yast
               HVSquash(
                 VBox(
                   ReplacePoint(Id(:rp_extra_buttons), Empty()),
-                  VSpacing( 0.2 ),
+                  VSpacing( 1 ),
                   Left(CheckBox(Id(:cb_extra_buttons), Opt(:notify), "Extra &Buttons", false)),
                   VSpacing( 1 ),
-                  Left(Label("Last Event:")),
-                  VSpacing( 0.2 ),
-                  MinWidth( 20,
-                    Label(Id(:last_event), Opt(:outputField), "<none>")
-                  ),
-                  VSpacing( 2 ),
-                  Left(CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true))
+                  Left(CheckBox(Id(:read_only), Opt(:notify), "Read &Only", true)),
+                  VSpacing( 3 ),
+                  HBox(
+                    # Putting both in one line to enable grepping for NCurses UI tests
+                    HSquash(Label("Last Event: ")),
+                    MinWidth(20, Label(Id(:last_event), Opt(:outputField, :hstretch), "<none>"))
+                  )
                 )
               )
             )
           ),
-          Right(PushButton(Id(:cancel), "&Quit"))
+          Right(PushButton(Id(:quit), "&Quit"))
         )
       )
     end
@@ -57,7 +62,7 @@ module Yast
         Item(Id(:save), "&Save"),
         Item(Id(:save_as), "Save &As..."),
         Item("---"),
-        Item(Id(:quit), "&Quit"),
+        Item(Id(:quit), "&Quit")
       ].freeze
     end
 
@@ -75,7 +80,7 @@ module Yast
         Item(Id(:view_compact), "&Compact"),
         Item(Id(:view_detailed), "&Detailed"),
         Item("---"),
-        term(:menu, "&Zoom", zoom_menu),
+        term(:menu, "&Zoom", zoom_menu)
       ].freeze
     end
 
@@ -83,13 +88,13 @@ module Yast
       [
         Item(Id(:zoom_in), "Zoom &In" ),
         Item(Id(:zoom_out), "Zoom &Out" ),
-        Item(Id(:zoom_default), "Zoom &Default" ),
+        Item(Id(:zoom_default), "Zoom &Default" )
       ].freeze
     end
 
     def options_menu
       [
-        Item(Id(:settings), "&Settings..."),
+        Item(Id(:settings), "&Settings...")
       ].freeze
     end
 
@@ -127,11 +132,11 @@ module Yast
       # so their shortcuts get priority over menus / menu items
       HSquash(
         HBox(Id(:extra_button_box),
-          PushButton("&Fi"),
-          PushButton("&Ed"),
-          PushButton("&Vi"),
-          PushButton("&Opt"),
-          PushButton("&Cp")
+          PushButton(Id(:b_file), "&File"),
+          PushButton(Id(:b_edit), "&Edit"),
+          PushButton(Id(:b_view), "&View"),
+          PushButton(Id(:b_opt), "&Opt"),
+          PushButton(Id(:b_cp), "&Cp")
         )
       )
     end
@@ -156,6 +161,9 @@ module Yast
 
     def show_event(id)
       UI.ChangeWidget(:last_event, :Value, id.to_s)
+      # Changing the content of a label does not trigger a re-layout by default;
+      # we need to do that manually
+      UI.RecalcLayout
     end
 
     # Enable or disable menu items depending on the current content of the
