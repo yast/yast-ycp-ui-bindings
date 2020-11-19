@@ -26,7 +26,7 @@ module Yast
             Left(
               Heading("Pizza Selector")
             ),
-            VSpacing(0.2),
+            VSpacing(1),
             HCenter(
               HSquash(
                 MinWidth(30, pizza_combo_box)
