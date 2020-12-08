@@ -5,26 +5,14 @@ module Yast
   class LabelAutoWrap1Client < Client
 
     def content
-        VBox(
-          VCenter(MinWidth(40, Label(Opt(:autoWrap), message))),
-          VSpacing(0.2),
-          Empty()
-        )
+      MinWidth(40, Label(Opt(:autoWrap), message))
     end
 
     def content2
-      HBox(
-        HSpacing(1),
         VBox(
-          VSpacing(0.2),
           content,
           VStretch(),
-          PushButton("OK"),
-          VStretch(),
-          VSpacing(0.2)
-        ),
-        HSpacing(1)
-      )
+        )
     end
 
     def message
