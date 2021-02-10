@@ -15,12 +15,11 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# YUIWidget_MenuBar
-%define min_yui_version	3.11.0
-%define yui_so		14
+%define min_yui_version	4.0.0
+%define yui_so		15
 
 Name:           yast2-ycp-ui-bindings
-Version:        4.3.7
+Version:        4.3.8
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
