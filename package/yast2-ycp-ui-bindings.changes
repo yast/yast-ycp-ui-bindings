@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Feb 10 12:09:10 UTC 2021 - Stefan Hundhammer <shundhammer@suse.com>
+
+- Adapted to libyui SO bump 14 -> 15 (bsc#1181653)
+- 4.3.8
+
+-------------------------------------------------------------------
 Mon Nov 16 16:19:49 UTC 2020 - Stefan Hundhammer <shundhammer@suse.com>
 
 - Extended MenuBar-shortcut-test example to test shortcut priority
