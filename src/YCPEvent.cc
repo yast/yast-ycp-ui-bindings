@@ -123,6 +123,8 @@ YCPEvent::eventId() const
     if ( dynamic_cast<const YCancelEvent  *> (_event ) )  return YCPSymbol( "cancel"  );
     if ( dynamic_cast<const YTimeoutEvent *> (_event ) )  return YCPSymbol( "timeout" );
     if ( dynamic_cast<const YDebugEvent   *> (_event ) )  return YCPSymbol( "debugHotkey" );
+    if ( auto special_event = dynamic_cast<const YSpecialKeyEvent *> (_event ) )
+		  return YCPSymbol( "special_key:" + special_event->id() );
 
     return YCPVoid();
 }
