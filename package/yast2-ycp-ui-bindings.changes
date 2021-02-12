@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Feb 12 10:35:54 UTC 2021 - Ladislav Slezák <lslezak@suse.cz>
+
+- Handle special keyboard shortcuts (jsc#PM-1895, jsc#SLE-16263)
+- 4.3.9
+
+-------------------------------------------------------------------
 Wed Feb 10 12:09:10 UTC 2021 - Stefan Hundhammer <shundhammer@suse.com>
 
 - Adapted to libyui SO bump 14 -> 15 (bsc#1181653)
