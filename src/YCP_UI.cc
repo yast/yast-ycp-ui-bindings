@@ -516,7 +516,7 @@ YCPValue YCP_UI::doUserInput( const char * 	builtin_name,
  * For UIs that don't support this kind of specialized dialog, this is
  * equivalent to <tt>`mainDialog</tt> -- see also the
  * <tt>HasWizardDialogSupport</tt> entry of the map returned by
- * <tt>UI::GetDisplayInfo()</tt>. 
+ * <tt>UI::GetDisplayInfo()</tt>.
  *
  * The <tt>`warncolor</tt> option displays the entire dialog in a bright
  * warning color.
@@ -572,7 +572,7 @@ YCPBoolean YCP_UI::OpenDialog( const YCPTerm & opts, const YCPTerm & dialogTerm 
     {
 	if ( dialogType == YWizardDialog && ! YUI::yApp()->hasWizardDialogSupport() )
 	    dialogType = YMainDialog;
-	
+
 	YDialog * dialog = YUI::widgetFactory()->createDialog( dialogType, colorMode );
 	YUI_CHECK_NEW( dialog );
 
@@ -953,7 +953,7 @@ YCPBoolean YCP_UI::SetFocus( const YCPValue & idValue )
 	return YCPNull();
 
     YCPBoolean result = YCPNull();
-    
+
     try
     {
 	YCPValue id = YCPDialogParser::parseIdTerm( idValue );
@@ -1107,7 +1107,7 @@ void YCP_UI::DumpWidgetTree()
     // After all, this is a debugging function
     YDialog *currentDialog = YDialog::currentDialog(false);
 
-    if (currentDialog) 
+    if (currentDialog)
         currentDialog->dumpDialogWidgetTree();
     else
 	yuiWarning() << "No dialog exists :( Nothing to dump." << endl;
@@ -1253,8 +1253,9 @@ YCPMap YCP_UI::GetDisplayInfo()
     info_map->add( YCPString( YUICap_HasIconSupport		), YCPBoolean( app->hasIconSupport()	) );
     info_map->add( YCPString( YUICap_HasAnimationSupport	), YCPBoolean( app->hasAnimationSupport()   ) );
     info_map->add( YCPString( YUICap_HasFullUtf8Support		), YCPBoolean( app->hasFullUtf8Support()    ) );
+    info_map->add( YCPString( YUICap_HasWidgetStyleSupport      ), YCPBoolean( app->hasWidgetStyleSupport() ) );
     info_map->add( YCPString( YUICap_RichTextSupportsTable	), YCPBoolean( app->richTextSupportsTable() ) );
-    info_map->add( YCPString( YUICap_LeftHandedMouse		), YCPBoolean( app->leftHandedMouse()	) );
+    info_map->add( YCPString( YUICap_LeftHandedMouse		), YCPBoolean( app->leftHandedMouse()	    ) );
     info_map->add( YCPString( YUICap_y2debug			), YCPBoolean( YUILog::debugLoggingEnabled() ) );
 
     return info_map;
@@ -1512,6 +1513,24 @@ YCPValue YCP_UI::AskForSaveFileName( const YCPString & startWith,
 	return YCPString( ret );
 }
 
+
+/**
+ * @builtin AskForWidgetStyle
+ * @short Ask the user what widget style (theme) to use.
+ *
+ * @description
+ * Open a pop-up dialog to let the user select between the available widget
+ * styles (themes). If the UI does not support that, this does nothing.
+ *
+ * Use GetDisplayInfo() and check the HasWidgetStyleSupport capability to check
+ * if the UI supports this.
+ */
+void YCP_UI::AskForWidgetStyle()
+{
+    YUI::app()->askForWidgetStyle();
+}
+
+
 /**
  * @builtin SetFunctionKeys
  * @short Sets the (default) function keys for a number of buttons.
@@ -1634,9 +1653,9 @@ YCPValue YCP_UI::evaluateCallback( const YCPTerm & term, bool to_wfm )
 
 /**
 * @description
-* Opens a context menu when the users right clickes a widget 
-* 
-* 
+* Opens a context menu when the users right clicks a widget
+*
+*
 * Example: <tt>OpenContextMenu( `menu(
 * [ `item(`id(`folder), "&Entry1"  ),
 * `menu( "&Submenu1",
@@ -1646,20 +1665,20 @@ YCPValue YCP_UI::evaluateCallback( const YCPTerm & term, bool to_wfm )
 * "&Entry3"     ) ]) ]  )); </tt>
 *
 * @param itemList list of menu items
-* @return bool  Returns true when the context menu was shown, on error 
+* @return bool  Returns true when the context menu was shown, on error
                 (e.g. not supported by ui) false is returned.
-                
+
 */
 YCPBoolean YCP_UI::OpenContextMenu ( const YCPTerm & term )
 {
     YCPList itemList = term->value(0)->asList();
- 
+
     if ( YUI::app()->openContextMenu( YCPMenuItemParser::parseMenuItemList( itemList ) ) )
 	return YCPBoolean( true );
     else
 	return YCPBoolean( false );
 }
- 
+
 
 /**
  * @builtin SetReleaseNotes

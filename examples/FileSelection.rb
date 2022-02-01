@@ -17,7 +17,8 @@ module Yast
               VBox(
                 PushButton(Id(:askDir), Opt(:hstretch), "Select &Directory..."),
                 PushButton(Id(:load), Opt(:hstretch), "&Load File..."),
-                PushButton(Id(:saveAs), Opt(:hstretch), "Save &As...")
+                PushButton(Id(:saveAs), Opt(:hstretch), "Save &As..."),
+                PushButton(Id(:style), Opt(:hstretch), "&Widget Style...")
               )
             ),
             HSpacing(2)
@@ -48,6 +49,8 @@ module Yast
           )
         elsif @button == :saveAs
           @name = UI.AskForSaveFileName("/tmp", "*", "Save as...")
+        elsif @button == :style
+          UI.AskForWidgetStyle()
         end
 
         @name = "<canceled>" if @name == nil

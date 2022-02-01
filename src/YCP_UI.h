@@ -53,6 +53,7 @@ public:
     static YCPValue	AskForExistingDirectory		( const YCPString & startDir, const YCPString & headline );
     static YCPValue 	AskForExistingFile		( const YCPString & startDir, const YCPString & filter, const YCPString & headline );
     static YCPValue 	AskForSaveFileName		( const YCPString & startDir, const YCPString & filter, const YCPString & headline );
+    static void         AskForWidgetStyle               ();
     static void 	BusyCursor			();
     static void 	Beep     			();
     static YCPValue 	ChangeWidget			( const YCPValue & widgetId, const YCPValue & property, const YCPValue & new_value );
@@ -85,6 +86,7 @@ public:
 							  const YCPString & screen_map,
 							  const YCPString & unicode_map,
 							  const YCPString & encoding );
+
     static void 	SetKeyboard			();
     static YCPInteger 	RunInTerminal			( const YCPString & module);
     static YCPBoolean 	SetFocus			( const YCPValue & widgetId );
@@ -140,14 +142,14 @@ protected:
     //
     // Data members
     //
-    
+
     /**
      * Queue for synthetic (faked) user input events.
      * Filled with FakeUserInput(), consumed with UserInput() and related.
      **/
     static std::deque<YCPValue> _fakeUserInputQueue;
 
-    
+
 private:
     YCP_UI() {}
     ~YCP_UI() {}
