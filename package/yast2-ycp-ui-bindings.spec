@@ -15,11 +15,12 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define min_yui_version	4.0.1
-%define yui_so		15
+# YApplication::askForWidgetStyle()
+%define min_yui_version	4.3.0
+%define yui_so		16
 
 Name:           yast2-ycp-ui-bindings
-Version:        4.4.0
+Version:        4.4.1
 Release:        0
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
