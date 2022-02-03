@@ -93,10 +93,10 @@ YUINamespace::SetProductName( const YCPString & name )
 
 YCPValue
 YUINamespace::SetConsoleFont( const YCPString & console_magic,
-		  const YCPString & font,
-		  const YCPString & screen_map,
-		  const YCPString & unicode_map,
-		  const YCPString & encoding )
+                              const YCPString & font,
+                              const YCPString & screen_map,
+                              const YCPString & unicode_map,
+                              const YCPString & encoding )
 {
     if ( YUIComponent::ui() )
 	YCP_UI::SetConsoleFont( console_magic,
@@ -619,6 +619,16 @@ YUINamespace::AskForSaveFileName( const YCPString & startWith, const YCPString &
 	return YCP_UI::AskForSaveFileName( startWith, filter, headline );
     else
 	return YCPVoid();
+}
+
+
+YCPValue
+YUINamespace::AskForWidgetStyle()
+{
+    if ( YUIComponent::ui() )
+	YCP_UI::AskForWidgetStyle();
+
+    return YCPVoid();
 }
 
 

@@ -301,6 +301,9 @@ public:
     /* TYPEINFO: string (string, string, string) */
     YCPValue AskForSaveFileName( const YCPString & startWith, const YCPString & filter, const YCPString & headline );
 
+    /* TYPEINFO: void () */
+    YCPValue AskForWidgetStyle();
+
     /* TYPEINFO: void (map<any,any>) */
     YCPValue SetFunctionKeys( const YCPMap & new_fkeys );
 
