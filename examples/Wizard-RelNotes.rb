@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Wizard example with steps.
+# Wizard example with steps and release notes.
 #
 # Note: Ruby applications are discouraged from using the Wizard widget directly.
 # Use the Wizard module instead.
@@ -10,12 +10,12 @@ module Yast
   class WizardClient < Client
     include Yast::Logger
     YAST_ICON = "/usr/share/icons/hicolor/scalable/apps/yast.svg".freeze
-    
+
     def main
       Yast.import "UI"
-      
+
       return unless ensure_wizard_widget
-      
+
       UI.OpenDialog(Opt(:defaultsize), wizard_dialog)
       set_up_wizard
       event_loop
@@ -56,6 +56,7 @@ module Yast
       UI.WizardCommand(term(:SetDialogHeading, "Welcome to the YaST2 installation"))
       UI.WizardCommand(term(:SetHelpText, help_text))
       add_wizard_steps
+      add_release_notes
     end
 
     def help_text
@@ -79,7 +80,7 @@ module Yast
       UI.WizardCommand(term(:AddStep, "Release Notes", "rel_notes"))
       UI.WizardCommand(term(:AddStep, "Device Configuration", "hw_proposal"))
       UI.WizardCommand(term(:UpdateSteps))
-      
+
       UI.WizardCommand(term(:SetCurrentStep, "net"))
     end
   end
@@ -101,6 +102,45 @@ module Yast
         )
       )
     )
+  end
+
+  def add_release_notes
+    UI.SetReleaseNotes(release_notes_map)
+    UI.WizardCommand(term(:ShowReleaseNotesButton, "Release Notes", "wizard_rel_notes"))
+  end
+
+  def release_notes_map
+    {
+      "SLES" => sles_release_notes,
+      "Foo" => foo_release_notes
+    }
+  end
+
+  def sles_release_notes
+    File.read("./RELEASE-NOTES.en.rtf")
+  end
+
+  def foo_release_notes
+    # Release notes with an external link (bsc#1195158):
+    # A click on the link should not clear the content.
+    notes = <<~EOF
+      <h1><a name="foo">Foo Release Notes</a></h1>
+      <p>Is it a foo? Is it a bar? You decide.</p>
+      <p>No matter if it's foo or bar, it will be good for you!</p>
+      <p>See more at the <a href="https://www.suse.com/">SUSE home page</<a>.</p>
+      <p>And if you click here, the content should not disappear!</p>
+      EOF
+
+    notes += "<br>" * 20
+    # Internal links should work, no matter if they are valid or not.
+    notes += <<~EOF
+      <p><i>
+      Back to the 
+      <a href="#foo">top</a> or 
+      <a href="#anywhere">anywhere</a>
+      </i></p>
+      EOF
+    notes
   end
 end
 
