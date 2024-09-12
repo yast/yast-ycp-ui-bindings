@@ -1,7 +1,7 @@
 #
 # spec file for package yast2-ycp-ui-bindings
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2023 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -12,10 +12,10 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
-# YApplication::askForWidgetStyle()
+
 %define min_yui_version	4.3.0
 %define yui_so		16
 
@@ -26,28 +26,29 @@ Release:        0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source0:        %{name}-%{version}.tar.bz2
 
-Group:	        System/YaST
+Group:          System/YaST
 License:        GPL-2.0-only
 
-BuildRequires:	gcc-c++
-BuildRequires:	libtool
+BuildRequires:  gcc-c++
+BuildRequires:  libtool
 BuildRequires:  yast2-devtools >= 3.1.10
 
 # autodocs + docbook docs
-BuildRequires:	doxygen
-BuildRequires:	docbook-xsl-stylesheets libxslt
-BuildRequires:	sgml-skel
+BuildRequires:  doxygen
+BuildRequires:  docbook-xsl-stylesheets
+BuildRequires:  libxslt
+BuildRequires:  sgml-skel
 
-Requires:	yast2-core
-BuildRequires:	yast2-core-devel
+Requires:       yast2-core
+BuildRequires:  yast2-core-devel
 
-BuildRequires:	libyui-devel >= %min_yui_version
-Requires:	libyui%yui_so >= %min_yui_version
+BuildRequires:  libyui-devel >= %min_yui_version
+Requires:       libyui%yui_so >= %min_yui_version
 
 # libyui ImplPtr
-BuildRequires:	boost-devel
+BuildRequires:  boost-devel
 
-Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
+Summary:        YaST2 - YCP Bindings for the YaST2 User Interface Engine
 
 %description
 This package makes the generic YaST2 user interface engine available
@@ -55,17 +56,17 @@ for YCP applications (YCP is the scripting language in which most YaST2
 modules are written).
 
 %package devel
-Requires:	yast2-ycp-ui-bindings = %version
-Group:		Development/Libraries
+Requires:       yast2-ycp-ui-bindings = %version
+Group:          Development/Libraries
 
-Summary:	YaST2 - YCP Bindings for the YaST2 User Interface Engine
+Summary:        YaST2 - YCP Bindings for the YaST2 User Interface Engine
 
-Requires:	glibc-devel
-Requires:	libstdc++-devel
-Requires:	boost-devel
-Requires:	libyui-devel >= %min_yui_version
-Requires:	yast2-core-devel
-Requires:	yast2-devtools
+Requires:       boost-devel
+Requires:       glibc-devel
+Requires:       libstdc++-devel
+Requires:       libyui-devel >= %min_yui_version
+Requires:       yast2-core-devel
+Requires:       yast2-devtools
 
 %description devel
 This is the development package that makes the generic YaST2 user
@@ -83,7 +84,6 @@ language in which most YaST2 modules are written).
 
 mkdir -p "$RPM_BUILD_ROOT"%{yast_logdir}
 %perl_process_packlist
-
 
 %files
 %defattr(-,root,root)
