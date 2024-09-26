@@ -1,0 +1,24 @@
+ YaST2 - ./../../InputField-setInputMaxLength.rb @ ohmu
+
+
+
+
+
+
+
+                            ┌──────────────────────┐
+                            │     Input Field      │
+                            │     ←a, pronta▒      │
+                            │Limit characters to...│
+                            │                   -1↑│
+                            │    [limit input]     │
+                            │        [Exit]        │
+                            └──────────────────────┘
+
+
+
+
+
+
+
+

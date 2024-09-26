@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText8.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │RichText Example                                                            │
+ │                                                                            │
+ │Firewall disabled (enable)                                                  │
+ │                                                                            │
+ │Some advanced firewall settings                                             │
+ │                                                                            │
+ │sshd disabled (enable)                                                      │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+                                    [Close]
+
+

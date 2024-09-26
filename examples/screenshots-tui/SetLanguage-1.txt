@@ -1,0 +1,24 @@
+ YaST2 - ./../../SetLanguage.rb @ ohmu
+
+
+
+
+
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                  Language:                                   │
+│                                  ▒▒▒▒▒▒▒▒▒                                   │
+│Current language:en_US.UTF-8                                                  │
+│[UI::SetLanguage(]┌UI::GetLanguage(┐┌UI::GetLanguage()┐[Test Dialog]   [Close]│
+│                  └strip encoding──┘└&with encoding───┘                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+

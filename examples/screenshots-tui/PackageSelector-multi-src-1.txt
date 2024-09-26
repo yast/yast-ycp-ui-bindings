@@ -1,0 +1,24 @@
+ YaST2 - ./../../PackageSelector-multi-src.rb @ ohmu
+
+ ┌────────────────────────┐┌──────────────────────────────────────────────────┐
+ │Filter                  ││     │Name                                        ─
+ │Repositories▒▒▒▒▒▒▒▒▒▒▒↓││  i  │aaa_base                                    │
+ │┌──────────────────────┐││  i  │aaa_base-extras                             │
+ ││ │Name                │││  i  │accounts-qml-module                         │
+ ││ │@System             │││  i  │accountsservice                             │
+ ││                      │││  i  │accountsservice-lang                        │
+ ││                      │││  i  │acl                                         │
+ ││                      │││  i  │acpica                                      │
+ ││                      │││  i  │adjtimex                                    │
+ ││                      │││  i  │adobe-sourcecodepro-fonts                   │
+ │└──────────────────────┘││  i  │adobe-sourcesanspro-fonts                   │
+ └────────────────────────┘└├─────────┤───────────────────────────────────────┘
+                           Package: aaa_base                         [Actions↓]
+ ┌────────────────────────┐┌──────────────────────────────────────────────────┐
+ │@System: local RPM      ││aaa_base - openSUSE Base Package                  ─
+ │database                ││                                                  │
+ │                        ││Version: 84.87+git20180409.04c9dae-lp152.13.1     │
+ └────────────────────────┘└──────────────────────────────────────────────────┘
+ [Help↓]                                                      [Cancel][Accept]
+
+ F1 Help  F9 Cancel  F10 Accept

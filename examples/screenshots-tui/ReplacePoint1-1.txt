@@ -1,0 +1,24 @@
+ YaST2 - ./../../ReplacePoint1.rb @ ohmu
+
+
+
+
+
+
+
+
+
+                               ┌───────────────┐
+                               │This is a label│
+                               │   [Change]    │
+                               └───────────────┘
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../MinSize1.rb @ ohmu
+
+
+
+              ┌──────────────────────────────────────────────────┐
+              │┌────────────────────────────────────────────────┐│
+              ││MinSize is particularly useful in connection    ││
+              ││with widgets that can scroll, such as           ││
+              ││ *  RichText                                    ││
+              ││ *  SelectionBox                                ││
+              ││ *  Table                                       ││
+              ││ *  MultiLineEdit                               ││
+              ││                                                ││
+              ││since those widgets don't have a reasonable     ││
+              ││default size.                                   ││
+              ││                                                ││
+              │└────────────────────────────────────────────────┘│
+              │                       [OK]                       │
+              └──────────────────────────────────────────────────┘
+
+
+
+
+

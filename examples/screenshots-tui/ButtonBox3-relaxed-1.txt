@@ -1,0 +1,24 @@
+ YaST2 - ./../../ButtonBox3-relaxed.rb @ ohmu
+
+
+
+
+
+
+
+
+                       ┌───────────────────────────────┐
+                       │Error: Your CPU is under water.│
+                       │                               │
+                       │       [OK] [Details...]       │
+                       └───────────────────────────────┘
+
+
+
+
+
+
+
+
+
+ F10 OK

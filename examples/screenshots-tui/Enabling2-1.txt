@@ -1,0 +1,24 @@
+ YaST2 - ./../../Enabling2.rb @ ohmu
+
+
+
+
+
+
+
+
+                                  ┌─────────┐
+                                  │TestEntry│
+                                  │Disabled▒│
+                                  │[Change ]│
+                                  └─────────┘
+
+
+
+
+
+
+
+
+
+

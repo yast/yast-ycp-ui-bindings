@@ -1,0 +1,24 @@
+ YaST2 - ./../../Wizard-SetDesktopTitle.rb @ ohmu
+
+ SetDesktopTitle Example
+
+
+
+
+
+
+
+
+ Read 'Network Settings' from the lan.desktop file and set this string as windo
+
+
+
+
+
+
+
+
+
+ [Help]                 [Back]                 [Abort]                 [Next]
+
+ F1 Help  F8 Back  F9 Abort  F10 Next

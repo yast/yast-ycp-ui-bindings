@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText1_cs.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │RichText example                                                            │
+ │                                                                            │
+ │This is a RichText widget.                                                  │
+ │                                                                            │
+ │It's czech: ěščřžýáíˇHTML, or german ööäää                                  │
+ │                                                                            │
+ │bold and italic you can rely on.                                            │
+ │                                                                            │
+ │colored  text  might  or  might  not  be  available, depending  on  the  UI.│
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+                                      [OK]
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../IconButton1.rb @ ohmu
+
+
+
+
+
+
+
+                          ┌─────────────────────────┐
+                          │YaST2 Mini Control Center│
+                          │       [Keyboard]        │
+                          │         [Mouse]         │
+                          │       [Time zone]       │
+                          │        [Network]        │
+                          │       [Software]        │
+                          └─────────────────────────┘
+
+
+
+
+
+
+
+

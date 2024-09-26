@@ -1,0 +1,24 @@
+ YaST2 - ./../../Label4.rb @ ohmu
+
+
+
+
+
+
+
+
+                           ┌───────────────────────┐
+                           │Label using normal font│
+                           │ Label using bold font │
+                           │Label using normal font│
+                           │         [OK]          │
+                           └───────────────────────┘
+
+
+
+
+
+
+
+
+

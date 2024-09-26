@@ -1,0 +1,24 @@
+ YaST2 - ./../../SimplePatchSelector-empty.rb @ ohmu
+
+
+
+
+
+
+
+
+
+        ┌──────────────────────────────────────────────────────────────┐
+        │Error: This UI doesn't support the SimplePatchSelector widget!│
+        │                             [OK]                             │
+        └──────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+

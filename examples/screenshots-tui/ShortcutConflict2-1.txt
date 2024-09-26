@@ -1,0 +1,24 @@
+ YaST2 - ./../../ShortcutConflict2.rb @ ohmu
+
+
+
+
+
+
+
+
+                             ┌───────────────────┐
+                             │[Do Something 1...]│
+                             │[Do Something 2...]│
+                             │[Do Something 3...]│
+                             │      [Quit]       │
+                             └───────────────────┘
+
+
+
+
+
+
+
+
+

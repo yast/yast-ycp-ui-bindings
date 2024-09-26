@@ -1,0 +1,24 @@
+ YaST2 - ./../../ButtonBox2.rb @ ohmu
+
+
+                   ┌───────────────────────────────────────┐
+                   │                                       │
+                   │          ButtonBox Examples           │
+                   │                                       │
+                   │ [            OK / Cancel            ] │
+                   │ [             Yes / No              ] │
+                   │ [         Continue / Cancel         ] │
+                   │ [        OK / Apply / Cancel        ] │
+                   │ [    OK / Apply / Cancel / Help     ] │
+                   │ [OK / Apply / Cancel / Custom / Help] │
+                   │ [                OK                 ] │
+                   │ [        OK / Retry (Error!)        ] │
+                   │ [          Retry / Cancel           ] │
+                   │                                       │
+                   │                               [Close] │
+                   │                                       │
+                   └───────────────────────────────────────┘
+
+
+
+

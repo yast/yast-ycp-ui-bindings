@@ -1,0 +1,24 @@
+ YaST2 - ./../../ProgressBar1.rb @ ohmu
+
+
+
+
+
+
+
+
+                             ┌───────────────────┐
+                             │Sample progress bar│
+                             │         0%        │
+                             │      [Next]       │
+                             │            [Close]│
+                             └───────────────────┘
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../Table8-multiSel.rb @ ohmu
+
+
+
+                   ┌────────────────────────────────────────┐
+                   │              Today's menu              │
+                   │┌──────────────────────────────────────┐│
+                   ││   │Name           │Price             ││
+                   ││[x]│Chili          │6                 ││
+                   ││[x]│Salami Baguette│                  ││
+                   ││[ ]│Spaghetti      │8                 ││
+                   ││[ ]│Steak Sandwich │12                ││
+                   ││                                      ││
+                   ││                                      ││
+                   ││                                      ││
+                   │└──────────────────────────────────────┘│
+                   │Get notified on 'Return' or double click│
+                   │Selected:  1 2▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+                   │      [Change Table Contents][OK]       │
+                   └────────────────────────────────────────┘
+
+
+
+

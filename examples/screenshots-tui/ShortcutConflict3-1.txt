@@ -1,0 +1,24 @@
+ YaST2 - ./../../ShortcutConflict3.rb @ ohmu
+
+
+
+
+                            ┌──────────────────────┐
+                            │(x) Instant Play      │
+                            │( ) Demo Only         │
+                            │Game Type:            │
+                            │Boring▒▒▒▒▒▒▒▒▒↓      │
+                            │Nickname for Player 1:│
+                            │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+                            │Nickname for Player 2:│
+                            │▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│
+                            │Maximum Time:         │
+                            │        ↓ 20↑         │
+                            │         [OK]         │
+                            └──────────────────────┘
+
+
+
+
+
+

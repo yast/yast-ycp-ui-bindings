@@ -1,0 +1,24 @@
+ YaST2 - ./../../CheckBox1.rb @ ohmu
+
+
+
+
+
+
+
+
+
+                           ┌───────────────────────┐
+                           │[x] A checked check box│
+                           │    with multi-line    │
+                           └───────────────────────┘
+
+
+
+
+
+
+
+
+
+

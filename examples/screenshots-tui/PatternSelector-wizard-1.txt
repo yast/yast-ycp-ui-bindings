@@ -1,0 +1,24 @@
+ YaST2 - ./../../PatternSelector-wizard.rb @ ohmu
+
+ ┌────────────────────────┐┌──────────────────────────────────────────────────┐
+ │Filter                  ││     │Name│Summary│Version│Size                   │
+ │Se                                                                          │
+ │┌─                          Package Dependencies                            │
+ ││S┌Problems──────────────────────────────────────────────────────────────┐  │
+ ││▒│This request will break your system!                                  │  │
+ ││[│                                                                      │  │
+ ││ └──────────────────────────────────────────────────────────────────────┘  │
+ ││Snothing provides requested glibc                                          │
+ ││C┌Possible Solutions────────────────────────────────────────────────────┐  │
+ ││ │[ ] ignore the warning of a broken system (requires:glibc)            │  │
+ │└─│                                                                      │  │
+ └──└──────────────────────────────────────────────────────────────────────┘ ─┘
+    ┌──────────────────────────────────────────────────────────────────────┐ ↓]
+ ┌Se│No further solution details available                                 │ ─┐
+ │[x│                                                                      │  │
+ │[x└──────────────────────────────────────────────────────────────────────┘  │
+ │[ [OK -- Try Again]                                               [Cancel]  │
+ └├─                                                                         ─┘
+ [Hel                                                                        ]
+
+ F10 OK
