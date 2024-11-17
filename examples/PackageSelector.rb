@@ -1,6 +1,10 @@
 # encoding: utf-8
-
-# Package Selector example
+#
+# PackageSelector in standard mode example
+#
+# This will load the configured repos and their content.
+# No root permissions are needed.
+#
 module Yast
   class PackageSelectorClient < Client
     def main

@@ -48,13 +48,12 @@ module Yast
       UI.WizardCommand(term(:SetDialogHeading, "Software Selection"))
       UI.WizardCommand(term(:SetHelpText, @help_text))
 
-      Pkg.TargetInit(
-        "/", # installed system
-        false
-      ) # don't create a new RPM database
+      Pkg.TargetInitialize("/")
+      Pkg.TargetLoad
+      Pkg.SourceRestore
+      Pkg.SourceLoad
 
       UI.ReplaceWidget(Id(:contents), PatternSelector(Id(:patterns)))
-
 
       @button = nil
       begin

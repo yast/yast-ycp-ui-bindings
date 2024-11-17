@@ -1,6 +1,7 @@
 # encoding: utf-8
 
-# Simple example for PatternSelector
+# Simple example for empty PatternSelector
+# This will not load any content.
 module Yast
   class PatternSelectorEmptyClient < Client
     def main

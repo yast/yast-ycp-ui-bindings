@@ -1,14 +1,21 @@
 # encoding: utf-8
-
+#
+# PackageSelector in system update mode example
+#
+# This will load the configured repos and their content.
+# No root permissions are needed.
+#
 module Yast
   class PackageSelectorUpdateClient < Client
     def main
       Yast.import "UI"
       Yast.import "Pkg"
-      Pkg.TargetInit(
-        "/", # installed system
-        false
-      ) # don't create a new RPM database
+
+      Pkg.TargetInitialize("/")
+      Pkg.TargetLoad
+      Pkg.SourceRestore
+      Pkg.SourceLoad
+
       UI.OpenDialog(
         Opt(:defaultsize),
         PackageSelector(Id(:selector), Opt(:testMode, :updateMode))
