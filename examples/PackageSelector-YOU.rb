@@ -1,30 +1,30 @@
 # encoding: utf-8
-
-# YOU mode
+#
+# PackageSelector in YOU (YaST Online Update) mode example
+#
+# This will load the configured repos and their content.
+# No root permissions are needed.
+#
 module Yast
   class PackageSelectorYOUClient < Client
     def main
       Yast.import "UI"
       Yast.import "Pkg"
-      Pkg.SourceCreate(
-        "http://armstrong.suse.de/download/Code/10/update/i386.ro/",
-        "/"
-      )
 
-      if true
-        Pkg.TargetInit(
-          "/", # installed system
-          false
-        ) # don't create a new RPM database
-      end
+      Pkg.TargetInitialize("/")
+      Pkg.TargetLoad
+      Pkg.SourceRestore
+      Pkg.SourceLoad
 
       UI.OpenDialog(
         Opt(:defaultsize),
         PackageSelector(Id(:selector), Opt(:testMode, :youMode))
       )
-      #				    `opt(`testMode ) ) );
+
       UI.RunPkgSelection(Id(:selector))
       UI.CloseDialog
+
+      Builtins.y2milestone("Input: %1", @input)
 
       nil
     end
