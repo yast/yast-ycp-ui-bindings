@@ -1,0 +1,24 @@
+ YaST2 - ./../../ComboBox-replace-items1.rb @ ohmu
+
+
+
+
+
+
+
+
+                               ┌───────────────┐
+                               │Daily Specials:│
+                               │Pizza Napoli▒▒↓│
+                               │[Pizza][Pasta] │
+                               │     [OK]      │
+                               └───────────────┘
+
+
+
+
+
+
+
+
+

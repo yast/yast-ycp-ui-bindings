@@ -1,0 +1,24 @@
+ YaST2 - ./../../SingleItemSelector1.rb @ ohmu
+
+
+
+
+                ┌──────────────────────────────────────────────┐
+                │┌────────────────────────────────────────────┐│
+                ││( ) Pizza Margherita                        ┬│
+                ││    Very basic with just tomatoes and cheese││
+                ││                                            ┴│
+                ││( ) Pizza Capricciosa                       ││
+                ││    Ham and vegetables                      ││
+                ││                                            ││
+                ││( ) Pizza Funghi                            ││
+                ││    Mushrooms                               ││
+                │└────────────────────────────────────────────┘│
+                │                     [OK]                     │
+                └──────────────────────────────────────────────┘
+
+
+
+
+
+

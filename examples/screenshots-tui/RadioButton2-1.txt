@@ -1,0 +1,24 @@
+ YaST2 - ./../../RadioButton2.rb @ ohmu
+
+
+
+
+
+
+
+                          ┌─────────────────────────┐
+                          │How do you want to crash?│
+                          │( ) Now                  │
+                          │( ) Every now an then    │
+                          │( ) Every five minutes   │
+                          │(x) Never                │
+                          │      [Next][Close]      │
+                          └─────────────────────────┘
+
+
+
+
+
+
+
+

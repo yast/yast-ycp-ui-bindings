@@ -1,0 +1,24 @@
+ YaST2 - ./../../ComboBox-setInputMaxLength.rb @ ohmu
+
+
+
+
+
+
+
+                            ┌──────────────────────┐
+                            │     Combo Box        │
+                            │     pizza▒▒▒▒▒▒↓     │
+                            │Limit characters to...│
+                            │                   -1↑│
+                            │    [limit input]     │
+                            │        [Exit]        │
+                            └──────────────────────┘
+
+
+
+
+
+
+
+

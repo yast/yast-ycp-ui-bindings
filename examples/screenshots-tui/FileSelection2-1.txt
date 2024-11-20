@@ -1,0 +1,24 @@
+ YaST2 - ./../../FileSelection2.rb @ ohmu
+
+                            YaST2 File Selector Demo
+
+
+
+
+
+
+
+
+
+
+
+                                                        [Select Directory...]
+                                                        [  Select File...   ]
+                                                        [   Load File...    ]
+                                                        [    Save As...     ]
+
+ Selected: <nothing selected>
+
+                                                                        [Close]
+
+

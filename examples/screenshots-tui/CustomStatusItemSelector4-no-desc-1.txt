@@ -1,0 +1,24 @@
+ YaST2 - ./../../CustomStatusItemSelector4-no-desc.rb @ ohmu
+
+
+
+
+                             ┌────────────────────┐
+                             │┌──────────────────┐│
+                             ││[ ] Pizza Margheri┬│
+                             ││                  ││
+                             ││                  ┴│
+                             ││[ ] Pizza Capricci││
+                             ││                  ││
+                             ││                  ││
+                             ││[ ] Pizza Funghi  ││
+                             ││                  ││
+                             │└├──────────┤──────┘│
+                             │        [OK]        │
+                             └────────────────────┘
+
+
+
+
+
+

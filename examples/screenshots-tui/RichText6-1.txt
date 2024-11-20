@@ -1,0 +1,24 @@
+ YaST2 - ./../../RichText6.rb @ ohmu
+
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │The big headline (level 1)                                                  ┬
+ │                                                                            │
+ │This is a RichText widget.                                                  │
+ │                                                                            │
+ │It's very much like HTML, but not quite as powerful.                        │
+ │                                                                            │
+ │bold and italic you can rely on.                                            │
+ │                                                                            │
+ │An ordered list (headline level 2)                                          ┴
+ │                                                                            │
+ │ 1. First list entry                                                        │
+ │ 2. Second one                                                              │
+ │     1. and more info                                                       │
+ │     2. and more and more                                                   │
+ │ 3. And so on                                                               │
+ │ 4. and even more                                                           │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+                                      [OK]
+
+

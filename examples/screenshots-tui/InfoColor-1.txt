@@ -1,0 +1,24 @@
+ YaST2 - ./../../InfoColor.rb @ ohmu
+
+
+
+
+
+
+                           ┌───────────────────────┐
+                           │This is an info dialog.│
+                           │┌─────────────────────┐│
+                           ││This should even work─│
+                           ││with multi line rich ││
+                           ││texts. Even with bold││
+                           │└─────────────────────┘│
+                           │         [OK]          │
+                           └───────────────────────┘
+
+
+
+
+
+
+
+

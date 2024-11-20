@@ -1,0 +1,24 @@
+ YaST2 - ./../../HCenter3.rb @ ohmu
+
+                                   [Button 1]
+
+
+
+
+
+                                   [Button 2]
+
+
+
+
+
+                                   [Button 3]
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../HCenter2.rb @ ohmu
+
+
+
+
+
+
+
+
+
+                  ┌──────────────────────────────────────────┐
+                  │This is a very long label that makes space│
+                  │[Normal]            [HCenter]             │
+                  └──────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+ YaST2 - ./../../WaitForEvent.rb @ ohmu
+
+
+
+
+
+
+
+                          ┌─────────────────────────┐
+                          │┌Select your Pizza:─────┐│
+                          ││Prosciutto             ││
+                          ││Quattro Stagioni       ││
+                          ││A la Chef              ─│
+                          │└───────────────────────┘│
+                          │[OK][Cancel] [Details...]│
+                          └─────────────────────────┘
+
+
+
+
+
+
+
+

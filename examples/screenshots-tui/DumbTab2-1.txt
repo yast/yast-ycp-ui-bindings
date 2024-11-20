@@ -1,0 +1,24 @@
+ YaST2 - ./../../DumbTab2.rb @ ohmu
+
+ ┌Address──Overview──GUI Style Hints──────────────────────────────────────────┐
+ │ GUI Style Hints                                                            │
+ │                                                                            │
+ │ Using tabs is usually a result of poor dialog design.                      │
+ │                                                                            │
+ │ Tabs hide complexity, they do not resolve it.                              │
+ │ The problem remains just as complex as before,                             │
+ │ only the user can no longer see it.                                        │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+                                                                        [Close]
+
+

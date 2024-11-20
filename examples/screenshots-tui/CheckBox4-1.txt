@@ -1,0 +1,24 @@
+ YaST2 - ./../../CheckBox4.rb @ ohmu
+
+
+
+
+
+
+
+                              ┌──────────────────┐
+                              │Select your extras│
+                              │[ ] Extra Cheese  │
+                              │[x] Pepperoni     │
+                              │[ ] Extra Salami  │
+                              │       [OK]       │
+                              └──────────────────┘
+
+
+
+
+
+
+
+
+

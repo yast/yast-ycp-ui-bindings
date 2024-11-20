@@ -1,0 +1,24 @@
+ YaST2 - ./../../AutoShortcut2.rb @ ohmu
+
+
+
+
+
+                       ┌───────────────────────────────┐
+                       │┌Software Selection───────────┐│
+                       ││( ) Minimum System           ││
+                       ││( ) Minimum X11 System       ││
+                       ││( ) Gnome System             ││
+                       ││( ) Default (KDE)            ││
+                       ││( ) Office System (KDE Based)││
+                       ││( ) Almost Everything        ││
+                       │└─────────────────────────────┘│
+                       │             [OK]              │
+                       └───────────────────────────────┘
+
+
+
+
+
+
+
